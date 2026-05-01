@@ -1,1 +1,1 @@
-# senioritis__tudorg_amys90_hannah61_stevenw92
+# StuyTCG by Senioritis
