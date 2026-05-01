@@ -1,0 +1,5 @@
+tudorG -- 2026-04-30 16:00
+- VM Setup:
+  -No re-image
+  -Flask
+  -Domain name & SSL certificate set up
