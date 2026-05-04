@@ -3,3 +3,6 @@ tudorG -- 2026-04-30 16:00
   -No re-image
   -Flask
   -Domain name & SSL certificate set up
+
+tudorG -- 2026-05-03 14:00
+- Made team flag
