@@ -1,35 +1,35 @@
-## [`StuyTCG`](https://github.com/tganshaw/senioritis__tudorg_amys90_hannah61_stevenw92) `by Senioritis`
+## [StuyTCG](https://github.com/tganshaw/senioritis__tudorg_amys90_hannah61_stevenw92) by Senioritis
 
-**`Final Project`**  
-**`Devos`**`: Tudor Ganshaw (PM), Steven Wu, Hannah Grimskog-Tran, Amy Shrestha`  
-**`TARGET SHIP DATE`**`: 2026-06-08`
+**Final Project**  
+**Devos**: Tudor Ganshaw (PM), Steven Wu, Hannah Grimskog-Tran, Amy Shrestha
+**TARGET SHIP DATE**: 2026-06-08
 
-`Project Description:`  
-`A web-based TCG (trading card game) themed around Stuyvesant. Users will be able to pull cards, show off their collections, and battle other users.`
+**Project Description**:
+A web-based TCG (trading card game) themed around Stuyvesant. Users will be able to pull cards, show off their collections, and battle other users.
 
-## `PROGRAM COMPONENTS`
+## PROGRAM COMPONENTS
 
-## `SITE MAP`
+## SITE MAP
 
-## `DATABASE ORGZ`
+## DATABASE ORGZ
 
-## `COMPONENT MAP`
+## COMPONENT MAP
 
-## `APIs`
+## APIs
 
-## `FRONT-END FRAMEWORK`
+## FRONT-END FRAMEWORK
 
-## `DATA VISUALIZATION LIBRARIES`
+## DATA VISUALIZATION LIBRARIES
 
-## `DATASETS`
+## DATASETS
 
-## `TASK ASSIGNMENTS`
+## TASK ASSIGNMENTS
 
-| `Name` | `Task` |
+| Name | Task |
 | :---- | :---- |
-| `Tudor` | `PM,`  |
-| `Steven` |  |
-| `Hannah` |  |
-| `Amy` |  |
+| Tudor | PM,  |
+| Steven |  |
+| Hannah |  |
+| Amy |  |
 
 
