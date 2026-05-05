@@ -1,0 +1,51 @@
+<html>
+
+testing
+
+<button id = "swap" value="swap">Swap</button>
+
+<button id = "card1"><img id = "test1" src = "https://assets.tcgdex.net/en/sm/sm11/220/low.jpg"></img></button>
+
+<button id = "card2"><img id = "test2" src = "https://assets.tcgdex.net/en/sm/sm11/13/low.jpg"></img></button>
+
+
+<script>
+
+var swap_button = document.getElementById("swap");
+swap_button.addEventListener("click", swap_cards);
+
+var card1 = document.getElementById("card1");
+var card2 = document.getElementById("card2");
+
+var card1_img = card1.firstChild.currentSrc;
+var card2_img = card2.firstChild.currentSrc;
+
+card1.addEventListener("click", set_active);
+card2.addEventListener("click", set_active);
+
+var active_card = card1_img;
+
+function set_active(event)
+{
+    var current_card_img = event.target.currentSrc;
+    if(current_card_img != active_card){console.log(active_card)}
+}
+
+function swap_cards(event)
+{
+    var test1 = document.getElementById("test1");
+    var src1 = test1.src;
+
+    var test2 = document.getElementById("test2");
+    var src2 = test2.src;
+    test1.src = src2;
+    test2.src = src1; 
+    
+}
+
+
+
+
+</script>
+
+</html>
