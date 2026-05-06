@@ -2,50 +2,59 @@
 
 testing
 
-<button id = "swap" value="swap">Swap</button>
-
-<button id = "card1"><img id = "test1" src = "https://assets.tcgdex.net/en/sm/sm11/220/low.jpg"></img></button>
-
-<button id = "card2"><img id = "test2" src = "https://assets.tcgdex.net/en/sm/sm11/13/low.jpg"></img></button>
+<div id = "card1">
+<p id = "1-atk" value="2">e</p>
 
 
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 <script>
 
-var swap_button = document.getElementById("swap");
-swap_button.addEventListener("click", swap_cards);
+const set_1 = "0;1".split(";");
+const set_2 = "1;0".split(";");
 
-var card1 = document.getElementById("card1");
-var card2 = document.getElementById("card2");
-
-var card1_img = card1.firstChild.currentSrc;
-var card2_img = card2.firstChild.currentSrc;
-
-card1.addEventListener("click", set_active);
-card2.addEventListener("click", set_active);
-
-var active_card = card1_img;
-
-function set_active(event)
+const csv_str = "{{testingtesting}}";
+var data = Papa.parse(csv_str,
 {
-    var current_card_img = event.target.currentSrc;
-    if(current_card_img != active_card){console.log(active_card)}
+    newline: "\n",
+    header: true
+});
+data = data["data"];
+console.log(data);
+
+var numCards = 0;
+
+var cards_1 = [];
+var cards_2 = [];
+for(let i = 0; i < set_1.length; i++)
+{
+    var current = data[set_1[i]];
+    cards_1.push(new Card(current["card_id"], current["max_hp"], current["atk"], current["def"], current["spd"], current["max_hp"], 0, 0, numCards ));
+    numCards++;
 }
 
-function swap_cards(event)
+console.log(cards_1);
+
+
+function Card(card_id, max_hp, atk, def, spd, current_hp, buffs, used_special, game_id)
 {
-    var test1 = document.getElementById("test1");
-    var src1 = test1.src;
-
-    var test2 = document.getElementById("test2");
-    var src2 = test2.src;
-    test1.src = src2;
-    test2.src = src1; 
-    
+    this.card_id = card_id;
+    this.max_hp = max_hp;
+    this.atk = atk;
+    this.def = def;
+    this.spd = spd;
+    this.current_hp = current_hp;
+    this.buffs = buffs;
+    this.used_special = used_special;
+    this.game_id = game_id;
 }
-
 
 
 
 </script>
+
+
 
 </html>

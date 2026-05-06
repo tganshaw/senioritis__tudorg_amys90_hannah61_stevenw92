@@ -6,7 +6,10 @@ app.secret_key = "er34546;'546;'3;'3453453kl345l;45k34905uidkldg593495io;dfop"
 
 @app.route("/")
 def main():
-    return render_template("jstest.html")
+    file = open("Data/card_info.csv")
+    data = file.read().replace("\n", "\\n")
+    
+    return render_template("jstest.html", testingtesting = data)
     # return "<title>Senioritis</title>\n<h1>Got This Working</h1>\n<br>\n<br>\n<p>yay</p>"
     
     

@@ -8,6 +8,9 @@
 A web-based TCG (trading card game) themed around Stuyvesant. Users will be able to pull cards, show off their collections, and battle other users.
 
 ## PROGRAM COMPONENTS
+- Python Backend
+- Javascript game page
+
 
 ## SITE MAP
 
@@ -16,12 +19,15 @@ A web-based TCG (trading card game) themed around Stuyvesant. Users will be able
 ## COMPONENT MAP
 
 ## APIs
+- None
 
 ## FRONT-END FRAMEWORK
 
 ## DATA VISUALIZATION LIBRARIES
+- None, most likely
 
 ## DATASETS
+- None
 
 ## TASK ASSIGNMENTS
 
