@@ -24,13 +24,14 @@ A web-based TCG (trading card game) themed around Stuyvesant. Users will be able
 
 ## Problem Being Solved
 
+Boredom
 
 ## Target Users
 
 Who will use this system?
 
-- <u>People who want to play a TCG game</u> ___________________________________
-- </u>Stuy students who want to play a game featuring their teachers</u> _______
+- <u>People who want to play a TCG game</u> 
+- </u>Stuy students who want to play a game featuring their teachers</u> 
 
 
 ## Why This Project Matters
@@ -42,14 +43,14 @@ Who will use this system?
 
 ## Core Features (Required for Final Submission)
 Features that **must** be completed:
-1. 
-1. 
-1. 
+1. Card battle system
+2. Deck building system
+3. Bot to battle against
+
 
 ## Stretch Features (Only if MVP is Complete)
-1. 
-1. 
-1. 
+1. Multiplayer battling
+
 
 ## Explicit Non-Goals
 
@@ -63,10 +64,10 @@ Features intentionally excluded:
 
 | Layer | Selected Tool |
 |---|---|
-| Backend Framework | Flask / Node.js (choose one) |
+| Backend Framework | Flask |
 | Frontend Framework | none / bootstrap / foundation / tailwind / other? (seek clearance) |
-| Database | SQLite / MongoDB |
-| Authentication | Flask sessions unless you have good reason/need to deviate |
+| Database | SQLite |
+| Authentication | Flask sessions |
 | ORM / DB Library | optionally SQLAlchemy; initiate clearance protocol if interested |
 
 ## Why This Stack Was Chosen
