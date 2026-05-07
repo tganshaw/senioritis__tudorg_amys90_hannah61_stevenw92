@@ -29,8 +29,8 @@ A web-based TCG (trading card game) themed around Stuyvesant. Users will be able
 
 Who will use this system?
 
-- ____________________________________
-- ____________________________________
+- People who want to play a TCG game ___________________________________
+- Stuy students who want to play a game featuring their teachers _______
 
 
 ## Why This Project Matters
