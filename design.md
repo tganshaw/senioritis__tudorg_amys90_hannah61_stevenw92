@@ -1,4 +1,4 @@
-#[StuyTCG](https://github.com/tganshaw/senioritis__tudorg_amys90_hannah61_stevenw92) by Senioritis
+# [StuyTCG](https://github.com/tganshaw/senioritis__tudorg_amys90_hannah61_stevenw92) by Senioritis
 
 ## TNPG: Senioritis
 ## project: StuyTCG
