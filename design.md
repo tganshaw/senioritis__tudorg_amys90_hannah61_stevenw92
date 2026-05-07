@@ -49,6 +49,8 @@ Features that **must** be completed:
 
 ## Stretch Features (Only if MVP is Complete)
 1. Multiplayer battling
+2. Add more specials/cards (i.e., increase attack, etc.)
+3. Show on profile win rate with different cards
 
 
 ## Explicit Non-Goals
