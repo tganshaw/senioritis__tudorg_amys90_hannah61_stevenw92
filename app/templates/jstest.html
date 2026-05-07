@@ -30,6 +30,8 @@ var numCards = 0;
 var all_cards = [];
 var cards_1 = fillDeck(set_1);
 var cards_2 = fillDeck(set_2);
+var active_card = 1;
+
 
 console.log(cards_1);
 console.log(cards_2);
@@ -47,17 +49,52 @@ var card_buttons = [];
 for(let i = 0; i < numCards; i++)
 {
     card_buttons.push(document.getElementById(`card-${i}`));
-    card_buttons[i].addEventListener("click", damageCard);
+    card_buttons[i].addEventListener("click", attackCardClick);
 }
 
-function damageCard(event)
+function attackCard(attacker_id, defender_id)
 {
-    var card_id = parseInt(event.target.value);
-    console.log(event.target);
-    all_cards[card_id]["current_hp"] = all_cards[card_id]["current_hp"] - 1;
+    var attacker = all_cards[attacker_id];
+    var defender = all_cards[defender_id];
+    
+    var damage_dealing = attacker["atk"] + attacker["buffs"];
+    var defense = defender["def"] + defender["buffs"];
+    var final_damage = damage_dealing - defense;
+    
+    if(final_damage > -1)
+    {
+        damageCard(defender_id, final_damage);
+    }
+    // all_cards[defender_id]["current_hp"] = all_cards[defender_id]["current_hp"] - final_damage;
+    
+    if(all_cards[defender_id]["current_hp"] <= 0)
+    {
+        setHP(defender_id, 0);
+        return -1;
+    }
+}
+
+function setHP(card_id, amt)
+{
+    all_cards[card_id]["current_hp"] = amt;
     var card_hp = parseInt(all_cards[card_id]["current_hp"]);
     
-    event.target.innerText = `${card_id}, HP: ${card_hp.toString()}`;
+    card_buttons[card_id].innerText = `${card_id}, HP: ${card_hp.toString()}`;
+}
+
+function attackCardClick(event)
+{
+    var card_id = parseInt(event.target.value);
+    attackCard(active_card, card_id);
+}
+
+function damageCard(card_id, damage)
+{
+    all_cards[card_id]["current_hp"] = all_cards[card_id]["current_hp"] - damage;
+    console.log(all_cards[card_id]["current_hp"] + " , " + damage);
+    var card_hp = parseInt(all_cards[card_id]["current_hp"]);
+    
+    card_buttons[card_id].innerText = `${card_id}, HP: ${card_hp.toString()}`;
     
 }
 
