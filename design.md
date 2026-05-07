@@ -36,6 +36,7 @@ Who will use this system?
 
 ## Why This Project Matters
 
+This project matters because many people may want to find a way to relieve themselves of boredom as a Stuyvesant student. A good way to do this is to play a Stuyvesant TCG card game, where cards are teachers from different departments. Another reason this project matters is that it is a fun way to help Stuyvesant students get to know different Stuyvesant teachers, their faces, departments, and what they do through their abilities.
 
 ---
 
