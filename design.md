@@ -93,18 +93,9 @@ Each member must own meaningful deliverables.
 
 # Site map
 
-{Insert your mermaid(or equivalent)-generated diagram here}
-eg...
-```
-Landing Page
-   ↓
-Login / Register
-   ↓
-Dashboard
-   ├── Feature A
-   ├── Feature B
-   └── Profile
-```
+<img width="3269" height="1686" alt="image" src="https://github.com/user-attachments/assets/cdce6374-bdd1-4704-bed2-2c4a97f3c9e3" />
+
+
 
 ## Key User Stories
 ### eg0
