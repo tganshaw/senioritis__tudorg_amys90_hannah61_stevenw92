@@ -30,8 +30,8 @@ Boredom
 
 Who will use this system?
 
-- <u>People who want to play a TCG game</u> 
-- </u>Stuy students who want to play a game featuring their teachers</u> 
+- <u>People who want to play a TCG game</u>
+- </u>Stuy students who want to play a game featuring their teachers</u>
 
 
 ## Why This Project Matters
@@ -55,8 +55,8 @@ Features that **must** be completed:
 ## Explicit Non-Goals
 
 Features intentionally excluded:
-- 
-- 
+-
+-
 
 ---
 
@@ -65,7 +65,7 @@ Features intentionally excluded:
 | Layer | Selected Tool |
 |---|---|
 | Backend Framework | Flask |
-| Frontend Framework | none / bootstrap / foundation / tailwind / other? (seek clearance) |
+| Frontend Framework | Tailwind |
 | Database | SQLite |
 | Authentication | Flask sessions |
 | ORM / DB Library | optionally SQLAlchemy; initiate clearance protocol if interested |
@@ -81,10 +81,10 @@ Each member must own meaningful deliverables.
 
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+| Tudor | | | |
+| Amy | | | |
+| Hannah | | | |
+| Steven | | | |
 
 ---
 
@@ -143,7 +143,3 @@ Project is considered complete when all of the following are true:
 
 # Open Questions
 {Delineate anything undecided here}
-
-
-
-
