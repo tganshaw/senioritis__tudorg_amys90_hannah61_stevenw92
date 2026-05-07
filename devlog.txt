@@ -12,3 +12,6 @@ tudorG, amyS, hannahG, stevenW -- 2026-05-04 10:00
 
 tudorG -- 2026-05-05 20:00
 - Starting on making the JavaScript framework for the game to be more efficient
+
+tudorG -- 2026-05-06 21:00
+- More working on beginning the JavaScript. Didn't think it wise to work on the design doc before consulting with team.

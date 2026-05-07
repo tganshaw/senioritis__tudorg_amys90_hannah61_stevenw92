@@ -2,18 +2,19 @@
 
 testing
 
-<div id = "card1">
-<p id = "1-atk" value="2">e</p>
+<div id = "playfield">
 
 
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 <script>
 
+
+
+
 const set_1 = "0;1".split(";");
-const set_2 = "1;0".split(";");
+const set_2 = "3;2".split(";");
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -26,17 +27,53 @@ console.log(data);
 
 var numCards = 0;
 
-var cards_1 = [];
-var cards_2 = [];
-for(let i = 0; i < set_1.length; i++)
-{
-    var current = data[set_1[i]];
-    cards_1.push(new Card(current["card_id"], current["max_hp"], current["atk"], current["def"], current["spd"], current["max_hp"], 0, 0, numCards ));
-    numCards++;
-}
+var all_cards = [];
+var cards_1 = fillDeck(set_1);
+var cards_2 = fillDeck(set_2);
 
 console.log(cards_1);
+console.log(cards_2);
+console.log(all_cards);
 
+var test = document.getElementById("playfield");
+
+for(let i = 0; i < numCards; i++)
+{
+    test.innerHTML += `<button id="card-${all_cards[i]["game_id"]}" value="${all_cards[i]["game_id"]}">${all_cards[i]["game_id"]}, HP: ${all_cards[i]["current_hp"]}</button>\n`;
+}
+
+var card_buttons = [];
+
+for(let i = 0; i < numCards; i++)
+{
+    card_buttons.push(document.getElementById(`card-${i}`));
+    card_buttons[i].addEventListener("click", damageCard);
+}
+
+function damageCard(event)
+{
+    var card_id = parseInt(event.target.value);
+    console.log(event.target);
+    all_cards[card_id]["current_hp"] = all_cards[card_id]["current_hp"] - 1;
+    var card_hp = parseInt(all_cards[card_id]["current_hp"]);
+    
+    event.target.innerText = `${card_id}, HP: ${card_hp.toString()}`;
+    
+}
+
+function fillDeck(set)
+{
+    var cards = [];
+    for(let i = 0; i < set_2.length; i++)
+    {
+        var current = data[set[i]];
+        cards.push(new Card(current["card_id"], current["max_hp"], current["atk"], current["def"], current["spd"], current["max_hp"], 0, 0, numCards ));
+        all_cards.push(cards[i]);
+        numCards++;
+    }
+    
+    return cards;
+}
 
 function Card(card_id, max_hp, atk, def, spd, current_hp, buffs, used_special, game_id)
 {
