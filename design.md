@@ -114,14 +114,14 @@ As a new user, I want to be able to easily understand and learn the game logic s
 
 | USER_DATA |         |                             |
 |-----------|---------|-----------------------------|
-| username  | STRING  | PK                          |
-| password  | STRING  |                             |
+| username  | TEXT    | PK                          |
+| password  | TEXT    |                             |
 | gameid    | INTEGER | FK REF GAME_CARDS(gameid)   |
 
 | ALL_CARDS |         |                             |
 |-----------|---------|-----------------------------|
-| name      | STRING  | PK                          |
-| dept      | STRING  |                             |
+| name      | TEXT    | PK                          |
+| dept      | TEXT    |                             |
 | health    | INTEGER |                             |
 | attack    | INTEGER |                             |
 | defense   | INTEGER |                             |
@@ -130,8 +130,8 @@ As a new user, I want to be able to easily understand and learn the game logic s
 | G_CARDS   |         |                             |
 |-----------|---------|-----------------------------|
 | gameid    | INTEGER | PK                          |
-| name      | STRING  | PK                          |
-| dept      | STRING  |                             |
+| name      | TEXT    | PK                          |
+| dept      | TEXT    |                             |
 | health    | INTEGER |                             |
 | attack    | INTEGER |                             |
 | defense   | INTEGER |                             |
