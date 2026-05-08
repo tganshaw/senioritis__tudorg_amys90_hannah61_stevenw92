@@ -11,7 +11,7 @@
 
 | Name | Email | Primary Role | Secondary Role |
 |---|---|---|---|
-|Tudor Ganshaw|tudorg@nycstudents.net| |PM|
+|Tudor Ganshaw|tudorg@nycstudents.net|JS Developer|PM|
 |Amy Shrestha|amys90@nycstudents.net| | |
 |Hannah Grimskog-Tran|hannahg61@nycstudents.net| ||
 |Steven Wu|stevenw92@nycstudents.net| | |
@@ -31,12 +31,12 @@ Boredom
 Who will use this system?
 
 - <u>People who want to play a TCG game</u>
-- </u>Stuy students who want to play a game featuring their teachers</u>
+- <u>Stuy students who want to play a game featuring their teachers</u>
 
 
 ## Why This Project Matters
 
-
+There is a gap in the market for Stuyvesant teacher themed trading card games and we are filling that gap lest it become a crater.
 
 # Minimum Viable Product (MVP) Scope
 
@@ -129,9 +129,10 @@ As a __________, I want to __________ so that...
 
 # Completion Criteria (_a.k.a._ "Definition of 'Done'")
 Project is considered complete when all of the following are true:
-1.
-1.
-1.
+1. Players can select a deck of 8 cards.
+2. Players can battle with said cards in a functional game.
+3. Players can have a decently fun experience with the game and understand what is going on.
+
 
 # Open Questions
 {Delineate anything undecided here}
