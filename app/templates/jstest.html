@@ -4,6 +4,9 @@ testing
 
 <div id = "playfield">
 
+<div id="active-field">
+<button id = "active-card" value="-1">Active Card</button><br>
+</div>
 
 </div>
 
@@ -30,7 +33,8 @@ var numCards = 0;
 var all_cards = [];
 var cards_1 = fillDeck(set_1);
 var cards_2 = fillDeck(set_2);
-var active_card = 1;
+var active_card = parseInt(document.getElementById("active-card").value);
+
 
 
 console.log(cards_1);
@@ -41,15 +45,41 @@ var test = document.getElementById("playfield");
 
 for(let i = 0; i < numCards; i++)
 {
-    test.innerHTML += `<button id="card-${all_cards[i]["game_id"]}" value="${all_cards[i]["game_id"]}">${all_cards[i]["game_id"]}, HP: ${all_cards[i]["current_hp"]}</button>\n`;
+    test.innerHTML += `<div id="${all_cards[i]["game_id"]}-field">\n <button id="card-${all_cards[i]["game_id"]}" value="${all_cards[i]["game_id"]}">${all_cards[i]["game_id"]}, HP: ${all_cards[i]["current_hp"]}</button>\n <button id="card-${all_cards[i]["game_id"]}-active" value="${all_cards[i]["game_id"]}">Make Card ${all_cards[i]["game_id"]} Active</button>\n<br></div>`;
 }
 
 var card_buttons = [];
 
 for(let i = 0; i < numCards; i++)
 {
+    document.getElementById(`card-${i}-active`).addEventListener("click", makeActive);
     card_buttons.push(document.getElementById(`card-${i}`));
     card_buttons[i].addEventListener("click", attackCardClick);
+}
+
+function makeActive(event)
+{
+    var new_active_id = parseInt(event.target.value);
+    var active_div = document.getElementById("active-field");
+    console.log(active_div.firstElementChild);
+    var active_card_id = parseInt(active_div.firstElementChild.value);
+    
+    if(active_card_id != -1)
+    {
+        var temp = document.getElementById(`${new_active_id}-field`);
+        var playfield = document.getElementById("playfield");
+        playfield.innerHTML += active_div.innerHTML;
+        active_div.innerHTML = temp.innerHTML;
+        element.remove(document.getElementById(`${new_active_id}-field`));
+        
+    }
+    else{
+        var temp = document.getElementById(`${new_active_id}-field`);
+        active_div.innerHTML = temp.innerHTML;
+        element.remove(document.getElementById(`${new_active_id}-field`));
+    }
+    console.log(new_active_id);
+    active_card = parseInt(new_active_id);
 }
 
 function attackCard(attacker_id, defender_id)
@@ -57,8 +87,8 @@ function attackCard(attacker_id, defender_id)
     var attacker = all_cards[attacker_id];
     var defender = all_cards[defender_id];
     
-    var damage_dealing = attacker["atk"] + attacker["buffs"];
-    var defense = defender["def"] + defender["buffs"];
+    var damage_dealing = parseInt(attacker["atk"]) + parseInt(attacker["buffs"]);
+    var defense = parseInt(defender["def"]) + parseInt(defender["buffs"]);
     var final_damage = damage_dealing - defense;
     
     if(final_damage > -1)
