@@ -24,7 +24,7 @@ A web-based TCG (trading card game) themed around Stuyvesant. Users will be able
 
 ## Problem Being Solved
 
-Boredom
+We want to make a fun game to solve students' boredom.
 
 ## Target Users
 
@@ -36,7 +36,7 @@ Who will use this system?
 
 ## Why This Project Matters
 
-There is a gap in the market for Stuyvesant teacher themed trading card games and we are filling that gap lest it become a crater.
+There is a gap in the market for Stuyvesant teacher themed trading card games and we are filling that gap lest it become a crater. By playing the game, all Stuyvesant staff can better know different Stuyvesant teachers in various departments in Stuyvesant, familiarize with their addresses, and what they are known for.
 
 # Minimum Viable Product (MVP) Scope
 
@@ -50,14 +50,15 @@ Features that **must** be completed:
 ## Stretch Features (Only if MVP is Complete)
 1. Multiplayer battling
 2. Add more specials/cards (i.e., increase attack, etc.)
-3. Show on profile win rate with different cards
+3. Win rate for different cards shown on the profile page
 
 
 ## Explicit Non-Goals
 
 Features intentionally excluded:
--
--
+- knowing the other player's cards
+- having an indefinite end to each battle
+- simultenous actions by players
 
 ---
 
