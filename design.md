@@ -12,9 +12,9 @@
 | Name | Email | Primary Role | Secondary Role |
 |---|---|---|---|
 |Tudor Ganshaw|tudorg@nycstudents.net|JS Developer|PM|
-|Amy Shrestha|amys90@nycstudents.net| | |
-|Hannah Grimskog-Tran|hannahg61@nycstudents.net| ||
-|Steven Wu|stevenw92@nycstudents.net| | |
+|Amy Shrestha|amys90@nycstudents.net|SQLite|Flask Pathways|
+|Hannah Grimskog-Tran|hannahg61@nycstudents.net|Flask Pathways|CSS|
+|Steven Wu|stevenw92@nycstudents.net|HTML Templates|JS Developer|
 
 ---
 
@@ -70,7 +70,6 @@ Features intentionally excluded:
 | Frontend Framework | Tailwind |
 | Database | SQLite |
 | Authentication | Flask sessions |
-| ORM / DB Library | optionally SQLAlchemy; initiate clearance protocol if interested |
 
 ## Why This Stack Was Chosen
 Flask, Tailwind, and SQLite are all known and trustworthy. Specific frontend framework isn't too important.
@@ -84,7 +83,7 @@ Each member must own meaningful deliverables.
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
 | Tudor | | | |
-| Amy | | | |
+| Amy | Complete SQLite DB by end of 1st week. | | |
 | Hannah | | | |
 | Steven | | | |
 
@@ -96,8 +95,7 @@ Each member must own meaningful deliverables.
 
 # Site map
 
-<img width="3269" height="1686" alt="image" src="https://github.com/user-attachments/assets/cdce6374-bdd1-4704-bed2-2c4a97f3c9e3" />
-
+![site map](https://github.com/user-attachments/assets/cdce6374-bdd1-4704-bed2-2c4a97f3c9e3")
 
 
 ## Key User Stories
