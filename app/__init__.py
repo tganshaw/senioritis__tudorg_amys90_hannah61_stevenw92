@@ -1,8 +1,16 @@
 from flask import *
+import os, json, sqlite3, random, urllib
 
 app = Flask(__name__)
 
 app.secret_key = "er34546;'546;'3;'3453453kl345l;45k34905uidkldg593495io;dfop"
+
+DB_NAME = "Data/database.db"
+DB = sqlite3.connect(DB_NAME)
+DBC = DB.cursor()
+
+DBC.execute("CREATE TABLE IF NOT EXISTS users(username TEXT, password TEXT, reviews TEXT, bio TEXT, favorites TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT);")
+
 
 @app.route("/")
 def main():
@@ -52,7 +60,7 @@ def login():
       return render_template('login.html', error=text)
 
     session['username'] = username
-    return redirect(url_for('/'))
+    return redirect('/')
 
   return render_template('login.html', error="")
 
@@ -89,7 +97,7 @@ def register():
     if 'rated_games' not in session:
         session['rated_games']=[]
     session.permanent=True
-    return redirect(url_for("/"))
+    return redirect(("/"))
 
 if __name__ == "__main__":
     app.debug=True
