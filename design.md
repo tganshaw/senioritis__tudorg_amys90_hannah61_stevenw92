@@ -106,13 +106,17 @@ As a player, I want to be able to select and create decks of cards that can help
 As a student, I want to have a variety of teacher cards from a variety of departments so that I can familiarize myself with their names, faces, and address.
 
 ### eg2
-As a new user, I want to be able to easily understand and learn the game logics so that I can immediately start playing.
+As a new user, I want to be able to easily understand and learn the game logic so that I can immediately start playing.
 
 
 
 # Database Design
 
-{Insert your table/document organizational structure here}
+| USER_DATA |        |    |
+|-----------|--------|----|
+| username  | string | PK |
+| password  | string |    |
+
 
 
 # Testing Plan
