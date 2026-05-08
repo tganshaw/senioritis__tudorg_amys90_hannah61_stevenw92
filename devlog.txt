@@ -26,3 +26,4 @@ tudorG -- 2026-05-07 21:00
 amyS -- 2026-05-07 23:00
 - worked on design doc
 - added Hannah's site map
+- add 14 pokemon cards
