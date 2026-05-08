@@ -82,10 +82,10 @@ Each member must own meaningful deliverables.
 
 | Team Member | Primary Ownership | Secondary Ownership | Specific Deliverables |
 |---|---|---|---|
-| Tudor | | | |
-| Amy | Complete SQLite DB by end of 1st week. | | |
-| Hannah | | | |
-| Steven | | | |
+| Tudor | Game logic & implementation | PM leadership | Battle system logic & bot |
+| Amy | Database design & application | Backend support | SQLite DB completed & deck storage |
+| Hannah | Flask routes & gameplay | CSS | Card display in profile/search & CSS |
+| Steven | Frontend HTML templates | Refine JS in game | Hand deck & battle gameplay |
 
 ---
 
@@ -100,13 +100,13 @@ Each member must own meaningful deliverables.
 
 ## Key User Stories
 ### eg0
-As a __________, I want to __________ so that...
+As a player, I want to be able to select and create decks of cards that can help me win battles so that I am able to win more battles and learn to utilize strategy.
 
 ### eg1
-As a __________, I want to __________ so that...
+As a student, I want to have a variety of teacher cards from a variety of departments so that I can familiarize myself with their names, faces, and address.
 
 ### eg2
-As a __________, I want to __________ so that...
+As a new user, I want to be able to easily understand and learn the game logics so that I can immediately start playing.
 
 
 
