@@ -112,30 +112,30 @@ As a new user, I want to be able to easily understand and learn the game logic s
 
 # Database Design
 
-| USER_DATA |        |    |
-|-----------|--------|----|
-| username  | STRING | PK |
-| password  | STRING |    |
-| gameid  | INTEGER |  FK REF GAME_CARDS(gameid)  |
+| USER_DATA |         |                             |
+|-----------|---------|-----------------------------|
+| username  | STRING  | PK                          |
+| password  | STRING  |                             |
+| gameid    | INTEGER | FK REF GAME_CARDS(gameid)   |
 
-| ALL_CARDS     |        |    |
-|-----------|--------|----|
-| name  | STRING | PK |
-| dept  | STRING |    |
-| health  | INTEGER |    |
-| attack  | INTEGER |    |
-| defense  | INTEGER |    |
-| speed  | INTEGER |    |
+| ALL_CARDS |         |                             |
+|-----------|---------|-----------------------------|
+| name      | STRING  | PK                          |
+| dept      | STRING  |                             |
+| health    | INTEGER |                             |
+| attack    | INTEGER |                             |
+| defense   | INTEGER |                             |
+| speed     | INTEGER |                             |
 
-| GAME_CARDS     |        |    |
-|-----------|--------|----|
-| gameid  | INTEGER |   |
-| name  | STRING | PK |
-| dept  | STRING |    |
-| health  | INTEGER |    |
-| attack  | INTEGER |    |
-| defense  | INTEGER |    |
-| speed  | INTEGER |    |
+| G_CARDS   |         |                             |
+|-----------|---------|-----------------------------|
+| gameid    | INTEGER | PK                          |
+| name      | STRING  | PK                          |
+| dept      | STRING  |                             |
+| health    | INTEGER |                             |
+| attack    | INTEGER |                             |
+| defense   | INTEGER |                             |
+| speed     | INTEGER |                             |
 
 # Testing Plan
 {Delineate here your plan for testing each component}
