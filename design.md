@@ -20,7 +20,7 @@
 
 
 # Summary
-A web-based TCG (trading card game) themed around Stuyvesant. Users will be able to pull cards, show off their collections, and battle other users.
+A web-based trading card game (TCG) themed around Stuyvesant. Users will be able to pull cards, show off their collections, and battle other users.
 
 ## Problem Being Solved
 
@@ -58,7 +58,7 @@ Features that **must** be completed:
 Features intentionally excluded:
 - knowing the other player's cards
 - having an indefinite end to each battle
-- simultenous actions by players
+- simultaneous actions by players
 
 ---
 
