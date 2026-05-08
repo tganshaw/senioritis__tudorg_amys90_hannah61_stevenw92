@@ -95,7 +95,7 @@ Each member must own meaningful deliverables.
 
 # Site map
 
-![site map](https://github.com/user-attachments/assets/cdce6374-bdd1-4704-bed2-2c4a97f3c9e3")
+![site map](sitemap.png)
 
 
 ## Key User Stories
