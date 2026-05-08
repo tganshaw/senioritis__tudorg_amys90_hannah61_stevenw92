@@ -124,6 +124,7 @@ As a new user, I want to be able to easily understand and learn the game logic s
 
 # Timeline
 ## Week 1 Goals:
+
 ## Week 2 Goals:
 ## Week 3 Goals:
 ## Internal Deadlines:
@@ -139,3 +140,7 @@ Project is considered complete when all of the following are true:
 
 # Open Questions
 {Delineate anything undecided here}
+
+# Appendix
+
+# Other
