@@ -4,19 +4,19 @@ testing
 
 <div id = "playfield">
 
-<div id="active-field">
-<button id = "active-card" value="-1">Active Card</button><br>
-</div>
-
+<button id="active-button" value="-1">
+<img id="active-card" width=245 height=337></img>
+</button>
+<br><br>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 <script>
 
 
+console.log(document.getElementById("active-card").alt);
 
-
-const set_1 = "0;1".split(";");
+const set_1 = "0;1;2;3;4".split(";");
 const set_2 = "3;2".split(";");
 
 const csv_str = "{{testingtesting}}";
@@ -33,53 +33,81 @@ var numCards = 0;
 var all_cards = [];
 var cards_1 = fillDeck(set_1);
 var cards_2 = fillDeck(set_2);
-var active_card = parseInt(document.getElementById("active-card").value);
+var active_card = -1;
 
+setYourDeck(cards_1);
 
-
-console.log(cards_1);
-console.log(cards_2);
-console.log(all_cards);
-
-var test = document.getElementById("playfield");
-
-for(let i = 0; i < numCards; i++)
+function setActive()
 {
-    test.innerHTML += `<div id="${all_cards[i]["game_id"]}-field">\n <button id="card-${all_cards[i]["game_id"]}" value="${all_cards[i]["game_id"]}">${all_cards[i]["game_id"]}, HP: ${all_cards[i]["current_hp"]}</button>\n <button id="card-${all_cards[i]["game_id"]}-active" value="${all_cards[i]["game_id"]}">Make Card ${all_cards[i]["game_id"]} Active</button>\n<br></div>`;
+    active_card = parseInt(document.getElementById("active-button").value);
 }
 
-var card_buttons = [];
-
-for(let i = 0; i < numCards; i++)
+function setYourDeck(deck)
 {
-    document.getElementById(`card-${i}-active`).addEventListener("click", makeActive);
-    card_buttons.push(document.getElementById(`card-${i}`));
-    card_buttons[i].addEventListener("click", attackCardClick);
-}
-
-function makeActive(event)
-{
-    var new_active_id = parseInt(event.target.value);
-    var active_div = document.getElementById("active-field");
-    console.log(active_div.firstElementChild);
-    var active_card_id = parseInt(active_div.firstElementChild.value);
-    
-    if(active_card_id != -1)
+    setActive();
+   // deck = shuffle(deck);
+    console.log(deck);
+    for(let i = 0; i < 5; i++)
     {
-        var temp = document.getElementById(`${new_active_id}-field`);
         var playfield = document.getElementById("playfield");
-        playfield.innerHTML += active_div.innerHTML;
-        active_div.innerHTML = temp.innerHTML;
-        element.remove(document.getElementById(`${new_active_id}-field`));
+        console.log(deck[i]);
+        playfield.innerHTML += `<button id="${i}-button" value="${deck[i]["game_id"]}">\n
+        <img id = "${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["game_id"]}.png" width=245 height=337></img>\n
+        </button>\n
+        <br>\n`;
+        
         
     }
-    else{
-        var temp = document.getElementById(`${new_active_id}-field`);
-        active_div.innerHTML = temp.innerHTML;
-        element.remove(document.getElementById(`${new_active_id}-field`));
+    for(let i = 0; i < 5; i++)
+    {
+        var button = document.getElementById(`${i}-button`);
+        button.addEventListener("click", swap_in);
     }
-    console.log(new_active_id);
-    active_card = parseInt(new_active_id);
+}
+
+function swap_in(event)
+{
+   
+    var active_value = document.getElementById("active-button").value;
+    const av1 = active_value;
+    var active_button = document.getElementById("active-button");
+    
+    var swap_value = this.value;
+    const sv1 = swap_value;
+    var swap_button = this;
+    
+    const temp_value = av1;
+    
+    
+    
+    active_button.value = sv1;
+    if(parseInt(av1) != -1)
+    {
+        swap_button.value = av1;
+    }
+    
+    var active_source = document.getElementById("active-card").src;
+    const as1 = active_source;
+    var active_img = document.getElementById("active-card");
+    
+    var swap_source = document.getElementById(`${sv1}-card`).src;
+    const ss1 = swap_source;
+    var swap_img = document.getElementById(`${sv1}-card`);
+    
+    const temp_source = active_source;
+    
+    active_img.src = `../static/cards/${sv1}.png`;
+    if(parseInt(av1) != -1)
+    {
+        console.log(av1);
+        swap_img.src = `../static/cards/${av1}.png`;
+        swap_img.id = `${av1}-card`;
+    }
+    
+    if(parseInt(active_value) == -1)
+    {
+        this.remove();
+    }
 }
 
 function attackCard(attacker_id, defender_id)
@@ -131,7 +159,7 @@ function damageCard(card_id, damage)
 function fillDeck(set)
 {
     var cards = [];
-    for(let i = 0; i < set_2.length; i++)
+    for(let i = 0; i < set.length; i++)
     {
         var current = data[set[i]];
         cards.push(new Card(current["card_id"], current["max_hp"], current["atk"], current["def"], current["spd"], current["max_hp"], 0, 0, numCards ));
@@ -155,6 +183,23 @@ function Card(card_id, max_hp, atk, def, spd, current_hp, buffs, used_special, g
     this.game_id = game_id;
 }
 
+
+function shuffle (arr) {
+  let i = 0,
+      res = [],
+      index
+
+  while (i <= arr.length - 1) {
+    index = Math.floor(Math.random() * arr.length)
+
+    if (!res.includes(arr[index])) {
+      res.push(arr[index])
+      i++
+    }
+  }
+
+  return res
+}
 
 
 </script>

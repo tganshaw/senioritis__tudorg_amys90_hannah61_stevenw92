@@ -37,3 +37,6 @@ hannahG -- 2026-05-08 10:42
 
 amyS -- 2026-05-08 10:59
 - update devlog with databases
+
+tudorG -- 2026-05-09 15:00
+- Got card-swapping working on the game
