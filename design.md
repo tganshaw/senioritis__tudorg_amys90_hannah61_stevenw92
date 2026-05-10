@@ -91,7 +91,7 @@ Each member must own meaningful deliverables.
 
 # Component map
 
-{Insert your mermaid(or equivalent)-generated diagram here}
+![component map](componentmap.png)
 
 # Site map
 
@@ -138,15 +138,25 @@ As a new user, I want to be able to easily understand and learn the game logic s
 | speed     | INTEGER |                             |
 
 # Testing Plan
-{Delineate here your plan for testing each component}
+- Components will be tested as they're made and one more after they're "finished".
 
 # Timeline
 ## Week 1 Goals:
-
+ - Functioning login system
+ - Functioning deck building system
+ - Functioning game against bot
+   
 ## Week 2 Goals:
+- Trying to implement multiplayer
+- If all else finished, perhaps expand scope of game (add more cards, make more complicated systems, perhaps add leaderboard or ranked system)
 ## Week 3 Goals:
+- Final touches
+- Styling and UI
+  
 ## Internal Deadlines:
-{List milestones your team has identified, in the order they must be completed. Set a target completion date for each.}
+- Finished game against bot: 5-17
+- Multiplayer: 5-24
+
 
 
 # Completion Criteria (_a.k.a._ "Definition of 'Done'")
@@ -157,7 +167,9 @@ Project is considered complete when all of the following are true:
 
 
 # Open Questions
-{Delineate anything undecided here}
+- Do we want a leaderboard system?
+- How do we want deck building to function?
+- How many cards do we want to make?
 
 # Appendix
 
