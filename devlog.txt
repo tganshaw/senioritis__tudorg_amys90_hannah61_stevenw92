@@ -40,3 +40,6 @@ amyS -- 2026-05-08 10:59
 
 tudorG -- 2026-05-09 15:00
 - Got card-swapping working on the game
+
+tudorG -- 2026-05-10 19:00
+- Finishing out design doc
