@@ -46,3 +46,13 @@ tudorG -- 2026-05-10 19:00
 
 tudorG -- 2026-05-11 20:00
 - Getting the action system setup
+
+amyS -- 2026-05-12 11:00
+- Python style outline:
+- The aspects most applicable to our codebase is to import in separate lines, avoid extra white space if not used in an expression, and utilizing inline comments. We found that the most useful aspect of the style guide was providing code examples to show us how to both correctly and incorrectly utilize the hanging indent and how to organize the code.
+- In __init__.py, we now import our modules in multiple lines:
+```from flask import *```
+```import os```
+```import json```
+```import sqlite3```
+- Javascript style outline:
