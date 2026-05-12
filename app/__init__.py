@@ -1,5 +1,9 @@
 from flask import *
-import os, json, sqlite3, random, urllib
+import os
+import json
+import sqlite3
+import random
+import urllib
 
 app = Flask(__name__)
 
@@ -20,6 +24,13 @@ def main():
     return render_template("jstest.html", testingtesting = data)
     # return "<title>Senioritis</title>\n<h1>Got This Working</h1>\n<br>\n<br>\n<p>yay</p>"
 
+@app.route("/encyclopedia")
+def encyclopedia():
+    file=open("Data/cards.csv")
+    data=file.read()
+    print (data)
+    return render_template("encyclopedia.html", data=data)
+
 @app.route("/logout")
 def logout():
     session.pop("username", None)
@@ -36,7 +47,6 @@ def registerhtml():
     if 'username' in session:
         return redirect("/")
     return render_template("register.html")
-
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
@@ -63,7 +73,6 @@ def login():
     return redirect('/')
 
   return render_template('login.html', error="")
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
