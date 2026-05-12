@@ -24,6 +24,13 @@ def main():
     return render_template("jstest.html", testingtesting = data)
     # return "<title>Senioritis</title>\n<h1>Got This Working</h1>\n<br>\n<br>\n<p>yay</p>"
 
+@app.route("/encyclopedia")
+def encyclopedia():
+    file=open("Data/cards.csv")
+    data=file.read()
+    print (data)
+    return render_template("encyclopedia.html", data=data)
+
 @app.route("/logout")
 def logout():
     session.pop("username", None)
