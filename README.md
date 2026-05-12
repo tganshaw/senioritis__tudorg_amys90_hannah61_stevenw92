@@ -34,15 +34,11 @@ python3 -m venv venv
 ```
 pip install -r requirements.txt
 ```
-6) Change into the app directory:
-```
-cd app
-```
 
 ## Launch codes
 1) Run the app through Flask:
 ```
-python3 __init__.py
+python3 app/__init__.py
 ```
 2) Open the link:
 ```
