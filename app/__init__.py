@@ -1,5 +1,9 @@
 from flask import *
-import os, json, sqlite3, random, urllib
+import os
+import json
+import sqlite3
+import random
+import urllib
 
 app = Flask(__name__)
 
