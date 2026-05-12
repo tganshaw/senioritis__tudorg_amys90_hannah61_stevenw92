@@ -2,7 +2,7 @@
 
 ## TNPG: Senioritis
 ## project: StuyTCG
-## Target ship date: {2026-06-05}
+## Target ship date: {2026-06-01}
 
 ---
 
