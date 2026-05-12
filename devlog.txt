@@ -43,3 +43,6 @@ tudorG -- 2026-05-09 15:00
 
 tudorG -- 2026-05-10 19:00
 - Finishing out design doc
+
+tudorG -- 2026-05-11 20:00
+- Getting the action system setup

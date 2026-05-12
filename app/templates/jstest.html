@@ -35,6 +35,8 @@ var cards_1 = fillDeck(set_1);
 var cards_2 = fillDeck(set_2);
 var active_card = -1;
 
+var action_list = [];
+
 setYourDeck(cards_1);
 
 function setActive()
@@ -61,20 +63,55 @@ function setYourDeck(deck)
     for(let i = 0; i < 5; i++)
     {
         var button = document.getElementById(`${i}-button`);
-        button.addEventListener("click", swap_in);
+        button.addEventListener("click", add_swap);
     }
+}
+
+function play_actions()
+{
+    for(let i = 0; i < action_list.length; i++)
+    {
+        const this_action = action_list[i];
+        const this_user = all_cards[this_action["user"]];
+        if(this_user["current_hp"] > 0)
+        {
+            if(this_action.value == -2)
+            {
+                swap_in(document.getElementById(`${this_action["user"]}-button`));
+            }
+        } 
+    }
+    action_list = [];
+}
+
+function add_swap(event)
+{
+    
+    const this_card = all_cards[parseInt(this.value)];
+    console.log(this_card);
+    action_list.push(new action(parseInt(this_card["game_id"]), parseInt(this_card["game_id"]), -2, parseInt(this_card["spd"])));
+    console.log(action_list);
+    }
+
+function action(user, target, value, speed)
+{
+    this.user = user;
+    this.target = target;
+    this.value = value; // Attacks have value, special is -1, swap in is -2
+    this.speed = speed;
 }
 
 function swap_in(event)
 {
    
+    console.log(event);
     var active_value = document.getElementById("active-button").value;
     const av1 = active_value;
     var active_button = document.getElementById("active-button");
     
-    var swap_value = this.value;
+    var swap_value = event.value;
     const sv1 = swap_value;
-    var swap_button = this;
+    var swap_button = event;
     
     const temp_value = av1;
     
@@ -106,7 +143,7 @@ function swap_in(event)
     
     if(parseInt(active_value) == -1)
     {
-        this.remove();
+        event.remove();
     }
 }
 
