@@ -49,11 +49,20 @@ tudorG -- 2026-05-11 20:00
 
 amyS -- 2026-05-12 11:00
 - Python style outline:
-- The aspects most applicable to our codebase is to import in separate lines, avoid extra white space if not used in an expression, and utilizing inline comments. We found that the most useful aspect of the style guide was providing code examples to show us how to both correctly and incorrectly utilize the hanging indent and how to organize the code.
-- In __init__.py, we now import our modules by utilizing multiple lines:
+- The aspects most applicable to our codebase are importing in separate lines, avoiding extra white space, and utilizing inline comments.
+- We found that the most useful aspect of the style guide was providing code examples to show us how to both correctly and incorrectly utilize the hanging indent and how to organize the code.
+- In app/__init__.py, we now import our modules by utilizing multiple lines:
   from flask import * 
   import os
   import json
   import sqlite3
 
 - Javascript style outline:
+- The aspects most applicable to our codebase are utilizing comments effectively to summarize code, using more short comments rather than multi-line ones, and prioritizing the function statement over let when creating a function.
+- We found the most useful aspect of the guide was coding try... catch statements in the code during error handling to find the error that we need.
+- In app/templates/jstest.html, we used the function statement instead of let:
+  function setActive()
+  {
+      active_card = parseInt(document.getElementById("active-button").value);
+  }
+
