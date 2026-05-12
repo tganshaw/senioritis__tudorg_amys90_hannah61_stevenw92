@@ -11,9 +11,10 @@
   <h1 class="text-4xl font-bold mb-8 text-center">Encyclopedia</h1>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
     <script>
-      for (let i = 0; i < 8; i++) {
+      const data="{{data}}"
+      document.write(data[0]);
+      for (let i = 0; i < data[0].length; i++) {
         document.write(`
           <div class="bg-white block max-w-sm border border-gray-200 rounded-xl shadow-sm overflow-hidden">
               <a href="/">

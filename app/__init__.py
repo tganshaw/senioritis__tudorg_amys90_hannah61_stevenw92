@@ -4,6 +4,7 @@ import json
 import sqlite3
 import random
 import urllib
+import csv
 
 app = Flask(__name__)
 
@@ -28,7 +29,10 @@ def main():
 def encyclopedia():
     file=open("Data/cards.csv")
     data=file.read()
-    print (data)
+    data=data.split()
+    for i in range(len(data)):
+        data[i]=data[i].split(",")
+
     return render_template("encyclopedia.html", data=data)
 
 @app.route("/logout")
