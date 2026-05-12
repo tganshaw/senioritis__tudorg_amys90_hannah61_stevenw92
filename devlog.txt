@@ -47,7 +47,7 @@ tudorG -- 2026-05-10 19:00
 tudorG -- 2026-05-11 20:00
 - Getting the action system setup
 
-amyS -- 2026-05-12 11:00
+amyS -- 2026-05-12 10:40
 - Python style outline:
 - The aspects most applicable to our codebase are importing in separate lines, avoiding extra white space, and utilizing inline comments.
 - We found that the most useful aspect of the style guide was providing code examples to show us how to both correctly and incorrectly utilize the hanging indent and how to organize the code.
@@ -66,3 +66,5 @@ amyS -- 2026-05-12 11:00
       active_card = parseInt(document.getElementById("active-button").value);
   }
 
+amyS -- 2026-05-12 10:55
+- add install guide
