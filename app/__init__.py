@@ -48,7 +48,6 @@ def registerhtml():
         return redirect("/")
     return render_template("register.html")
 
-
 @app.route("/login", methods = ["GET", "POST"])
 def login():
   if 'username' in session:
@@ -74,7 +73,6 @@ def login():
     return redirect('/')
 
   return render_template('login.html', error="")
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
