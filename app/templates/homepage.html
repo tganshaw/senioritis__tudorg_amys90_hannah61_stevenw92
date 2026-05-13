@@ -8,7 +8,17 @@
   <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 </head>
 <body>
-  <header class=>
-  </header>
+  <header class="fixed top-0 left-0 w-full bg-gray-300 text-white shadow-lg z-50">
+        <nav class="px-4 py-3 flex items-center justify-between">
+            <h1 class="text-xl font-bold drop-shadow-lg"> Stuy TCG</h1>
+            <div class="space-x-4">
+                <a href="/game" class="text-lg font-bold text-center px-1.5 py-1.5 lg:border rounded border-white text-white drop-shadow-lg hover:border-transparent hover:bg-white hover:text-blue-300 hover:underline">Let's Play!</a>
+                <a href="/profile/{{ user }}" class="text-lg font-bold text-center px-1.5 py-1.5 lg:border rounded border-white text-white drop-shadow-lg hover:border-transparent hover:bg-white hover:text-blue-300 hover:underline">Profile</a>
+                <form action="/logout" method="POST" class="inline-block text-lg font-bold text-center px-1.5 py-1.5 lg:border rounded border-white text-white drop-shadow-lg hover:border-transparent hover:bg-white hover:text-blue-300 hover:underline">
+                  <input type="submit" value="Logout">
+                </form>
+            </div>
+        </nav>
+    </header>
 </body>
 </html>
