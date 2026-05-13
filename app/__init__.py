@@ -28,12 +28,13 @@ def main():
 @app.route("/encyclopedia")
 def encyclopedia():
     file=open("Data/cards.csv")
-    data=file.read()
-    data=data.split()
-    for i in range(len(data)):
-        data[i]=data[i].split(",")
-
+    data = file.read().replace("\n", "\\n")
     return render_template("encyclopedia.html", data=data)
+
+@app.route("/gamepage/<game_id>", methods=["GET","POST"])
+def gamepage(game_id):
+    return redirect(url_for("/"))
+
 
 @app.route("/logout")
 def logout():
