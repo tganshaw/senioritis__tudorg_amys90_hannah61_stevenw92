@@ -42,7 +42,7 @@ var send_actions = document.getElementById("send-actions");
 send_actions.addEventListener("click", play_actions);
 
 setYourDeck(cards_1);
-setTheirDeck(cards_2);
+// setTheirDeck(cards_2);
 
 
 function setActive()
@@ -60,15 +60,14 @@ function setYourDeck(deck)
         var playfield = document.getElementById("playfield");
         console.log(deck[i]);
         playfield.innerHTML += `<button id="${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
-        <img id = "opp-${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
+        <img id = "${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
         </button>\n
         <br>\n`;
-        
-        
+        console.log(deck[i]["game_id"]);
     }
     for(let i = 0; i < 5; i++)
     {
-        var button = document.getElementById(`${i}-button`);
+        var button = document.getElementById(`${deck[i]["game_id"]}-button`);
         button.addEventListener("click", add_swap);
     }
 }
@@ -79,7 +78,7 @@ function setTheirDeck(deck)
     {
         var playfield = document.getElementById("playfield")
         playfield.innerHTML += `<button id="opp-${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
-        <img id = "${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
+        <img id = "opp-${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
         </button>\n
         <br>\n`;
     }
@@ -123,13 +122,13 @@ function sort_by_spd(a, b)
 
 function add_swap(event)
 {
-    
+    console.log("work");
     const this_card = all_cards[parseInt(this.value)];
     var name = this.id;
     var button_val = parseInt(name.substring(0,1));
     action_list.push(new action(parseInt(this_card["game_id"]), button_val, -2, parseInt(this_card["spd"])));
     console.log(action_list);
-    }
+}
 
 function action(user, target, value, speed)
 {

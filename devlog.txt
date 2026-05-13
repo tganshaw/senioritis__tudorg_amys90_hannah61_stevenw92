@@ -68,3 +68,6 @@ amyS -- 2026-05-12 10:40
 
 amyS -- 2026-05-12 10:55
 - add install guide
+
+tudorG -- 2026-05-12 21:00
+- Backtracking to fix issues that showed up randomly
