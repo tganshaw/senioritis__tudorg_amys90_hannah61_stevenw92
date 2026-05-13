@@ -8,8 +8,10 @@ number,name,hp,atk,def,spd
 6,Mr.Moran,11,0,2,3
 7,Ms.Pendrick,12,0,3,6
 8,Mr.Barry,13,3,4,2
+9,Mr.Hanna,12,0,2,5
 10,Dr.Greenwald,13,0,2,4
 11,Mr.Citron,10,0,2,2
+12,Mr.Avallone,14,3,2,4
 13,Ms.Sharaf,15,0,2,5
 14,Ms.Bernstein,14,4,3,2
 15,Ms.Shamazov,13,4,2,5
@@ -18,4 +20,7 @@ number,name,hp,atk,def,spd
 18,Ms.Markova,11,5,3,3
 19,Mr.Choubaralian,13,4,3,6
 20,Ms.Choy,12,3,4,2
+21,Mr.Jaishankar,15,4,3,1
+22,Mr.Jumash,11,1,4,2
+23,Mr.Hiller,10,6,1,4
 24,Ms.Cooperstone,11,5,1,5
