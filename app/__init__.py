@@ -23,6 +23,12 @@ def main():
     return render_template("jstest.html", testingtesting = data)
     # return "<title>Senioritis</title>\n<h1>Got This Working</h1>\n<br>\n<br>\n<p>yay</p>"
 
+@app.route("/game")
+def game():
+    file = open("Data/card_info.csv")
+    data = file.read().replace("\n", "\\n")
+    return render_template("jstest.html", testingtesting = data)
+    
 @app.route("/encyclopedia")
 def encyclopedia():
     file=open("Data/cards.csv")
