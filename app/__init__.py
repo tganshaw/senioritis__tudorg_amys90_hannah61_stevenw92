@@ -4,7 +4,6 @@ import json
 import sqlite3
 import random
 import urllib
-import csv
 
 app = Flask(__name__)
 
@@ -47,9 +46,10 @@ with open('Data/cards.csv', 'r') as f:
     new_d = []
     for i in d.split("\n")[1:]:
         new_d.append(i.split(","))
-    print(new_d)
+    #print(new_d)
 
-#DBC.execute("""INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)""", (new_d[0], new_d[1], new_d[2], new_d[3], new_d[4], new_d[5]))
+for dval in new_d:
+    DBC.execute("""INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)""", (dval[0], dval[1], dval[2], dval[3], dval[4], dval[5]))
 
 @app.route("/")
 def main():
@@ -67,13 +67,8 @@ def game():
 @app.route("/encyclopedia")
 def encyclopedia():
     file=open("Data/cards.csv")
-    data = file.read().replace("\n", "\\n")
+    data=file.read()
     return render_template("encyclopedia.html", data=data)
-
-@app.route("/gamepage/<game_id>", methods=["GET","POST"])
-def gamepage(game_id):
-    return redirect(url_for("/"))
-
 
 @app.route("/logout")
 def logout():
