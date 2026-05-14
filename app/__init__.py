@@ -60,7 +60,7 @@ def main():
 
 @app.route("/game")
 def game():
-    file = open("Data/card_info.csv")
+    file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
     return render_template("jstest.html", testingtesting = data)
 
