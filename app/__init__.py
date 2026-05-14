@@ -20,15 +20,24 @@ DBC.execute("CREATE TABLE IF NOT EXISTS users(username TEXT, password TEXT, revi
 def main():
     file = open("Data/card_info.csv")
     data = file.read().replace("\n", "\\n")
+<<<<<<< HEAD
 
     return render_template("homepage.html", testingtesting = data)
+=======
+    return render_template("jstest.html", testingtesting = data)
+>>>>>>> main
     # return "<title>Senioritis</title>\n<h1>Got This Working</h1>\n<br>\n<br>\n<p>yay</p>"
 
+@app.route("/game")
+def game():
+    file = open("Data/card_info.csv")
+    data = file.read().replace("\n", "\\n")
+    return render_template("jstest.html", testingtesting = data)
+    
 @app.route("/encyclopedia")
 def encyclopedia():
     file=open("Data/cards.csv")
     data=file.read()
-    print (data)
     return render_template("encyclopedia.html", data=data)
 
 @app.route("/logout")
