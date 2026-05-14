@@ -36,9 +36,11 @@ def encyclopedia():
     data = file.read().replace("\n", "\\n")
     return render_template("encyclopedia.html", data=data)
 
-@app.route("/gamepage/<game_id>", methods=["GET","POST"])
-def gamepage(game_id):
-    return redirect(url_for("/"))
+@app.route("/card/<card_id>", methods=["GET","POST"])
+def card(card_id):
+    file=open("Data/cards.csv")
+    data = file.read().replace("\n", "\\n")
+    return render_template("card.html",data=data,card_id=len(card_id))
 
 
 @app.route("/logout")
