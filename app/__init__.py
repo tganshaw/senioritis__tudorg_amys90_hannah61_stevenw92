@@ -13,8 +13,43 @@ DB_NAME = "Data/database.db"
 DB = sqlite3.connect(DB_NAME)
 DBC = DB.cursor()
 
-DBC.execute("CREATE TABLE IF NOT EXISTS users(username TEXT, password TEXT, reviews TEXT, bio TEXT, favorites TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT);")
+DBC.execute("""CREATE TABLE IF NOT EXISTS users(
+    username TEXT PRIMARY KEY,
+    password TEXT,
+    reviews TEXT,
+    bio TEXT,
+    favorites TEXT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT
+);""")
 
+DBC.execute("""CREATE TABLE IF NOT EXISTS all_cards(
+    cardId INTEGER,
+    name TEXT,
+    health INTEGER,
+    attack INTEGER,
+    defense INTEGER,
+    speed INTEGER
+);""")
+
+DBC.execute("""CREATE TABLE IF NOT EXISTS game_cards(
+    gameId INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    name TEXT,
+    health INTEGER,
+    attack INTEGER,
+    defense INTEGER,
+    speed INTEGER
+);""")
+
+with open('Data/cards.csv', 'r') as f:
+    d = f.read().replace("/n", "")[:-1]
+    new_d = []
+    for i in d.split("\n")[1:]:
+        new_d.append(i.split(","))
+    #print(new_d)
+
+for dval in new_d:
+    DBC.execute("""INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)""", (dval[0], dval[1], dval[2], dval[3], dval[4], dval[5]))
 
 @app.route("/")
 def main():
@@ -28,7 +63,7 @@ def game():
     file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
     return render_template("jstest.html", testingtesting = data)
-    
+
 @app.route("/encyclopedia")
 def encyclopedia():
     file=open("Data/cards.csv")
