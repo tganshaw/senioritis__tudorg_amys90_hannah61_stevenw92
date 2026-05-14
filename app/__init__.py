@@ -4,6 +4,7 @@ import json
 import sqlite3
 import random
 import urllib
+import csv
 
 app = Flask(__name__)
 
@@ -32,8 +33,13 @@ def game():
 @app.route("/encyclopedia")
 def encyclopedia():
     file=open("Data/cards.csv")
-    data=file.read()
+    data = file.read().replace("\n", "\\n")
     return render_template("encyclopedia.html", data=data)
+
+@app.route("/gamepage/<game_id>", methods=["GET","POST"])
+def gamepage(game_id):
+    return redirect(url_for("/"))
+
 
 @app.route("/logout")
 def logout():
