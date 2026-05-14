@@ -52,9 +52,36 @@ buttonTime(cards_1);
 testOppActive(6);
 
 
+
 function setActive()
 {
-    active_card = parseInt(document.getElementById("active-button").value);
+    var active_button = document.getElementById("active-button");
+    active_card = parseInt(active_button.value);
+    active_button.addEventListener("click", addAttack);
+}
+
+function addAttack()
+{
+    var active_button = document.getElementById("active-button");
+    var active_card = all_cards[parseInt(active_button.value)];
+    
+    var opp_button = document.getElementById("opp-active-button");
+    var opp_card = all_cards[parseInt(opp_button.value)];
+    
+    if(active_card["atk"] != "-1")
+    {
+    
+        var total_atk = parseInt(active_card["atk"]) + active_card["buffs"];
+        
+        var total_def = parseInt(opp_card["def"]) + opp_card["buffs"];
+        
+        var dmg_dealt = total_atk - total_def;
+        if(dmg_dealt < 0){dmg_dealt = 0;}
+    
+        action_list.push(new action(parseInt(active_button.value), parseInt(opp_button.value), dmg_dealt, parseInt(active_card["speed"])));
+    }
+    console.log(active_card);
+    console.log(opp_card);
 }
 
 function buttonTime(deck)
@@ -75,7 +102,7 @@ function setYourDeck(deck)
     {
         var playfield = document.getElementById("playfield");
         console.log(deck[i]);
-        playfield.innerHTML += `<button id="${deck[i]["game_id"]}-button" value="${deck[i]["card_id"]}">\n
+        playfield.innerHTML += `<button id="${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
         <img id = "${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
         </button>\n
         <br>\n`;
@@ -93,7 +120,7 @@ function setTheirDeck(deck)
     for(let i = 0; i < 5; i++)
     {
         var playfield = document.getElementById("playfield")
-        playfield.innerHTML += `<button id="opp-${deck[i]["game_id"]}-button" value="${deck[i]["card_id"]}">\n
+        playfield.innerHTML += `<button id="opp-${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
         <img id = "opp-${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
         </button>\n
         <br>\n`;
@@ -114,6 +141,7 @@ function play_actions()
             if(this_action.value == -2)
             {
                 swap_in(document.getElementById(`${this_action["target"]}-button`));
+                setActive();
             }
         } 
     }
@@ -186,11 +214,11 @@ function testOppActive(game_id)
     
     const temp_source = active_source;
     
-    active_img.src = `../static/cards/${sv1}.png`;
+    active_img.src = ss1;
     if(parseInt(av1) != -1)
     {
         console.log(av1);
-        swap_img.src = `../static/cards/${av1}.png`;
+        swap_img.src = as1;
         swap_img.id = `${av1}-card`;
     }
     
@@ -232,11 +260,11 @@ function swap_in(event)
     
     const temp_source = active_source;
     
-    active_img.src = `../static/cards/${sv1}.png`;
+    active_img.src = ss1;
     if(parseInt(av1) != -1)
     {
         console.log(av1);
-        swap_img.src = `../static/cards/${av1}.png`;
+        swap_img.src = as1;
         swap_img.id = `${av1}-card`;
     }
     
