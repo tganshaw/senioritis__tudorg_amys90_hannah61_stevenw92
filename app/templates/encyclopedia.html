@@ -8,7 +8,7 @@
 </head>
 
 <body class="bg-gray-100 p-8">
-<<<<<<< HEAD
+
   <header class="fixed top-0 left-0 w-full bg-gray-300 text-white shadow-lg z-50">
         <nav class="px-4 py-3 flex items-center justify-between">
             <h1 class="text-xl font-bold drop-shadow-lg"> Stuy TCG</h1>
@@ -16,16 +16,11 @@
                 <a href="/choose" class="text-lg font-bold text-center px-1.5 py-1.5 lg:border rounded border-white text-white drop-shadow-lg hover:border-transparent hover:bg-white hover:text-blue-300 hover:underline">Let's Play!</a>
                 <a href="/profile/{{ user }}" class="text-lg font-bold text-center px-1.5 py-1.5 lg:border rounded border-white text-white drop-shadow-lg hover:border-transparent hover:bg-white hover:text-blue-300 hover:underline">Profile</a>
                 <form action="/logout" method="POST" class="inline-block text-lg font-bold text-center px-1.5 py-1.5 lg:border rounded border-white text-white drop-shadow-lg hover:border-transparent hover:bg-white hover:text-blue-300 hover:underline">
-                  <input type="submit" value="Logout">
+                  <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Logout</button>
                 </form>
             </div>
         </nav>
     </header>
-=======
-  <form action="{{url_for('logout')}}" method="POST">
-    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Logout</button>
-  </form>
->>>>>>> main
   <h1 class="text-4xl font-bold mb-8 text-center">Encyclopedia</h1>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
