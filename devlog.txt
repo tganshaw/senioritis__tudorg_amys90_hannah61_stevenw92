@@ -78,3 +78,19 @@ tudorG -- 2026-05-13 21:00
 
 tudorG -- 2026-05-14 21:00
 - Added HP under all cards that updates to match current HP
+
+hannahG -- 2026-05-15 11:00
+- Finished Encyclopedia
+- Finished Card data page (-styling)
+
+
+
+
+
+
+
+
+
+
+
+
