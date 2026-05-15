@@ -48,8 +48,10 @@ with open('Data/cards.csv', 'r') as f:
         new_d.append(i.split(","))
     #print(new_d)
 
+"""
 for dval in new_d:
     DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5])))
+"""
 
 @app.route("/")
 def main():
