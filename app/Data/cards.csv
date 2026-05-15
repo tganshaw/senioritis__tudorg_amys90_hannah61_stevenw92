@@ -1,4 +1,4 @@
-card_id,name,max_hp,atk,def,spd,atk_name,atk_desc
+card_id,name,max_hp,atk,def,spd
 0,Mr.Mykolyk,10,2,1,6
 1,Mr.K,12,3,3,2
 2,Mr.Hannon,14,4,4,2

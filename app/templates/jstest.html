@@ -52,8 +52,27 @@ play_actions();
 setTheirDeck(cards_2);
 buttonTime(cards_1);
 testOppActive(9);
+setActive();
 showStats();
 
+function botRandomAction()
+{
+    var active_button = document.getElementById("opp-active-button");
+    if(active_button)
+    {
+        var active_card = all_cards[parseInt(active_button.value)];
+        
+        if(active_card)
+        {
+            if(active_card["current_hp"] < active_card["max_hp"] / 2)
+            {
+                const rand_swap = Math.floor((Math.random() * 4) + 5);
+                console.log(rand_swap);
+                action_list.push(new action(rand_swap, rand_swap, -3, all_cards[rand_swap]["spd"]));
+            }
+        }
+    }
+}
 
 function updateStats()
 {
@@ -130,7 +149,7 @@ function addAttack()
         var total_def = parseInt(opp_card["def"]) + opp_card["buffs"];
         
         var dmg_dealt = total_atk - total_def;
-        if(dmg_dealt < 0){dmg_dealt = 0;}
+        if(dmg_dealt < 1){dmg_dealt = 1;}
     
         action_list.push(new action(parseInt(active_button.value), parseInt(opp_button.value), dmg_dealt, parseInt(active_card["spd"])));
     }
@@ -183,6 +202,7 @@ function setTheirDeck(deck)
 
 function play_actions()
 {
+    botRandomAction();
     action_list = action_list.sort(sort_by_spd);
     for(let i = 0; i < action_list.length; i++)
     {
@@ -199,6 +219,10 @@ function play_actions()
             if(this_action.value > -1)
             {
                 attackCard(this_action["user"], this_action["target"]);
+            }
+            if(this_action.value == -3)
+            {
+                testOppActive(this_action["user"]);
             }
         } 
     }
@@ -275,6 +299,7 @@ function testOppActive(game_id)
     const as1 = active_source;
     var active_img = document.getElementById("opp-active-card");
     
+    console.log(sv1);
     var swap_source = document.getElementById(`opp-${sv1}-card`).src;
     const ss1 = swap_source;
     var swap_img = document.getElementById(`opp-${sv1}-card`);
@@ -352,11 +377,16 @@ function attackCard(attacker_id, defender_id)
     var damage_dealing = parseInt(attacker["atk"]) + parseInt(attacker["buffs"]);
     var defense = parseInt(defender["def"]) + parseInt(defender["buffs"]);
     var final_damage = damage_dealing - defense;
+    if(final_damage < 1)
+    {
+        final_damage = 1;
+    }
     
     if(final_damage > -1)
     {
         damageCard(defender_id, final_damage);
     }
+    
     //  all_cards[defender_id]["current_hp"] = all_cards[defender_id]["current_hp"] - final_damage;
     
     if(all_cards[defender_id]["current_hp"] <= 0)
@@ -364,14 +394,12 @@ function attackCard(attacker_id, defender_id)
         setHP(defender_id, 0);
         return -1;
     }
+    updateStats();
 }
 
 function setHP(card_id, amt)
 {
     all_cards[card_id]["current_hp"] = amt;
-    var card_hp = parseInt(all_cards[card_id]["current_hp"]);
-    
-    card_buttons[card_id].innerText = `${card_id}, HP: ${card_hp.toString()}`;
 }
 
 
@@ -386,9 +414,11 @@ function damageCard(card_id, damage)
 function fillDeck(set)
 {
     var cards = [];
+    console.log(set.length);
     for(let i = 0; i < set.length; i++)
     {
         var current = data[set[i]];
+        console.log(current);
         cards.push(new Card(current["card_id"], current["max_hp"], current["atk"], current["def"], current["spd"], current["max_hp"], 0, 0, numCards ));
         all_cards.push(cards[i]);
         numCards++;
