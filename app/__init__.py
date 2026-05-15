@@ -14,7 +14,7 @@ DB = sqlite3.connect(DB_NAME)
 DBC = DB.cursor()
 
 DBC.execute("""CREATE TABLE IF NOT EXISTS users(
-    username TEXT PRIMARY KEY,
+    username TEXT,
     password TEXT,
     reviews TEXT,
     bio TEXT,
@@ -49,7 +49,7 @@ with open('Data/cards.csv', 'r') as f:
     #print(new_d)
 
 for dval in new_d:
-    DBC.execute("""INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)""", (dval[0], dval[1], dval[2], dval[3], dval[4], dval[5]))
+    DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5])))
 
 @app.route("/")
 def main():
