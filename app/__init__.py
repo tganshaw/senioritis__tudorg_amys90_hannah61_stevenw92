@@ -40,6 +40,7 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS game_cards(
     defense INTEGER,
     speed INTEGER
 );""")
+<<<<<<< HEAD
 # 
 # with open('Data/cards.csv', 'r') as f:
 #     d = f.read().replace("/n", "")[:-1]
@@ -50,6 +51,20 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS game_cards(
 # 
 # for dval in new_d:
 #     DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5])))
+=======
+
+with open('Data/cards.csv', 'r') as f:
+    d = f.read().replace("/n", "")[:-1]
+    new_d = []
+    for i in d.split("\n")[1:]:
+        new_d.append(i.split(","))
+    #print(new_d)
+
+"""
+for dval in new_d:
+    DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5])))
+"""
+>>>>>>> 4b7db5d5784186f6df9208d35b99ada3f62484a5
 
 @app.route("/")
 def main():
@@ -67,14 +82,16 @@ def game():
 @app.route("/encyclopedia")
 def encyclopedia():
     file=open("Data/cards.csv")
-    data=file.read()
+    data=file.read().replace("\n","\\n")
     return render_template("encyclopedia.html", data=data)
 
 @app.route("/card/<card_id>", methods=["GET","POST"])
 def card(card_id):
     file=open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
-    return render_template("card.html",data=data,card_id=len(card_id))
+    i=int(card_id)
+    print(i)
+    return render_template("card.html",data=data,card_id=int(card_id)+1)
 
 
 @app.route("/logout")

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 card_id,name,max_hp,atk,def,spd
 0,Mr.Mykolyk,10,2,1,6
 1,Mr.K,12,3,3,2
@@ -24,3 +25,31 @@ card_id,name,max_hp,atk,def,spd
 22,Mr.Jumash,11,1,4,2
 23,Mr.Hiller,10,6,1,4
 24,Ms.Cooperstone,11,5,1,5
+=======
+card_id,name,max_hp,atk,def,spd,atk_name,atk_desc
+0,Mr.Mykolyk,10,2,1,6,Git Merge Conflict,Deals 1 point of damage to all enemy units.
+1,Mr.K,12,3,3,2,Runtime Error,Deals 3 points of damage to a single enemy unit.
+2,Mr.Hannon,14,4,4,2,Green-Eyed Monster,Deals 4 points of damage to a single enemy unit.
+3,Ms.Novillo,13,-1,2,4,Cmd+C Cmd+V,Copies an enemy card's move or attack once. The next use will then utilize the enemy card's attack or special attack.
+4,Mr.Dillon,15,2,2,6,01000011 01010011,Deals 2 points of damage to a single enemy unit.
+5,Dr.Yu,15,-1,4,6,Suspension,Forcibly switches one card on hand with any selected card from the deck.
+6,Mr.Moran,11,-1,2,3,Phone Confiscation,Decreases 2 points of defense for every enemy card for this game.
+7,Ms.Pendrick,12,-1,3,6,Emotional Support,Heals 2 points of health for a selected friendly unit.
+8,Mr.Barry,13,3,4,2,Stock Market Crash,Deals 3 points of damage to a single enemy unit.
+9,Mr.Hanna,12,-1,2,5,Halbert,Increases a single selected friendly unit’s defense by 1 point.
+10,Dr.Greenwald,13,-1,2,4,Final Project,Decreases a single selected enemy unit’s attack by 1 point.
+11,Mr.Citron,10,-1,2,2,Rose of Jericho,Revives one fallen friendly unit and loses 8 points of health.
+12,Mr.Avallone,14,3,2,4,Curling Physics,Deals 3 points of damage to a single enemy unit.
+13,Ms.Sharaf,15,-1,2,5,Web VPython Pop Quiz,Increases a single selected friendly unit’s attack by 1 point.
+14,Ms.Bernstein,14,4,3,2,Unsafe Equipment,Deals 4 points of damage to a single enemy unit.
+15,Ms.Shamazov,13,4,2,5,Off-key,Deals 4 points of damage to a single enemy unit.
+16,Mr.Stephan,5,-1,1,1,Mutual Annihilation,Self destructs and instantly KO’s a single enemy unit.
+17,Dr.Winkel,14,2,4,2,Put Away Your Phone,Deals 2 points of damage to a single enemy unit.
+18,Ms.Markova,11,5,3,3,Fitness Gram Pacer Test,Deals 5 points of damage to a single enemy unit.
+19,Mr.Choubaralian,13,4,3,6,Spinning Rollerblades,Deals 4 points of damage to a single enemy unit.
+20,Ms.Choy,12,3,4,2,Swim Test,Deals 3 points of damage to a single enemy unit.
+21,Mr.Jaishankar,15,4,3,1,Anti-Senioritis,Deals 4 points of damage to a single enemy unit.
+22,Mr.Jumash,11,1,4,2,Distribution,Deals 1 point of damage to all enemy units.
+23,Mr.Hiller,10,6,1,4,Forgotten Chain Rule,Deals 6 points of damage to a single enemy unit.
+24,Ms.Cooperstone,11,5,1,5,Little Fires Everywhere,Deal 5 points of damage to a single enemy unit.
+>>>>>>> 4b7db5d5784186f6df9208d35b99ada3f62484a5

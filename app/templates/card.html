@@ -13,7 +13,8 @@
   </form>
     <script>
       var data = "{{data}}";
-      const id="{{card_id}}"
+      const id=parseInt("{{card_id}}")
+      console.log(id)
       data = data.split("\n");
       for (let i = 0; i<data.length;i++){
         data[i]=data[i].split(",");
@@ -31,9 +32,16 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         
 
-                  <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${values["number"]}.png" alt="Image ${values["number"]}" />
-</div>
+                  <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${values["card_id"]}.png" alt="Image ${values["card_id"]}" />
+<!/div>
+<!div class="grid grid-cols-2">
+<h2>Health: ${values["max_hp"]}</h2>
+<h2>Defense: ${values["def"]}</h2>
+<h2>Speed: ${values["spd"]}</h2>
 
+<h2>Move: ${values["atk_name"]}</h2>
+<h2>${values["atk_desc"]}</h2>
+</div>
 
 
 
