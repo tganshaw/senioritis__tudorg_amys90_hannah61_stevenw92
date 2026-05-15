@@ -69,8 +69,17 @@ def game():
 @app.route("/encyclopedia")
 def encyclopedia():
     file=open("Data/cards.csv")
-    data=file.read()
+    data=file.read().replace("\n","\\n")
     return render_template("encyclopedia.html", data=data)
+
+@app.route("/card/<card_id>", methods=["GET","POST"])
+def card(card_id):
+    file=open("Data/cards.csv")
+    data = file.read().replace("\n", "\\n")
+    i=int(card_id)
+    print(i)
+    return render_template("card.html",data=data,card_id=int(card_id)+1)
+
 
 @app.route("/logout")
 def logout():
