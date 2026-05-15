@@ -75,3 +75,6 @@ tudorG -- 2026-05-12 21:00
 tudorG -- 2026-05-13 21:00
 - Fixing issues with swap in and setting opponent card active
 - Starting on attack system
+
+tudorG -- 2026-05-14 21:00
+- Added HP under all cards that updates to match current HP

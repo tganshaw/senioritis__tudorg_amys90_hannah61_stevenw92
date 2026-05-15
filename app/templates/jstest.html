@@ -24,7 +24,7 @@ testing
 console.log(document.getElementById("active-card").alt);
 
 const set_1 = "0;1;2;3;4".split(";");
-const set_2 = "2;2;2;2;2".split(";");
+const set_2 = "5;6;7;8;10".split(";");
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -47,11 +47,65 @@ var send_actions = document.getElementById("send-actions");
 send_actions.addEventListener("click", play_actions);
 
 setYourDeck(cards_1);
+add_swap_id(4);
+play_actions();
 setTheirDeck(cards_2);
 buttonTime(cards_1);
-testOppActive(6);
+testOppActive(9);
+showStats();
 
 
+function updateStats()
+{
+    for(let i = 0; i < 4; i++)
+    {
+        var this_button = document.getElementById(`${i}-button`);
+        var this_hp = document.getElementById(`${i}-hp`);
+        if(this_hp)
+        {
+            this_hp.innerHTML = `${all_cards[this_button.value]["current_hp"]}`;
+        }
+    }
+    for(let i = 5; i < 9; i++)
+    {
+        var this_button = document.getElementById(`opp-${i}-button`);
+        var this_hp = document.getElementById(`opp-${i}-hp`);
+        if(this_hp)
+        {
+            this_hp.innerHTML = `${all_cards[this_button.value]["current_hp"]}`;
+        }
+    }
+    var active_button = document.getElementById("active-button");
+    var active_hp = document.getElementById("active-hp");
+    if(active_hp)
+    {
+        active_hp.innerHTML = `${all_cards[active_button.value]["current_hp"]}`;
+    }
+    var opp_active_button = document.getElementById("opp-active-button");
+    var opp_active_hp = document.getElementById("opp-active-hp");
+    if(opp_active_hp)
+    {
+        opp_active_hp.innerHTML = `${all_cards[opp_active_button.value]["current_hp"]}`;
+    }
+}
+
+function showStats()
+{
+    for(let i = 0; i < 4; i++)
+    {
+        var this_button = document.getElementById(`${i}-button`);
+        this_button.innerHTML += `<p id="${i}-hp">${all_cards[this_button.value]["current_hp"]}</p>`
+    }
+    for(let i = 5; i < 9; i++)
+    {
+        var this_button = document.getElementById(`opp-${i}-button`);
+        this_button.innerHTML += `<p id="opp-${i}-hp">${all_cards[this_button.value]["current_hp"]}</p>`
+    }
+    var active_button = document.getElementById("active-button");
+    active_button.innerHTML += `<p id="active-hp">${all_cards[active_button.value]["current_hp"]}</p>`
+    var opp_active_button = document.getElementById("opp-active-button");
+    opp_active_button.innerHTML += `<p id="opp-active-hp">${all_cards[opp_active_button.value]["current_hp"]}</p>`
+}
 
 function setActive()
 {
@@ -78,15 +132,14 @@ function addAttack()
         var dmg_dealt = total_atk - total_def;
         if(dmg_dealt < 0){dmg_dealt = 0;}
     
-        action_list.push(new action(parseInt(active_button.value), parseInt(opp_button.value), dmg_dealt, parseInt(active_card["speed"])));
+        action_list.push(new action(parseInt(active_button.value), parseInt(opp_button.value), dmg_dealt, parseInt(active_card["spd"])));
     }
-    console.log(active_card);
-    console.log(opp_card);
-}
+    console.log(action_list);
+ }
 
 function buttonTime(deck)
 {
-    for(let i = 0; i < 5; i++)
+    for(let i = 0; i < 4; i++)
     {
         var button = document.getElementById(`${deck[i]["game_id"]}-button`);
         button.addEventListener("click", add_swap);
@@ -143,6 +196,10 @@ function play_actions()
                 swap_in(document.getElementById(`${this_action["target"]}-button`));
                 setActive();
             }
+            if(this_action.value > -1)
+            {
+                attackCard(this_action["user"], this_action["target"]);
+            }
         } 
     }
     
@@ -150,7 +207,7 @@ function play_actions()
     {
         action_list.shift();
     }
-   
+   updateStats();
 }
 
 function sort_by_spd(a, b)
@@ -164,9 +221,19 @@ function sort_by_spd(a, b)
         return (a["speed"] > b["speed"]) ? -1 : 1;
       }}
 
+function add_swap_id(button)
+{
+    const this_button = document.getElementById(`${button}-button`);
+    const this_card = all_cards[parseInt(this_button.value)];
+    var name = this_button.id;
+    var button_val = parseInt(name.substring(0,1));
+    action_list.push(new action(parseInt(this_card["game_id"]), button_val, -2, parseInt(this_card["spd"])));
+    console.log(action_list);
+
+}     
+      
 function add_swap(event)
 {
-    console.log("work");
     const this_card = all_cards[parseInt(this.value)];
     var name = this.id;
     var button_val = parseInt(name.substring(0,1));
@@ -279,6 +346,9 @@ function attackCard(attacker_id, defender_id)
     var attacker = all_cards[attacker_id];
     var defender = all_cards[defender_id];
     
+    console.log(attacker);
+    console.log(defender);
+    
     var damage_dealing = parseInt(attacker["atk"]) + parseInt(attacker["buffs"]);
     var defense = parseInt(defender["def"]) + parseInt(defender["buffs"]);
     var final_damage = damage_dealing - defense;
@@ -287,7 +357,7 @@ function attackCard(attacker_id, defender_id)
     {
         damageCard(defender_id, final_damage);
     }
-    // all_cards[defender_id]["current_hp"] = all_cards[defender_id]["current_hp"] - final_damage;
+    //  all_cards[defender_id]["current_hp"] = all_cards[defender_id]["current_hp"] - final_damage;
     
     if(all_cards[defender_id]["current_hp"] <= 0)
     {
@@ -304,19 +374,12 @@ function setHP(card_id, amt)
     card_buttons[card_id].innerText = `${card_id}, HP: ${card_hp.toString()}`;
 }
 
-function attackCardClick(event)
-{
-    var card_id = parseInt(event.target.value);
-    attackCard(active_card, card_id);
-}
 
 function damageCard(card_id, damage)
 {
     all_cards[card_id]["current_hp"] = all_cards[card_id]["current_hp"] - damage;
     console.log(all_cards[card_id]["current_hp"] + " , " + damage);
     var card_hp = parseInt(all_cards[card_id]["current_hp"]);
-    
-    card_buttons[card_id].innerText = `${card_id}, HP: ${card_hp.toString()}`;
     
 }
 
