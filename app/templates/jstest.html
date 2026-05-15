@@ -51,14 +51,60 @@ add_swap_id(4);
 play_actions();
 setTheirDeck(cards_2);
 buttonTime(cards_1);
-testOppActive(6);
+testOppActive(9);
+showStats();
+
+
+function updateStats()
+{
+    for(let i = 0; i < 4; i++)
+    {
+        var this_button = document.getElementById(`${i}-button`);
+        var this_hp = document.getElementById(`${i}-hp`);
+        if(this_hp)
+        {
+            this_hp.innerHTML = `${all_cards[this_button.value]["current_hp"]}`;
+        }
+    }
+    for(let i = 5; i < 9; i++)
+    {
+        var this_button = document.getElementById(`opp-${i}-button`);
+        var this_hp = document.getElementById(`opp-${i}-hp`);
+        if(this_hp)
+        {
+            this_hp.innerHTML = `${all_cards[this_button.value]["current_hp"]}`;
+        }
+    }
+    var active_button = document.getElementById("active-button");
+    var active_hp = document.getElementById("active-hp");
+    if(active_hp)
+    {
+        active_hp.innerHTML = `${all_cards[active_button.value]["current_hp"]}`;
+    }
+    var opp_active_button = document.getElementById("opp-active-button");
+    var opp_active_hp = document.getElementById("opp-active-hp");
+    if(opp_active_hp)
+    {
+        opp_active_hp.innerHTML = `${all_cards[opp_active_button.value]["current_hp"]}`;
+    }
+}
 
 function showStats()
 {
     for(let i = 0; i < 4; i++)
     {
         var this_button = document.getElementById(`${i}-button`);
+        this_button.innerHTML += `<p id="${i}-hp">${all_cards[this_button.value]["current_hp"]}</p>`
     }
+    for(let i = 5; i < 9; i++)
+    {
+        var this_button = document.getElementById(`opp-${i}-button`);
+        this_button.innerHTML += `<p id="opp-${i}-hp">${all_cards[this_button.value]["current_hp"]}</p>`
+    }
+    var active_button = document.getElementById("active-button");
+    active_button.innerHTML += `<p id="active-hp">${all_cards[active_button.value]["current_hp"]}</p>`
+    var opp_active_button = document.getElementById("opp-active-button");
+    opp_active_button.innerHTML += `<p id="opp-active-hp">${all_cards[opp_active_button.value]["current_hp"]}</p>`
 }
 
 function setActive()
@@ -161,7 +207,7 @@ function play_actions()
     {
         action_list.shift();
     }
-   
+   updateStats();
 }
 
 function sort_by_spd(a, b)
