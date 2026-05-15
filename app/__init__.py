@@ -28,7 +28,9 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS all_cards(
     health INTEGER,
     attack INTEGER,
     defense INTEGER,
-    speed INTEGER
+    speed INTEGER,
+    atkName TEXT,
+    atkDesc TEXT
 );""")
 
 DBC.execute("""CREATE TABLE IF NOT EXISTS game_cards(
@@ -38,7 +40,10 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS game_cards(
     health INTEGER,
     attack INTEGER,
     defense INTEGER,
-    speed INTEGER
+    speed INTEGER,
+    atkName TEXT,
+    atkDesc TEXT,
+    FOREIGN KEY (atkName, atkDesc) REFERENCES all_cards(atkName, atkDesc)
 );""")
 
 with open('Data/cards.csv', 'r') as f:
@@ -48,10 +53,11 @@ with open('Data/cards.csv', 'r') as f:
         new_d.append(i.split(","))
     #print(new_d)
 
-"""
-for dval in new_d:
-    DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5])))
-"""
+dval=new_d[0]
+DBC.execute("INSERT INTO all_cards(cardId, name, health, attack, defense, speed, atkName, atkDesc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5]), dval[6], dval[7]))
+#DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed, atkName, atkDesc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5]), dval[6], dval[7]))
+
+DBC.close()
 
 @app.route("/")
 def main():
