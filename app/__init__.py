@@ -40,18 +40,6 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS game_cards(
     defense INTEGER,
     speed INTEGER
 );""")
-<<<<<<< HEAD
-# 
-# with open('Data/cards.csv', 'r') as f:
-#     d = f.read().replace("/n", "")[:-1]
-#     new_d = []
-#     for i in d.split("\n")[1:]:
-#         new_d.append(i.split(","))
-#     #print(new_d)
-# 
-# for dval in new_d:
-#     DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5])))
-=======
 
 with open('Data/cards.csv', 'r') as f:
     d = f.read().replace("/n", "")[:-1]
@@ -64,7 +52,6 @@ with open('Data/cards.csv', 'r') as f:
 for dval in new_d:
     DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5])))
 """
->>>>>>> 4b7db5d5784186f6df9208d35b99ada3f62484a5
 
 @app.route("/")
 def main():
