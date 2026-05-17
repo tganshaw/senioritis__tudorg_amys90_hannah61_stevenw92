@@ -46,6 +46,9 @@ var action_list = [];
 var send_actions = document.getElementById("send-actions");
 send_actions.addEventListener("click", play_actions);
 
+var your_cards_alive = 5;
+var opp_cards_alive = 5;
+
 setYourDeck(cards_1);
 add_swap_id(4);
 play_actions();
@@ -70,18 +73,28 @@ function botRandomAction()
                 console.log(rand_swap);
                 action_list.push(new action(rand_swap, rand_swap, -3, all_cards[rand_swap]["spd"]));
             }
+            else
+            {
+                oppAddAttack();
+            }
         }
     }
 }
 
 function updateStats()
 {
+    your_cards_alive = 0;
+    opp_cards_alive = 0;
     for(let i = 0; i < 4; i++)
     {
         var this_button = document.getElementById(`${i}-button`);
         var this_hp = document.getElementById(`${i}-hp`);
-        if(this_hp)
+        if(this_hp && i != parseInt(document.getElementById("active-button").value))
         {
+            if(all_cards[this_button.value]["current_hp"] > 0)
+            {
+                your_cards_alive++;
+            }
             this_hp.innerHTML = `${all_cards[this_button.value]["current_hp"]}`;
         }
     }
@@ -89,8 +102,13 @@ function updateStats()
     {
         var this_button = document.getElementById(`opp-${i}-button`);
         var this_hp = document.getElementById(`opp-${i}-hp`);
-        if(this_hp)
+        console.log("Card Id: " + i + " | Active Card Id: " + document.getElementById("opp-active-button").value);
+        if(this_hp && i != parseInt(document.getElementById("opp-active-button").value))
         {
+            if(all_cards[this_button.value]["current_hp"] > 0)
+            {
+                opp_cards_alive++;
+            }
             this_hp.innerHTML = `${all_cards[this_button.value]["current_hp"]}`;
         }
     }
@@ -98,12 +116,21 @@ function updateStats()
     var active_hp = document.getElementById("active-hp");
     if(active_hp)
     {
+        if(all_cards[active_button.value]["current_hp"] > 0)
+        {
+            your_cards_alive++;
+        }
+
         active_hp.innerHTML = `${all_cards[active_button.value]["current_hp"]}`;
     }
     var opp_active_button = document.getElementById("opp-active-button");
     var opp_active_hp = document.getElementById("opp-active-hp");
     if(opp_active_hp)
     {
+        if(all_cards[opp_active_button.value]["current_hp"] > 0)
+        {
+            opp_cards_alive++;
+        }
         opp_active_hp.innerHTML = `${all_cards[opp_active_button.value]["current_hp"]}`;
     }
 }
@@ -132,6 +159,30 @@ function setActive()
     active_card = parseInt(active_button.value);
     active_button.addEventListener("click", addAttack);
 }
+
+function oppAddAttack()
+{
+    var active_button = document.getElementById("active-button");
+    var active_card = all_cards[parseInt(active_button.value)];
+    
+    var opp_button = document.getElementById("opp-active-button");
+    var opp_card = all_cards[parseInt(opp_button.value)];
+    
+    if(opp_card["atk"] != "-1")
+    {
+    
+        var total_atk = parseInt(opp_card["atk"]) + opp_card["buffs"];
+        
+        var total_def = parseInt(active_card["def"]) + active_card["buffs"];
+        
+        var dmg_dealt = total_atk - total_def;
+        console.log("Opp Dmg: " + dmg_dealt);
+        if(dmg_dealt < 1){dmg_dealt = 1;}
+    
+        action_list.push(new action(parseInt(opp_button.value), parseInt(active_button.value), dmg_dealt, parseInt(opp_card["spd"])));
+    }
+    console.log(action_list);
+ }
 
 function addAttack()
 {
@@ -213,7 +264,10 @@ function play_actions()
         {
             if(this_action.value == -2)
             {
-                swap_in(document.getElementById(`${this_action["target"]}-button`));
+                if(all_cards[this_action["target"]]["current_hp"] > 0)
+                {
+                    swap_in(document.getElementById(`${this_action["target"]}-button`));
+                }
                 setActive();
             }
             if(this_action.value > -1)
@@ -222,7 +276,10 @@ function play_actions()
             }
             if(this_action.value == -3)
             {
-                testOppActive(this_action["user"]);
+                if(all_cards[this_action["user"]]["current_hp"] > 0)
+                {
+                    testOppActive(this_action["user"]);
+                }
             }
         } 
     }
@@ -299,7 +356,8 @@ function testOppActive(game_id)
     const as1 = active_source;
     var active_img = document.getElementById("opp-active-card");
     
-    console.log(sv1);
+    console.log(document.getElementById(`opp-${sv1}-card`));
+    console.log(`opp-${sv1}-card`);
     var swap_source = document.getElementById(`opp-${sv1}-card`).src;
     const ss1 = swap_source;
     var swap_img = document.getElementById(`opp-${sv1}-card`);
@@ -311,7 +369,7 @@ function testOppActive(game_id)
     {
         console.log(av1);
         swap_img.src = as1;
-        swap_img.id = `${av1}-card`;
+        swap_img.id = `opp-${av1}-card`;
     }
     
     if(parseInt(active_value) == -1)

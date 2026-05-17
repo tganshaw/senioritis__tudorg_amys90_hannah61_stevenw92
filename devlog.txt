@@ -83,7 +83,10 @@ hannahG -- 2026-05-15 11:00
 - Finished Encyclopedia
 - Finished Card data page (-styling)
 
-
+tudorG -- 2026-05-17 17:00
+- Fixing previous issues involving dealing damage to opponent cards
+- Made it so cards can't swap in when at 0 HP or less
+- Made it so opponent cards can now attack
 
 
 
