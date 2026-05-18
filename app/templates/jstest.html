@@ -1,6 +1,6 @@
 <html>
 
-testing
+<h1 id = "current-action"></h1>
 
 <button id="send-actions">Send Actions</button>
 
@@ -20,7 +20,15 @@ testing
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 <script>
 
-
+/*
+    Order of events:
+        - Multi target attacks
+        - Buffing allies
+        - Yu
+        - Stephan
+        - Citron
+        - Novillo
+*/
 
 const set_1 = "0;1;2;3;4".split(";");
 const set_2 = "5;6;7;8;10".split(";");
@@ -48,6 +56,7 @@ var your_cards_alive = 5;
 var opp_cards_alive = 5;
 
 var made_action = 0;
+var current_action = document.getElementById("current-action");
 
 setYourDeck(cards_1);
 add_swap_id(4);
@@ -95,7 +104,7 @@ function updateStats()
             {
                 your_cards_alive++;
             }
-            this_hp.innerHTML = `${all_cards[this_button.value]["current_hp"]}`;
+            this_hp.innerHTML = `HP: ${all_cards[this_button.value]["current_hp"]}`;
         }
     }
     for(let i = 5; i < 9; i++)
@@ -108,7 +117,7 @@ function updateStats()
             {
                 opp_cards_alive++;
             }
-            this_hp.innerHTML = `${all_cards[this_button.value]["current_hp"]}`;
+            this_hp.innerHTML = `HP: ${all_cards[this_button.value]["current_hp"]}`;
         }
     }
     var active_button = document.getElementById("active-button");
@@ -120,7 +129,7 @@ function updateStats()
             your_cards_alive++;
         }
 
-        active_hp.innerHTML = `${all_cards[active_button.value]["current_hp"]}`;
+        active_hp.innerHTML = `HP: ${all_cards[active_button.value]["current_hp"]}`;
     }
     var opp_active_button = document.getElementById("opp-active-button");
     var opp_active_hp = document.getElementById("opp-active-hp");
@@ -130,7 +139,7 @@ function updateStats()
         {
             opp_cards_alive++;
         }
-        opp_active_hp.innerHTML = `${all_cards[opp_active_button.value]["current_hp"]}`;
+        opp_active_hp.innerHTML = `HP: ${all_cards[opp_active_button.value]["current_hp"]}`;
     }
 }
 
@@ -139,17 +148,17 @@ function showStats()
     for(let i = 0; i < 4; i++)
     {
         var this_button = document.getElementById(`${i}-button`);
-        this_button.innerHTML += `<p id="${i}-hp">${all_cards[this_button.value]["current_hp"]}</p>`
+        this_button.innerHTML += `<p id="${i}-hp">HP: ${all_cards[this_button.value]["current_hp"]}</p>`
     }
     for(let i = 5; i < 9; i++)
     {
         var this_button = document.getElementById(`opp-${i}-button`);
-        this_button.innerHTML += `<p id="opp-${i}-hp">${all_cards[this_button.value]["current_hp"]}</p>`
+        this_button.innerHTML += `<p id="opp-${i}-hp">HP: ${all_cards[this_button.value]["current_hp"]}</p>`
     }
     var active_button = document.getElementById("active-button");
-    active_button.innerHTML += `<p id="active-hp">${all_cards[active_button.value]["current_hp"]}</p>`
+    active_button.innerHTML += `<p id="active-hp">HP: ${all_cards[active_button.value]["current_hp"]}</p>`
     var opp_active_button = document.getElementById("opp-active-button");
-    opp_active_button.innerHTML += `<p id="opp-active-hp">${all_cards[opp_active_button.value]["current_hp"]}</p>`
+    opp_active_button.innerHTML += `<p id="opp-active-hp">HP: ${all_cards[opp_active_button.value]["current_hp"]}</p>`
 }
 
 function setActive()
@@ -204,6 +213,7 @@ function addAttack()
         }
         made_action = 1;
         console.log(`${active_card["name"]} will use ${active_card["atk_name"]}`);
+        current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
  }
 
 function buttonTime(deck)
@@ -249,6 +259,7 @@ function setTheirDeck(deck)
 
 function play_actions()
 {
+    console.log("-------NEW TURN-------");
     botRandomAction();
     action_list = action_list.sort(sort_by_spd);
     for(let i = 0; i < action_list.length; i++)
@@ -261,18 +272,21 @@ function play_actions()
             {
                 if(all_cards[this_action["target"]]["current_hp"] > 0)
                 {
+                    console.log(`${all_cards[this_action["target"]]["name"]} swaps in.`)
                     swap_in(document.getElementById(`${this_action["target"]}-button`));
                 }
                 setActive();
             }
             if(this_action.value > -1)
             {
+                console.log(`${all_cards[this_action["user"]]["name"]} attacks.`)
                 attackCard(this_action["user"], this_action["target"]);
             }
             if(this_action.value == -3)
             {
                 if(all_cards[this_action["user"]]["current_hp"] > 0)
                 {
+                    console.log(`${all_cards[this_action["user"]]["name"]} swaps in.`)
                     testOppActive(this_action["user"]);
                 }
             }
@@ -285,6 +299,7 @@ function play_actions()
     }
     made_action = 0;
     updateStats();
+    console.log("-------END TURN-------");
 }
 
 function sort_by_spd(a, b)
@@ -310,15 +325,14 @@ function add_swap_id(button)
       
 function add_swap(event)
 {
-    if(made_action == 0)
-    {
+    if(made_action != 0){action_list.pop();}
         const this_card = all_cards[parseInt(this.value)];
         var name = this.id;
         var button_val = parseInt(name.substring(0,1));
         action_list.push(new action(parseInt(this_card["game_id"]), button_val, -2, parseInt(this_card["spd"])));
         made_action = 1;
         console.log(`${this_card["name"]} will swap in.`);
-    }
+        current_action.innerHTML = `${this_card["name"]} will swap in.`;
 }
 
 function action(user, target, value, speed)

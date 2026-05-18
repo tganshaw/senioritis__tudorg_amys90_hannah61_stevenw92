@@ -74,8 +74,6 @@ def main():
 def game():
     file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
-    deck1
-    deck2
     return render_template("jstest.html", testingtesting = data)
 
 @app.route("/encyclopedia")
