@@ -107,7 +107,7 @@ def profile():
             return redirect(url_for('profile'))
 
     sprite = user[3]
-    return render_template("profile.html", profile_icons=profile_icons, user=user, sprite=sprite)
+    return render_template("profile.html", profile_icons=profile_icons, user=user[0], sprite=sprite)
 
 @app.route("/encyclopedia")
 def encyclopedia():
