@@ -55,10 +55,10 @@ for dval in new_d:
 
 @app.route("/")
 def main():
-    file = open("Data/card_info.csv")
-    data = file.read().replace("\n", "\\n")
-    return render_template("jstest.html", testingtesting = data)
-    # return "<title>Senioritis</title>\n<h1>Got This Working</h1>\n<br>\n<br>\n<p>yay</p>"
+    if "username" not in session:
+        return redirect(url_for("loginhtml"))
+    else:
+        return redirect(url_for("encyclopedia"))
 
 @app.route("/game")
 def game():
