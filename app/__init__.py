@@ -53,6 +53,10 @@ for dval in new_d:
     DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5])))
 """
 
+@app.route("/favicon.ico")
+def favicon():
+    return send_file("favicon.ico")
+
 @app.route("/")
 def main():
     if "username" not in session:
