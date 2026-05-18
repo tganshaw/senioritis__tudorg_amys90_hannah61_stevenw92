@@ -59,12 +59,16 @@ DBC.execute("INSERT INTO all_cards(cardId, name, health, attack, defense, speed,
 
 DBC.close()
 
+@app.route("/favicon.ico")
+def favicon():
+    return send_file("favicon.ico")
+
 @app.route("/")
 def main():
-    file = open("Data/card_info.csv")
-    data = file.read().replace("\n", "\\n")
-    return render_template("jstest.html", testingtesting = data)
-    # return "<title>Senioritis</title>\n<h1>Got This Working</h1>\n<br>\n<br>\n<p>yay</p>"
+    if "username" not in session:
+        return redirect(url_for("loginhtml"))
+    else:
+        return redirect(url_for("encyclopedia"))
 
 @app.route("/game")
 def game():
@@ -75,8 +79,17 @@ def game():
 @app.route("/encyclopedia")
 def encyclopedia():
     file=open("Data/cards.csv")
-    data=file.read()
+    data=file.read().replace("\n","\\n")
     return render_template("encyclopedia.html", data=data)
+
+@app.route("/card/<card_id>", methods=["GET","POST"])
+def card(card_id):
+    file=open("Data/cards.csv")
+    data = file.read().replace("\n", "\\n")
+    i=int(card_id)
+    print(i)
+    return render_template("card.html",data=data,card_id=int(card_id)+1)
+
 
 @app.route("/logout")
 def logout():

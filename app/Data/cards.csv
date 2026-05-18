@@ -24,3 +24,4 @@ card_id,name,max_hp,atk,def,spd,atk_name,atk_desc
 22,Mr.Jumash,11,1,4,2,Distribution,Deals 1 point of damage to all enemy units.
 23,Mr.Hiller,10,6,1,4,Forgotten Chain Rule,Deals 6 points of damage to a single enemy unit.
 24,Ms.Cooperstone,11,5,1,5,Little Fires Everywhere,Deal 5 points of damage to a single enemy unit.
+>>>>>>> 4b7db5d5784186f6df9208d35b99ada3f62484a5

@@ -16,6 +16,7 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <script>
       var data = "{{data}}";
+      console.log(data)
       data = data.split("\n");
       for (let i = 0; i<data.length;i++){
         data[i]=data[i].split(",");
