@@ -76,6 +76,21 @@ def game():
     data = file.read().replace("\n", "\\n")
     return render_template("jstest.html", testingtesting = data)
 
+@app.route("/profile")
+def profile():
+    profile_icons = [
+        "/static/profilepic/pic1.png",
+        "/static/profilepic/pic2.png",
+        "/static/profilepic/pic3.png",
+        "/static/profilepic/pic4.png",
+        "/static/profilepic/pic5.png"
+    ]
+    if 'username' in session:
+        user = session["username"]
+    else:
+        user = ""
+    return render_template("jstest.html", profile_icons=profile_icons, user=user)
+
 @app.route("/encyclopedia")
 def encyclopedia():
     file=open("Data/cards.csv")
