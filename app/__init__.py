@@ -17,6 +17,7 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS users(
     username TEXT,
     password TEXT,
     bio TEXT,
+    img TEXT,
     deck1 TEXT,
     deck2 TEXT,
     id INTEGER PRIMARY KEY AUTOINCREMENT
@@ -74,8 +75,6 @@ def main():
 def game():
     file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
-    deck1
-    deck2
     return render_template("jstest.html", testingtesting = data)
 
 @app.route("/profile")
@@ -91,7 +90,24 @@ def profile():
         user = session["username"]
     else:
         user = ""
-    return render_template("jstest.html", profile_icons=profile_icons, user=user)
+
+    with sqlite3.connect(DB_NAME) as db:
+        c = db.cursor()
+        c.execute("SELECT * FROM users WHERE username = ?", (session["username"],))
+        user = c.fetchone()
+
+        if user is None:
+            session.pop("username")
+            return redirect(url_for('login'))
+
+        if request.method == 'POST' and 'profile_icon' in request.form:
+            icon = request.form.get("profile_icon")
+            c.execute("UPDATE users SET img = ? WHERE username = ?", (icon, session["username"]))
+            db.commit()
+            return redirect(url_for('profile'))
+
+    sprite = user[3]
+    return render_template("profile.html", profile_icons=profile_icons, user=user, sprite=sprite)
 
 @app.route("/encyclopedia")
 def encyclopedia():
@@ -106,7 +122,6 @@ def card(card_id):
     i=int(card_id)
     print(i)
     return render_template("card.html",data=data,card_id=int(card_id)+1)
-
 
 @app.route("/logout")
 def logout():
@@ -173,15 +188,13 @@ def register():
       db.close()
       return render_template("register.html", error="Username already taken!")
 
-    c.execute("INSERT INTO users VALUES (?, ?, ?, NULL, NULL, NULL)",
-    (username, password, reviews))
+    c.execute("INSERT INTO users VALUES (?, ?, ?, ?, NULL, NULL, NULL)",
+    (username, password, reviews, "/static/profilepic/pic1.png"))
 
     db.commit()
     db.close()
 
     session['username'] = username
-    if 'rated_games' not in session:
-        session['rated_games']=[]
     session.permanent=True
     return redirect(("/"))
 
