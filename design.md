@@ -116,12 +116,15 @@ As a new user, I want to be able to easily understand and learn the game logic s
 |-----------|---------|-----------------------------|
 | username  | TEXT    | PK                          |
 | password  | TEXT    |                             |
-| gameid    | INTEGER | FK REF GAME_CARDS(gameid)   |
+| reviews   | TEXT    |                             |
+| bio       | TEXT    |                             |
+| favorites | TEXT    |                             |
+| gameid    | INTEGER | PK AUTOINCREMENT            |
 
 | ALL_CARDS |         |                             |
 |-----------|---------|-----------------------------|
-| name      | TEXT    | PK                          |
-| dept      | TEXT    |                             |
+| cardId    | INTEGER |                             |
+| name      | TEXT    |                             |
 | health    | INTEGER |                             |
 | attack    | INTEGER |                             |
 | defense   | INTEGER |                             |
@@ -129,9 +132,9 @@ As a new user, I want to be able to easily understand and learn the game logic s
 
 | G_CARDS   |         |                             |
 |-----------|---------|-----------------------------|
-| gameid    | INTEGER | PK                          |
-| name      | TEXT    | PK                          |
-| dept      | TEXT    |                             |
+| gameId    | INTEGER | PK AUTOINCREMENT            |
+| username  | TEXT    |                             |
+| name      | TEXT    |                             |
 | health    | INTEGER |                             |
 | attack    | INTEGER |                             |
 | defense   | INTEGER |                             |
@@ -149,6 +152,7 @@ As a new user, I want to be able to easily understand and learn the game logic s
 ## Week 2 Goals:
 - Trying to implement multiplayer
 - If all else finished, perhaps expand scope of game (add more cards, make more complicated systems, perhaps add leaderboard or ranked system)
+
 ## Week 3 Goals:
 - Final touches
 - Styling and UI
@@ -156,7 +160,6 @@ As a new user, I want to be able to easily understand and learn the game logic s
 ## Internal Deadlines:
 - Finished game against bot: 5-17
 - Multiplayer: 5-24
-
 
 
 # Completion Criteria (_a.k.a._ "Definition of 'Done'")

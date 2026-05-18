@@ -39,15 +39,11 @@ pip install -r requirements.txt
 ```
 
 ## Launch codes
-1) Run the app through Flask:
+1) Cd into app folder:
 ```
-python3 app/__init__.py
+cd senioritis/app
 ```
-2) Open the link:
+2) Run `__init__.py`
 ```
-https://senioritis.dev
-```
-3) After running the launch codes and utilizing the app, exit the virtual environment:
-```
-deactivate
+python3 __init__.py
 ```
