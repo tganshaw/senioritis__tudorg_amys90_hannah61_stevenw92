@@ -57,7 +57,7 @@ dval=new_d[0]
 DBC.execute("INSERT INTO all_cards(cardId, name, health, attack, defense, speed, atkName, atkDesc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5]), dval[6], dval[7]))
 #DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed, atkName, atkDesc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5]), dval[6], dval[7]))
 
-DBC.close()
+DB.close()
 
 @app.route("/favicon.ico")
 def favicon():
