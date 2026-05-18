@@ -16,9 +16,9 @@ DBC = DB.cursor()
 DBC.execute("""CREATE TABLE IF NOT EXISTS users(
     username TEXT,
     password TEXT,
-    reviews TEXT,
     bio TEXT,
-    favorites TEXT,
+    deck1 TEXT,
+    deck2 TEXT,
     id INTEGER PRIMARY KEY AUTOINCREMENT
 );""")
 
@@ -74,6 +74,8 @@ def main():
 def game():
     file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
+    deck1
+    deck2
     return render_template("jstest.html", testingtesting = data)
 
 @app.route("/profile")
