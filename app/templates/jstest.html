@@ -32,8 +32,8 @@
         - Novillo
 */
 
-const set_1 = "0;1;2;3;4".split(";");
-const set_2 = "15;15;15;15;15".split(";");
+const set_1 = "0;1;2;3;4;18;12;8".split(";");
+const set_2 = "17;19;20;21;22;15;23;24".split(";");
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -48,6 +48,11 @@ var numCards = 0;
 var all_cards = [];
 var cards_1 = fillDeck(set_1);
 var cards_2 = fillDeck(set_2);
+fillReserves(set_1, cards_1);
+fillReserves(set_2, cards_2);
+var reserves_1 = 3;
+var reserves_2 = 3;
+
 var active_card = -1;
 
 var action_list = [];
@@ -59,6 +64,7 @@ var opp_cards_alive = 5;
 
 var made_action = 0;
 var current_action = document.getElementById("current-action");
+
 
 setYourDeck(cards_1);
 add_swap_id(4);
@@ -83,7 +89,9 @@ function botRandomAction()
             {
                 var num_cards = 0;    
                 
-                const rand_swap = Math.floor((Math.random() * 4) + 5);
+                if( Math.random() * 3 < 2 )
+                {
+                var rand_swap = Math.floor((Math.random() * 4) + 5);
                 while(all_cards[rand_swap]["current_hp"] <= 0)
                 {
                     rand_swap = Math.floor((Math.random() * 4) + 5);
@@ -94,7 +102,13 @@ function botRandomAction()
                 {
                     oppAddAttack();
                 }
-                action_list.push(new action(rand_swap, rand_swap, -3, all_cards[rand_swap]["spd"]));
+                else
+                    {action_list.push(new action(rand_swap, rand_swap, -3, all_cards[rand_swap]["spd"]));}
+                }
+                else
+                {
+                    oppAddAttack();
+                }
             }
             else
             {
@@ -102,6 +116,47 @@ function botRandomAction()
             }
         }
     }
+}
+
+function swapReserveActive()
+{
+    if(reserves_1 == 0){return -1;}
+    var res_card = cards_1[4 + reserves_1];
+    // console.log(res_card);
+    
+    var active_button = document.getElementById("active-button");
+    var active_img = document.getElementById("active-card");
+    var active_hp = document.getElementById("active-hp");
+    
+    var active_card = all_cards[parseInt(active_button.value)];
+    
+    current_action.innerHTML = `${active_card["name"]} has fainted. ${res_card["name"]} swapped in.`;   
+    active_button.value = res_card["game_id"];
+    active_img.src = `https://senioritis.dev/static/cards/${res_card["card_id"]}.png`;
+    active_hp.innerHTML = `HP: ${res_card["current_hp"]}`;
+    reserves_1--;
+    your_cards_alive++;
+    return 0;
+}
+
+function swapBotReserveActive()
+{
+    if(reserves_2 == 0){return -1;}
+    var res_card = cards_2[4 + reserves_2];
+    
+    var active_button = document.getElementById("opp-active-button");
+    var active_img = document.getElementById("opp-active-card");
+    var active_hp = document.getElementById("opp-active-hp");
+    
+    var active_card = all_cards[parseInt(active_button.value)];
+    
+    current_action.innerHTML = `${active_card["name"]} has fainted. ${res_card["name"]} swapped in.`;   
+    active_button.value = res_card["game_id"];
+    active_img.src = `https://senioritis.dev/static/cards/${res_card["card_id"]}.png`;
+    active_hp.innerHTML = `HP: ${res_card["current_hp"]}`;
+    reserves_2--;
+    opp_cards_alive++;
+    return 0;
 }
 
 function updateStats()
@@ -143,6 +198,15 @@ function updateStats()
         {
             your_cards_alive++;
         }
+        else
+        {
+            var res_swapped = swapReserveActive();
+            if(res_swapped == -1)
+            {
+                
+            }
+            
+        }
 
         active_hp.innerHTML = `HP: ${all_cards[active_button.value]["current_hp"]}`;
     }
@@ -154,8 +218,14 @@ function updateStats()
         {
             opp_cards_alive++;
         }
+        else
+        {
+            var res_swapped_opp = swapBotReserveActive();
+        }
         opp_active_hp.innerHTML = `HP: ${all_cards[opp_active_button.value]["current_hp"]}`;
     }
+    
+    console.log(`You have ${your_cards_alive} cards alive on field. Your opponent has ${opp_cards_alive} alive on field.`)
 }
 
 function showStats()
@@ -322,8 +392,8 @@ function play_actions()
         action_list.shift();
     }
     made_action = 0;
-    updateStats();
     current_action.innerHTML = "No Action Selected"
+    updateStats();
     console.log("-------END TURN-------");
     }
 }
@@ -509,7 +579,7 @@ function damageCard(card_id, damage)
 function fillDeck(set)
 {
     var cards = [];
-    for(let i = 0; i < set.length; i++)
+    for(let i = 0; i < 5; i++)
     {
         var current = data[set[i]];
         cards.push(new Card(current["card_id"], current["max_hp"], current["atk"], current["def"], current["spd"], current["max_hp"], 0, 0, numCards, current["name"], current["atk_name"], current["atk_desc"] ));
@@ -518,6 +588,18 @@ function fillDeck(set)
     }
     
     return cards;
+}
+
+function fillReserves(set, cards)
+{
+    for(let i = 5; i < 8; i++)
+    {
+       var current = data[set[i]];
+        cards.push(new Card(current["card_id"], current["max_hp"], current["atk"], current["def"], current["spd"], current["max_hp"], 0, 0, numCards, current["name"], current["atk_name"], current["atk_desc"] ));
+        all_cards.push(cards[i]);
+        numCards++; 
+    }
+    
 }
 
 function Card(card_id, max_hp, atk, def, spd, current_hp, buffs, used_special, game_id, name, atk_name, atk_desc)
