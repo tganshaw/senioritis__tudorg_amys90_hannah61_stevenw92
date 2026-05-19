@@ -69,7 +69,7 @@ def main():
     if "username" not in session:
         return redirect(url_for("loginhtml"))
     else:
-        return redirect(url_for("encyclopedia"))
+        return redirect(url_for("profile"))
 
 @app.route("/game")
 def game():
