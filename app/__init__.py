@@ -149,7 +149,7 @@ def registerhtml():
 @app.route("/login", methods = ["GET", "POST"])
 def login():
   if 'username' in session:
-      return redirect(url_for('homepage'))
+      return redirect("/")
   if request.method == 'POST':
     username = request.form.get('username', '').strip()
     password = request.form.get('password', '')
