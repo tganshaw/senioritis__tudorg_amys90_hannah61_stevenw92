@@ -33,7 +33,7 @@
 */
 
 const set_1 = "0;1;2;3;4;18;12;8".split(";");
-const set_2 = "17;19;20;21;22;15;23;24".split(";");
+const set_2 = "14;19;20;0;1;15;2;24".split(";");
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -65,6 +65,7 @@ var opp_cards_alive = 5;
 var made_action = 0;
 var current_action = document.getElementById("current-action");
 
+var just_starting = 0;
 
 setYourDeck(cards_1);
 add_swap_id(4);
@@ -77,6 +78,7 @@ testOppActive(9);
 setActive();
 showStats();
 
+just_starting = 1;
 
 function botRandomAction()
 {
@@ -165,9 +167,9 @@ function swapBotReserveId(id)
 {
     if(reserves_2 == 0){return -1;}
     var res_card = cards_2[4+ reserves_2];
-    
+
     var active_button = document.getElementById(`opp-${id}-button`);
-    var active_img = document.getElementById(`opp-${id}-card`);
+    var active_img = document.getElementById(`opp-${parseInt(active_button.value)}-card`);
     var active_hp = document.getElementById(`opp-${id}-card`);
     
     var active_card = all_cards[parseInt(active_button.value)];
@@ -234,6 +236,7 @@ function updateStats()
             }
             else
             {
+                console.log(`${i} dead`);
                 swapBotReserveId(i);
             }
             this_hp.innerHTML = `HP: ${all_cards[this_button.value]["current_hp"]}`;
@@ -274,7 +277,12 @@ function updateStats()
         opp_active_hp.innerHTML = `HP: ${all_cards[opp_active_button.value]["current_hp"]}`;
     }
     
-    console.log(`You have ${your_cards_alive} cards alive on field. Your opponent has ${opp_cards_alive} alive on field.`)
+    console.log(`You have ${your_cards_alive} cards alive on field. Your opponent has ${opp_cards_alive} cards alive on field.`);
+    if(just_starting != 0)
+    {
+        if(your_cards_alive == 0){window.location.assign("/youlost");}
+        if(opp_cards_alive == 0){window.location.assign("/youwon");}
+    }
 }
 
 function showStats()
@@ -582,6 +590,7 @@ function swap_in(event)
     {
         event.remove();
     }
+    updateStats();
 }
 
 function attackCard(attacker_id, defender_id)
