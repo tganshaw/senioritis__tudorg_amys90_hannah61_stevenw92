@@ -22,7 +22,7 @@
 
 /*
     Order of events:
-        - DEATH
+        - DEATH ## DONE
         - Winning
         - Multi target attacks
         - Buffing allies
@@ -69,6 +69,8 @@ var current_action = document.getElementById("current-action");
 setYourDeck(cards_1);
 add_swap_id(4);
 play_actions();
+var playfield_div = document.getElementById("playfield");
+playfield_div.innerHTML += "<br>";
 setTheirDeck(cards_2);
 buttonTime(cards_1);
 testOppActive(9);
@@ -89,7 +91,7 @@ function botRandomAction()
             {
                 var num_cards = 0;    
                 
-                if( Math.random() * 3 < 2 )
+                if( Math.random() * 4 < 2 || active_card["current_hp"] == 0)
                 {
                 var rand_swap = Math.floor((Math.random() * 4) + 5);
                 while(all_cards[rand_swap]["current_hp"] <= 0)
@@ -139,6 +141,45 @@ function swapReserveActive()
     return 0;
 }
 
+function swapReserveId(id)
+{
+    if(reserves_1 == 0){return -1;}
+    var res_card = cards_1[4+ reserves_1];
+    
+    var active_button = document.getElementById(`${id}-button`);
+    var active_img = document.getElementById(`${id}-card`);
+    var active_hp = document.getElementById(`${id}-card`);
+    
+    var active_card = all_cards[parseInt(active_button.value)];
+    
+    current_action.innerHTML = `${active_card["name"]} has fainted. ${res_card["name"]} swapped in.`;   
+    active_button.value = res_card["game_id"];
+    active_img.src = `https://senioritis.dev/static/cards/${res_card["card_id"]}.png`;
+    active_hp.innerHTML = `HP: ${res_card["current_hp"]}`;
+    reserves_1--;
+    your_cards_alive++;
+    return 0;
+}
+
+function swapBotReserveId(id)
+{
+    if(reserves_2 == 0){return -1;}
+    var res_card = cards_2[4+ reserves_2];
+    
+    var active_button = document.getElementById(`opp-${id}-button`);
+    var active_img = document.getElementById(`opp-${id}-card`);
+    var active_hp = document.getElementById(`opp-${id}-card`);
+    
+    var active_card = all_cards[parseInt(active_button.value)];
+
+    active_button.value = res_card["game_id"];
+    active_img.src = `https://senioritis.dev/static/cards/${res_card["card_id"]}.png`;
+    active_hp.innerHTML = `HP: ${res_card["current_hp"]}`;
+    reserves_2--;
+    opp_cards_alive++;
+    return 0;
+}
+
 function swapBotReserveActive()
 {
     if(reserves_2 == 0){return -1;}
@@ -173,6 +214,10 @@ function updateStats()
             {
                 your_cards_alive++;
             }
+            else
+            {
+                swapReserveId(i);
+            }
             this_hp.innerHTML = `HP: ${all_cards[this_button.value]["current_hp"]}`;
         }
     }
@@ -186,6 +231,10 @@ function updateStats()
             if(all_cards[this_button.value]["current_hp"] > 0)
             {
                 opp_cards_alive++;
+            }
+            else
+            {
+                swapBotReserveId(i);
             }
             this_hp.innerHTML = `HP: ${all_cards[this_button.value]["current_hp"]}`;
         }
@@ -327,7 +376,7 @@ function setYourDeck(deck)
         playfield.innerHTML += `<button id="${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
         <img id = "${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
         </button>\n
-        <br>\n`;
+        \n`;
     }
     for(let i = 0; i < 5; i++)
     {
@@ -344,7 +393,7 @@ function setTheirDeck(deck)
         playfield.innerHTML += `<button id="opp-${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
         <img id = "opp-${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
         </button>\n
-        <br>\n`;
+        \n`;
     }
 }
 
