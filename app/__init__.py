@@ -119,9 +119,15 @@ def encyclopedia():
 def card(card_id):
     file=open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
-    i=int(card_id)
-    print(i)
-    return render_template("card.html",data=data,card_id=int(card_id)+1)
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    username=session["username"]
+    c.execute("SELECT * FROM users where username=?",(username,))
+    temp=c.fetchall()
+    deck1=(temp[0][3])
+    deck2=(temp[0][4])
+    print(deck1)
+    return render_template("card.html",data=data,deck1=deck1,deck2=deck2,card_id=int(card_id)+1)
 
 @app.route("/logout")
 def logout():
