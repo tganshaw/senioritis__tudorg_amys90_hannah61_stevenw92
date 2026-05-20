@@ -16,9 +16,10 @@ DBC = DB.cursor()
 DBC.execute("""CREATE TABLE IF NOT EXISTS users(
     username TEXT,
     password TEXT,
-    reviews TEXT,
     bio TEXT,
-    favorites TEXT,
+    img TEXT,
+    deck1 TEXT,
+    deck2 TEXT,
     id INTEGER PRIMARY KEY AUTOINCREMENT
 );""")
 
@@ -68,13 +69,45 @@ def main():
     if "username" not in session:
         return redirect(url_for("loginhtml"))
     else:
-        return redirect(url_for("encyclopedia"))
+        return redirect(url_for("profile"))
 
 @app.route("/game")
 def game():
     file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
     return render_template("jstest.html", testingtesting = data)
+
+@app.route("/profile")
+def profile():
+    profile_icons = [
+        "/static/profilepic/pic1.png",
+        "/static/profilepic/pic2.png",
+        "/static/profilepic/pic3.png",
+        "/static/profilepic/pic4.png",
+        "/static/profilepic/pic5.png"
+    ]
+    if 'username' in session:
+        user = session["username"]
+    else:
+        user = ""
+
+    with sqlite3.connect(DB_NAME) as db:
+        c = db.cursor()
+        c.execute("SELECT * FROM users WHERE username = ?", (session["username"],))
+        user = c.fetchone()
+
+        if user is None:
+            session.pop("username")
+            return redirect(url_for('login'))
+
+        if request.method == 'POST' and 'profile_icon' in request.form:
+            icon = request.form.get("profile_icon")
+            c.execute("UPDATE users SET img = ? WHERE username = ?", (icon, session["username"]))
+            db.commit()
+            return redirect(url_for('profile'))
+
+    sprite = user[3]
+    return render_template("profile.html", profile_icons=profile_icons, user=user[0], sprite=sprite)
 
 @app.route("/encyclopedia")
 def encyclopedia():
@@ -86,10 +119,15 @@ def encyclopedia():
 def card(card_id):
     file=open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
-    i=int(card_id)
-    print(i)
-    return render_template("card.html",data=data,card_id=int(card_id)+1)
-
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    username=session["username"]
+    c.execute("SELECT * FROM users where username=?",(username,))
+    temp=c.fetchall()
+    deck1=(temp[0][3])
+    deck2=(temp[0][4])
+    print(deck1)
+    return render_template("card.html",data=data,deck1=deck1,deck2=deck2,card_id=int(card_id)+1)
 
 @app.route("/logout")
 def logout():
@@ -111,7 +149,7 @@ def registerhtml():
 @app.route("/login", methods = ["GET", "POST"])
 def login():
   if 'username' in session:
-      return redirect(url_for('homepage'))
+      return redirect("/")
   if request.method == 'POST':
     username = request.form.get('username', '').strip()
     password = request.form.get('password', '')
@@ -156,15 +194,13 @@ def register():
       db.close()
       return render_template("register.html", error="Username already taken!")
 
-    c.execute("INSERT INTO users VALUES (?, ?, ?, NULL, NULL, NULL)",
-    (username, password, reviews))
+    c.execute("INSERT INTO users VALUES (?, ?, ?, ?, NULL, NULL, NULL)",
+    (username, password, reviews, "/static/profilepic/pic1.png"))
 
     db.commit()
     db.close()
 
     session['username'] = username
-    if 'rated_games' not in session:
-        session['rated_games']=[]
     session.permanent=True
     return redirect(("/"))
 
