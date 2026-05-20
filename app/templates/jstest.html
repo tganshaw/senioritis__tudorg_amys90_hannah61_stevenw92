@@ -1,7 +1,17 @@
 <html>
 
-<h1 id = "current-action">No Action Selected</h1>
+<style>
 
+@media (prefers-color-scheme: dark) {
+    html{
+        background-color: #56646E
+    }
+}
+
+</style>
+    
+<h1 id = "current-action">No Action Selected</h1>
+<h2 id = "get-target"></h2>
 <button id="send-actions">Send Actions</button>
 
 <div id = "playfield">
@@ -32,7 +42,7 @@
         - Novillo
 */
 
-const set_1 = "0;1;2;3;4;18;12;8".split(";");
+const set_1 = "0;13;9;3;7;18;12;8".split(";");
 const set_2 = "14;19;20;0;1;15;2;24".split(";");
 
 const csv_str = "{{testingtesting}}";
@@ -66,6 +76,17 @@ var made_action = 0;
 var current_action = document.getElementById("current-action");
 
 var just_starting = 0;
+
+var buffers_arr = [
+                    7, // 2hs+
+                    9, // 1ds+
+                    13 // 1as+
+                ];
+var debuffers_arr = [
+                    6, // 2dm-
+                    10 // 1as-
+                ];
+                
 
 setYourDeck(cards_1);
 add_swap_id(4);
@@ -253,10 +274,6 @@ function updateStats()
         else
         {
             var res_swapped = swapReserveActive();
-            if(res_swapped == -1)
-            {
-                
-            }
             
         }
 
@@ -330,13 +347,59 @@ function oppAddAttack()
     
         action_list.push(new action(parseInt(opp_button.value), parseInt(active_button.value), dmg_dealt, parseInt(opp_card["spd"])));
     }
+    else
+    {
+        
+        if(buffers_arr.includes(opp_card["card_id"]))
+        {
+            var num_cards = 0;
+            var rand_swap = Math.floor((Math.random() * 4) + 5);
+                while(all_cards[rand_swap]["current_hp"] <= 0)
+                {
+                    rand_swap = Math.floor((Math.random() * 4) + 5);
+                    num_cards++;
+                    if(num_cards > 4){break;}
+                }
+            if(all_cards[rand_swap]["current_hp"] > 0)
+            {
+                action_list.push(new action (opp_card["game_id"], rand_swap, -1, parseInt(opp_card["spd"])));
+            }
+        }
+    }
  }
 
+function oppSendBuff(target)
+{
+    var user = parseInt(document.getElementById("opp-active-button").value);
+    var user_card = all_cards[user];
+    action_list.push(new action(user, target, -1, parseInt(user_card["spd"])));
+}
+ 
+function sendBuff()
+{
+    if(made_action != 0){action_list.pop();}
+    var target = parseInt(document.getElementById("buff-target").value);
+    if(all_cards[target]["current_hp"] == 0)
+    {
+        current_action.innerHTML = `Cannot buff ${all_cards[target]["name"]} on account of their being dead.`;
+    }
+    else
+    {
+        var user = parseInt(document.getElementById("active-button").value);
+        var user_card = all_cards[user];
+        action_list.push(new action(user, target, -1, parseInt(user_card["spd"])));
+        made_action += 1;
+        current_action.innerHTML = `${user_card["name"]} will user ${user_card["atk_name"]} on ${all_cards[target]["name"]}`;
+    }
+}
+ 
 function addAttack()
 {
     if(made_action != 0){action_list.pop();}
     var active_button = document.getElementById("active-button");
     var active_card = all_cards[parseInt(active_button.value)];
+    var get_target = document.getElementById("get-target");
+    get_target.innerHTML = "";
     if(active_card["current_hp"] > 0)
     {
         
@@ -354,10 +417,20 @@ function addAttack()
             if(dmg_dealt < 1){dmg_dealt = 1;}
         
             action_list.push(new action(parseInt(active_button.value), parseInt(opp_button.value), dmg_dealt, parseInt(active_card["spd"])));
+            current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
+        }
+        else
+        {
+            if(active_card["card_id"] == 7 || active_card["card_id"] == 9 || active_card["card_id"] == 13)
+            {
+                get_target.innerHTML += "SELECT A TARGET:<input type = 'number' id='buff-target' min=0 max=3></input><button id = 'send-buff'>CONFIRM</button>";
+                var buff_button = document.getElementById("send-buff");
+                buff_button.addEventListener("click", sendBuff);
+            }
         }
         made_action = 1;
         console.log(`${active_card["name"]} will use ${active_card["atk_name"]}`);
-        current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
+        
     }
     else
     {
@@ -455,6 +528,7 @@ function play_actions()
     action_list = action_list.sort(sort_by_spd);
     for(let i = 0; i < action_list.length; i++)
     {
+        console.log(action_list[i]);
         const this_action = action_list[i];
         const this_user = all_cards[this_action["user"]];
         if(this_user["current_hp"] > 0)
@@ -492,18 +566,23 @@ function play_actions()
                 }
             }
             if(this_action.value == -1)
-            {
-                var specialers_arr = [
-                    6, // 2dm-
-                    7, // 2hs+
-                    9, // 1ds+
-                    10, // 1as-
-                    13 // 1as+
-                ]
-                // when adding attack, if -1 put popup in current action asking for target
-                // then that adds the action via function
-                // then we do that here
-                // alright
+            {  
+                var target_card = all_cards[this_action["target"]];
+                if(buffers_arr.includes(parseInt(this_user["card_id"])))
+                {
+                    if(this_user["card_id"] == 7)
+                    {
+                        target_card["current_hp"] += 2;
+                        if(target_card["current_hp"] > target_card["max_hp"])
+                        {
+                            target_card["current_hp"] = target_card["max_hp"];
+                        }
+                    }
+                    else
+                    {
+                        target_card["buffs"] += 1;
+                    }
+                }
             }
         } 
     }
@@ -543,6 +622,8 @@ function add_swap_id(button)
 function add_swap(event)
 {
     if(made_action != 0){action_list.pop();}
+    var get_target = document.getElementById("get-target");
+    get_target.innerHTML = "";
     const this_card = all_cards[parseInt(this.value)];
     if(this_card["current_hp"] > 0)
     {
