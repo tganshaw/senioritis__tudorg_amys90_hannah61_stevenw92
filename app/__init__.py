@@ -73,6 +73,8 @@ def main():
 
 @app.route("/game")
 def game():
+    # if 'username' not in session:
+    #     return redirect("/")
     file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
     return render_template("jstest.html", testingtesting = data)
@@ -111,6 +113,8 @@ def profile():
 
 @app.route("/encyclopedia")
 def encyclopedia():
+    if 'username' not in session:
+        return redirect("/")
     file=open("Data/cards.csv")
     data=file.read().replace("\n","\\n")
     return render_template("encyclopedia.html", data=data)
