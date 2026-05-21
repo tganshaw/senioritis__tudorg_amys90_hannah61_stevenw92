@@ -93,8 +93,12 @@ tudorG -- 2026-05-18 20:00
 - Making it so dead cards can't attack or swap in
 - Fixing some bugs regarding showing HP
 
+tudorG -- 2026-05-19 18:00
+- Making it so cards can actually die
+- Implementing the reserve system
 
-
+tudorG -- 2026-05-20 19:00
+- Implementing buffers
 
 
 

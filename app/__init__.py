@@ -73,6 +73,8 @@ def main():
 
 @app.route("/game")
 def game():
+    # if 'username' not in session:
+    #     return redirect("/")
     file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
     return render_template("jstest.html", testingtesting = data)
@@ -126,8 +128,39 @@ def card(card_id):
     temp=c.fetchall()
     deck1=(temp[0][3])
     deck2=(temp[0][4])
-    print(deck1)
-    return render_template("card.html",data=data,deck1=deck1,deck2=deck2,card_id=int(card_id)+1)
+    return render_template("card.html",data=data,deck1=deck1,deck2=deck2,card_id=int(card_id))
+
+@app.route("/addDeck1/<card_id>")
+def addD1(card_id):
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    username=session["username"]
+    c.execute("SELECT * FROM users where username=?;",(username,))
+    deck=c.fetchall()
+    deck=deck[0][3]
+    prev=deck
+    deck+=";"+card_id
+    c.execute("UPDATE users SET deck1=? where username=?",(deck,username,))
+    db.commit()
+    db.close()
+    return redirect(url_for("card",card_id=card_id))
+
+
+@app.route("/removeDeck1/<card_id>")
+def rmD1(card_id):
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    username=session["username"]
+    c.execute("SELECT * FROM users where username=?;",(username,))
+    deck=c.fetchall()
+    print(deck)
+    deck=deck[0][3]
+    deck=deck.replace(f";{card_id}","",1)
+    print(deck)
+    c.execute("UPDATE users SET deck1=? where username=?",(deck,username,))
+    db.commit()
+    db.close()
+    return redirect(url_for("card",card_id=card_id))
 
 @app.route("/logout")
 def logout():
@@ -149,7 +182,7 @@ def registerhtml():
 @app.route("/login", methods = ["GET", "POST"])
 def login():
   if 'username' in session:
-      return redirect(url_for('homepage'))
+      return redirect("/")
   if request.method == 'POST':
     username = request.form.get('username', '').strip()
     password = request.form.get('password', '')
