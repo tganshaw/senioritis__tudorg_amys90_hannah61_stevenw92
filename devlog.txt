@@ -103,6 +103,7 @@ tudorG -- 2026-05-20 19:00
 hannahG --2026-05-21 11:00
 - Created and finished the mechanic to add cards to your deck via the encyclopedia/cards page
 
-
+tudorG -- 2026-05-21 18:00
+- Finished Yu force swap & Stephan destiny bond
 
 
