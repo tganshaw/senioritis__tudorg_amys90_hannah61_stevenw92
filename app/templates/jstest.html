@@ -44,14 +44,14 @@
         - Winning ## DONE
         - Multi target attacks ## DONE
         - Buffing allies ## DONE
-        - Yu
+        - Yu ## DONE
         - Stephan
         - Citron
         - Novillo
 */
 
-const set_1 = "7;13;9;3;5;18;12;8".split(";");
-const set_2 = "14;19;20;0;1;15;2;24".split(";");
+const set_1 = "7;13;9;3;0;18;12;8".split(";");
+const set_2 = "14;19;20;0;5;15;2;24".split(";");
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -371,6 +371,23 @@ function oppAddAttack()
             if(all_cards[rand_swap]["current_hp"] > 0)
             {
                 action_list.push(new action (opp_card["game_id"], rand_swap, -1, parseInt(opp_card["spd"])));
+            }
+        }
+        if(opp_card["card_id"] == 5)
+        {
+            console.log("bot yu");
+            var num_cards = 0;
+            var rand_swap = Math.floor(Math.random() * 4);
+                while(all_cards[rand_swap]["current_hp"] <= 0)
+                {
+                    rand_swap = Math.floor(Math.random() * 4);
+                    num_cards++;
+                    if(num_cards > 4){break;}
+                }
+            if(all_cards[rand_swap]["current_hp"] > 0)
+            {
+                action_list.push(new action(rand_swap, rand_swap, -2, parseInt(opp_card["spd"])));
+                console.log(action_list[1]);
             }
         }
     }
