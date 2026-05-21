@@ -6,6 +6,14 @@
     html{
         background-color: #56646E
     }
+    button{
+        background-color: #404952;
+        color: #D9E9FA
+    }
+    input{
+        background-color: #404952;
+        color: #D9E9FA
+    }
 }
 
 </style>
@@ -35,14 +43,14 @@
         - DEATH ## DONE
         - Winning ## DONE
         - Multi target attacks ## DONE
-        - Buffing allies
+        - Buffing allies ## DONE
         - Yu
         - Stephan
         - Citron
         - Novillo
 */
 
-const set_1 = "0;13;9;3;7;18;12;8".split(";");
+const set_1 = "7;13;9;3;5;18;12;8".split(";");
 const set_2 = "14;19;20;0;1;15;2;24".split(";");
 
 const csv_str = "{{testingtesting}}";
@@ -379,7 +387,8 @@ function sendBuff()
 {
     if(made_action != 0){action_list.pop();}
     var target = parseInt(document.getElementById("buff-target").value);
-    if(all_cards[target]["current_hp"] == 0)
+    console.log("Buffing " + target);
+    if(all_cards[target]["current_hp"] <= 0)
     {
         current_action.innerHTML = `Cannot buff ${all_cards[target]["name"]} on account of their being dead.`;
     }
@@ -389,7 +398,26 @@ function sendBuff()
         var user_card = all_cards[user];
         action_list.push(new action(user, target, -1, parseInt(user_card["spd"])));
         made_action += 1;
-        current_action.innerHTML = `${user_card["name"]} will user ${user_card["atk_name"]} on ${all_cards[target]["name"]}`;
+        current_action.innerHTML = `${user_card["name"]} will use ${user_card["atk_name"]} on ${all_cards[target]["name"]}`;
+    }
+}
+
+function yuSwap()
+{
+    if(made_action != 0){action_list.pop();}
+    var target = parseInt(document.getElementById("swap-target").value);
+    console.log("Swapping " + target);
+    if(all_cards[target]["current_hp"] <= 0)
+    {
+        current_action.innerHTML = `Cannot swap in ${all_cards[target]["name"]} on account of their being dead.`;
+    }
+    else
+    {
+        var user = parseInt(document.getElementById("active-button").value);
+        var user_card = all_cards[user];
+        action_list.push(new action(target, target, -3, parseInt(user_card["spd"])));
+        made_action += 1;
+        current_action.innerHTML = `${user_card["name"]} will use ${user_card["atk_name"]} on ${all_cards[target]["name"]}`;
     }
 }
  
@@ -423,9 +451,28 @@ function addAttack()
         {
             if(active_card["card_id"] == 7 || active_card["card_id"] == 9 || active_card["card_id"] == 13)
             {
-                get_target.innerHTML += "SELECT A TARGET:<input type = 'number' id='buff-target' min=0 max=3></input><button id = 'send-buff'>CONFIRM</button>";
+                get_target.innerHTML += "TARGET: <select id='buff-target'>\n</select>\n<button id='send-buff'>CONFIRM</button>";
+                var buff_select = document.getElementById("buff-target");
+                for(let x = 0; x < 4; x++)
+                {
+                    buff_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`${x}-button`).value)]["name"]}</option>\n`
+                }
+                
+                
                 var buff_button = document.getElementById("send-buff");
                 buff_button.addEventListener("click", sendBuff);
+            }
+            if(active_card["card_id"] == 5)
+            {
+                get_target.innerHTML += "TARGET: <select id='swap-target'>\n</select>\n<button id='send-swap'>CONFIRM</button>";
+                var swap_select = document.getElementById("swap-target");
+                for(let x = 5; x < 9; x++)
+                {
+                    swap_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`opp-${x}-button`).value)]["name"]}</option>\n`
+                }
+                
+                var swap_button = document.getElementById("send-swap");
+                swap_button.addEventListener("click", yuSwap);
             }
         }
         made_action = 1;
