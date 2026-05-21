@@ -14,10 +14,8 @@
     <script>
       var deck1="{{deck1}}"
       var deck2="{{deck2}}"
-      console.log(deck1)
       var num_deck1=(deck1.split("{{card_id}}").length-1)
       var num_deck2=(deck2.split("{{card_id}}").length-1)
-      
 
       var data = "{{data}}";
       const id=parseInt("{{card_id}}")+1
@@ -26,7 +24,6 @@
         data[i]=data[i].split(",");
 }
       data.pop();
-      console.log(id)
       var values={};
       for (let i =0;i<data[0].length;i++){
         values[data[0][i]]=data[id][i]
@@ -58,6 +55,25 @@
           </a>
 <a
             href="/removeDeck1/${values["card_id"]}"
+            class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
+          >
+            -
+          </a>
+
+<br>
+<br>
+
+<h2>Number in Deck2: ${num_deck2}</h2> 
+
+
+<a
+            href="/addDeck2/${values["card_id"]}"
+            class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
+          >
+            +
+          </a>
+<a
+            href="/removeDeck2/${values["card_id"]}"
             class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
           >
             -
