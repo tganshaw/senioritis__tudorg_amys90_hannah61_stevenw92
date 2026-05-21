@@ -97,7 +97,8 @@ tudorG -- 2026-05-19 18:00
 - Making it so cards can actually die
 - Implementing the reserve system
 
-
+tudorG -- 2026-05-20 19:00
+- Implementing buffers
 
 
 
