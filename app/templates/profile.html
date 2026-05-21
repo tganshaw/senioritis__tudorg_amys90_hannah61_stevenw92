@@ -34,8 +34,9 @@
          <div class = "profile-icons ml-3 overflow-hidden">
             {% for icon in profile_icons %}
             <form action = "/profile" method = "POST" style="display: inline;">
+              <form action = "/profile" method = "POST" style="display: inline;">
                <input type = "hidden" name = "profile_icon" value = "{{ icon }}">
-               <button type = "submit" class = "icon-button">
+               <button type = "submit" class = "icon-button profile-icon">
                <img src = "{{ icon }}" class = "profile-icon h-12 w-12 shrink-0 rounded-full" alt = "Profile Icon {{ loop.index }}" style="width:150px; height:150px; object-fit:cover;">
                </button>
             </form>
