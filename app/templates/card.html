@@ -7,10 +7,34 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 p-8">
+<body class="bg-gray-100">
+
+<nav class=" bg-gray-400 border-b">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+
+    <a href="/encyclopedia" >
+      Encyclopedia
+    </a>
+
+    <ul class="flex space-x-4">
+        <a href="/game" class=" hover:text-black">
+          game
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4">
+        <a href="/" class=" hover:text-black">
+          Profile
+        </a>
+    </ul>
+<ul class="flex space-x-4">
   <form action="{{url_for('logout')}}" method="POST">
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Logout</button>
   </form>
+</ul>
+</nav>
+
+<div class="p-8">
     <script>
       var deck1="{{deck1}}"
       var deck2="{{deck2}}"
@@ -83,10 +107,81 @@
 </div>
 </div>
 
-
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 `);   
+
+
+deck1=deck1.split(";");
+deck1.shift();
+console.log(deck1);
+document.write(`
+<h1 class="text-center">Deck1:</h1>
+<div class="grid grid-cols-7">
+<div>
+</div>
+
+`)
+
+for (var i=0;i<deck1.length;i++){
+    document.write(`
+
+<div>
+    <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${deck1[i]}.png" alt="Image ${deck1[i]}" />
+</div>
+`)
+}
+for(var i=0;i<5-deck1.length;i++){
+    document.write(`
+<div class="content-center gap-4 rounded-lg bg-white p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
+<h1 class="text-center">Empty</h1>
+</div>
+
+`)
+}
+
+
+
+deck2=deck2.split(";");
+deck2.shift();
+console.log(deck2);
+document.write(`
+</div>
+<br>
+<br>
+<br>
+<h1 class="text-center">Deck2:</h1>
+<div class="grid grid-cols-7">
+<div>
+</div>
+`)
+
+for (var i=0;i<deck2.length;i++){
+    document.write(`
+
+<div>
+    <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${deck2[i]}.png" alt="Image ${deck2[i]}" />
+</div>
+`)
+}
+for(var i=0;i<5-deck2.length;i++){
+    document.write(`
+<div class="content-center gap-4 rounded-lg bg-white p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
+<h1 class="text-center">Empty</h1>
+</div>
+
+`)
+}
+
+
 
     </script>
   </div>
