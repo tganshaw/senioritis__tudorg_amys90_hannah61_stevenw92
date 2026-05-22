@@ -83,10 +83,81 @@
 </div>
 </div>
 
-
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 `);   
+
+
+deck1=deck1.split(";");
+deck1.shift();
+console.log(deck1);
+document.write(`
+<h1 class="text-center">Deck1:</h1>
+<div class="grid grid-cols-7">
+<div>
+</div>
+
+`)
+
+for (var i=0;i<deck1.length;i++){
+    document.write(`
+
+<div>
+    <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${deck1[i]}.png" alt="Image ${deck1[i]}" />
+</div>
+`)
+}
+for(var i=0;i<5-deck1.length;i++){
+    document.write(`
+<div class="content-center gap-4 rounded-lg bg-white p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
+<h1 class="text-center">Empty</h1>
+</div>
+
+`)
+}
+
+
+
+deck2=deck2.split(";");
+deck2.shift();
+console.log(deck2);
+document.write(`
+</div>
+<br>
+<br>
+<br>
+<h1 class="text-center">Deck2:</h1>
+<div class="grid grid-cols-7">
+<div>
+</div>
+`)
+
+for (var i=0;i<deck2.length;i++){
+    document.write(`
+
+<div>
+    <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${deck2[i]}.png" alt="Image ${deck2[i]}" />
+</div>
+`)
+}
+for(var i=0;i<5-deck2.length;i++){
+    document.write(`
+<div class="content-center gap-4 rounded-lg bg-white p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
+<h1 class="text-center">Empty</h1>
+</div>
+
+`)
+}
+
+
 
     </script>
   </div>
