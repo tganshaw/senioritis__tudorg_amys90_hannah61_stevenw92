@@ -18,7 +18,7 @@
 
     <ul class="flex space-x-4">
         <a href="/game" class=" hover:text-black">
-          game
+          Game
         </a>
     </ul>
 
@@ -40,15 +40,19 @@
   <br>
   <br>
   <br>
-      <div class= "text-center">
-         <h2>User Information: {{user}}</h2>
+      <div class= "grid grid-cols-2 ">
+        <div class="text-right text-2xl font-bold">
+         <h1>{{user}}</h1>
+       </div>
+       <div>
          <img src= "{{ icon }}" class= "img-fluid" alt= "profilepic" style="width:150px; height:150px; object-fit:cover;">
+        </div>
       </div>
       <br>
       <br>
       <br>
       <details class = "profile-select">
-         <summary class="button" style="font-size: 150%;">Change Profile Picture</summary>
+         <summary class="button" style="font-size: 100%;">Change Profile Picture</summary>
          <br>
          <div class = "profile-icons">
             {% for icon in profile_icons %}

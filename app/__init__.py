@@ -107,7 +107,6 @@ def profile():
             c.execute("UPDATE users SET img = ? WHERE username = ?", (icon, session["username"]))
             db.commit()
             return redirect(url_for('profile'))
-
     sprite = user[3]
     return render_template("profile.html", profile_icons=profile_icons, user=user[0], sprite=sprite)
 
