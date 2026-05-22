@@ -7,10 +7,34 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 p-8">
+<body class="bg-gray-100">
+
+<nav class=" bg-gray-400 border-b">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+
+    <a href="/encyclopedia" >
+      Encyclopedia
+    </a>
+
+    <ul class="flex space-x-4">
+        <a href="/game" class=" hover:text-black">
+          game
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4">
+        <a href="/" class=" hover:text-black">
+          Profile
+        </a>
+    </ul>
+<ul class="flex space-x-4">
   <form action="{{url_for('logout')}}" method="POST">
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Logout</button>
   </form>
+</ul>
+</nav>
+
+<div class="p-8">
     <script>
       var deck1="{{deck1}}"
       var deck2="{{deck2}}"
