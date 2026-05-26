@@ -120,19 +120,19 @@ function botRandomAction()
                 
                 if( Math.random() * 4 < 2 || active_card["current_hp"] == 0)
                 {
-                var rand_swap = Math.floor((Math.random() * 4) + 5);
-                while(all_cards[rand_swap]["current_hp"] <= 0)
-                {
-                    rand_swap = Math.floor((Math.random() * 4) + 5);
-                    num_cards++;
-                    if(num_cards > 4){break;}
-                }
-                if(num_cards > 4)
-                {
-                    oppAddAttack();
-                }
-                else
-                    {action_list.push(new action(rand_swap, rand_swap, -3, all_cards[rand_swap]["spd"]));}
+                    var rand_swap = Math.floor((Math.random() * 4) + 5);
+                    while(all_cards[rand_swap]["current_hp"] <= 0)
+                    {
+                        rand_swap = Math.floor((Math.random() * 4) + 5);
+                        num_cards++;
+                        if(num_cards > 4){break;}
+                    }
+                    if(num_cards > 4)
+                    {
+                        oppAddAttack();
+                    }
+                    else
+                        {action_list.push(new action(rand_swap, rand_swap, -3, all_cards[rand_swap]["spd"]));}
                 }
                 else
                 {
