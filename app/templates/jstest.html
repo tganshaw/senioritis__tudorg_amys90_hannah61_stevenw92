@@ -50,8 +50,8 @@
         - Novillo
 */
 
-const set_1 = "7;13;9;3;0;18;12;8".split(";");
-const set_2 = "14;19;20;0;11;15;2;24".split(";");
+const set_1 = "7;13;9;0;7;18;12;8".split(";");
+const set_2 = "14;19;20;0;3;15;2;24".split(";");
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -95,6 +95,8 @@ var debuffers_arr = [
                     10 // 1as-
                 ];
                 
+var copy_pasted = 0;
+var opp_copy_pasted = 0;
 
 setYourDeck(cards_1);
 add_swap_id(4);
@@ -422,6 +424,43 @@ function oppAddAttack()
                 action_list.push(new action(opp_card["game_id"], parseInt(active_button.value), 1, parseInt(opp_card["spd"])));
             }
         }
+        if(opp_card["card_id"] == 3)
+        {
+            if(active_card["atk"] != "-1")
+                {
+                     var total_atk = parseInt(active_card["atk"]) + active_card["buffs"];
+            
+                     var total_def = parseInt(active_card["def"]) + active_card["buffs"];
+                        
+                     var dmg_dealt = total_atk - total_def;
+                     if(dmg_dealt < 1){dmg_dealt = 1;}
+                    
+                     action_list.push(new action(parseInt(opp_button.value), parseInt(active_button.value), dmg_dealt, parseInt(opp_card["spd"])));
+                }
+            else
+            {
+                if(buffers_arr.includes(parseInt(active_card["card_id"])))
+                {
+                    
+                    var num_cards = 0;
+                    var rand_swap = parseInt(document.getElementById(`opp-${Math.floor((Math.random() * 4) + 5)}-button`).value);
+                        while(all_cards[rand_swap]["current_hp"] <= 0 || all_cards[rand_swap]["current_hp"] == all_cards[rand_swap]["max_hp"])
+                        {
+                            rand_swap = parseInt(document.getElementById(`opp-${Math.floor((Math.random() * 4) + 5)}-button`).value);
+                            num_cards++;
+                            if(num_cards > 4){break;}
+                        }
+                    if(all_cards[rand_swap]["current_hp"] > 0 && all_cards[rand_swap]["current_hp"] != all_cards[rand_swap]["max_hp"])
+                    {
+                        action_list.push(new action (active_card["game_id"], rand_swap, -1, parseInt(opp_card["spd"])));
+                    }
+                    else
+                    {
+                        action_list.push(new action(active_card["game_id"], parseInt(active_button.value), 1, parseInt(opp_card["spd"])));
+                    }
+                }
+            }
+        }
     }
  }
 
@@ -438,6 +477,10 @@ function sendBuff()
     var user = parseInt(document.getElementById("active-button").value);
     var user_card = all_cards[user];
     var target = parseInt(document.getElementById("buff-target").value);
+    if(user_card["card_id"] == 3)
+    {
+        user = target;
+    }
     if(parseInt(document.getElementById("buff-target").value) == -1)
     {
         target = parseInt(document.getElementById("opp-active-button").value);
@@ -591,6 +634,39 @@ function addAttack()
                 
                 var res_button = document.getElementById("send-res");
                 res_button.addEventListener("click", citronRes);
+            }
+            if(active_card["card_id"] == 3)
+            {
+                var opp_id = opp_card["card_id"];
+                if(opp_card["atk"] != "-1")
+                {
+                     var total_atk = parseInt(opp_card["atk"]) + opp_card["buffs"];
+            
+                     var total_def = parseInt(opp_card["def"]) + opp_card["buffs"];
+                        
+                     var dmg_dealt = total_atk - total_def;
+                     if(dmg_dealt < 1){dmg_dealt = 1;}
+                    
+                     action_list.push(new action(parseInt(active_button.value), parseInt(opp_button.value), dmg_dealt, parseInt(active_card["spd"])));
+                     current_action.innerHTML = `${active_card["name"]} will use ${opp_card["atk_name"]}`;
+                }
+                else
+                {
+                   if(opp_card["card_id"] == 7 || opp_card["card_id"] == 9 || opp_card["card_id"] == 13)
+                    {
+                        get_target.innerHTML += "TARGET: <select id='buff-target'>\n</select>\n<button id='send-buff'>CONFIRM</button>";
+                        var buff_select = document.getElementById("buff-target");
+                        for(let x = 0; x < 4; x++)
+                        {
+                            buff_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`${x}-button`).value)]["name"]}</option>\n`
+                        }
+                        buff_select.innerHTML += `<option value=-1>Attack</option>\n`
+                        
+                        
+                        var buff_button = document.getElementById("send-buff");
+                        buff_button.addEventListener("click", sendBuff);
+                    } 
+                }
             }
         }
         made_action = 1;

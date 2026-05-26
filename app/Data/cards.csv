@@ -2,7 +2,7 @@ card_id,name,max_hp,atk,def,spd,atk_name,atk_desc
 0,Mr.Mykolyk,10,2,1,6,Git Merge Conflict,Deals 1 point of damage to all enemy units.
 1,Mr.K,12,3,3,2,Runtime Error,Deals 3 points of damage to a single enemy unit.
 2,Mr.Hannon,14,4,4,2,Green-Eyed Monster,Deals 4 points of damage to a single enemy unit.
-3,Ms.Novillo,13,-1,2,4,Cmd+C Cmd+V,Copies an enemy card's move or attack once. The next use will then utilize the enemy card's attack or special attack.
+3,Ms.Novillo,13,-1,2,4,Ctrl C + Ctrl V,Copies the enemy card's attack.
 4,Mr.Dillon,15,2,2,6,01000011 01010011,Deals 2 points of damage to a single enemy unit.
 5,Dr.Yu,15,-1,4,6,Suspension,Forcibly switches one card on hand with any selected card from the deck.
 6,Mr.Moran,11,-1,2,3,Phone Confiscation,Decreases 2 points of defense for every enemy card for this game.
