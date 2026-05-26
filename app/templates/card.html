@@ -5,34 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>card</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+  <style>
+  body{
+    padding:0px;
+    background-color:#900020;
+    color:white;
+    font-family: "Anta";
+  }
+  </style>
 </head>
 
-<body class="bg-gray-100">
+<body>
 
-<nav class=" bg-gray-400 border-b">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-
-    <a href="/encyclopedia" >
-      Encyclopedia
-    </a>
+  <nav class="bg-gray-800 border-b">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-evenly">
 
     <ul class="flex space-x-4">
-        <a href="/game" class=" hover:text-black">
+        <a href="/encyclopedia" class=" hover:text-red-600">
+          Encyclopedia
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4">
+        <a href="/game" class=" hover:text-red-600">
           Game
         </a>
     </ul>
 
-    <ul class="flex space-x-4">
-        <a href="/" class=" hover:text-black">
+    <ul class="flex space-x-4 text-blue-700">
+        <a href="/" class=" hover:text-red-600">
           Profile
         </a>
     </ul>
-<ul class="flex space-x-4">
+  <ul class="flex space-x-4">
   <form action="{{url_for('logout')}}" method="POST">
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Logout</button>
   </form>
-</ul>
-</nav>
+  </ul>
+  </div>
+  </nav>
 
 <div class="p-8">
     <script>
@@ -51,12 +65,12 @@
       var values={};
       for (let i =0;i<data[0].length;i++){
         values[data[0][i]]=data[id][i]
-} 
+}
        document.write(`
           <h1 class="text-4xl font-bold mb-8 text-center">${values["name"]}</h1>
 
   <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-2 gap-10">
-        
+
 <div class="row-span-3">
                   <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${values["card_id"]}.png" alt="Image ${values["card_id"]}" />
 </div>
@@ -69,7 +83,7 @@
 </div>
 
 <div class="text-center">
-<h2>Number in Deck1: ${num_deck1}</h2> 
+<h2>Number in Deck1: ${num_deck1}</h2>
 
 <a
             href="/addDeck1/${values["card_id"]}"
@@ -87,7 +101,7 @@
 <br>
 <br>
 
-<h2>Number in Deck2: ${num_deck2}</h2> 
+<h2>Number in Deck2: ${num_deck2}</h2>
 
 
 <a
@@ -117,7 +131,7 @@
 <br>
 <br>
 
-`);   
+`);
 
 
 deck1=deck1.split(";");
@@ -141,7 +155,7 @@ for (var i=0;i<deck1.length;i++){
 }
 for(var i=0;i<5-deck1.length;i++){
     document.write(`
-<div class="content-center gap-4 rounded-lg bg-white p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
+<div class="content-center gap-4 rounded-lg bg-gray-800 p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
 <h1 class="text-center">Empty</h1>
 </div>
 
@@ -174,7 +188,7 @@ for (var i=0;i<deck2.length;i++){
 }
 for(var i=0;i<5-deck2.length;i++){
     document.write(`
-<div class="content-center gap-4 rounded-lg bg-white p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
+<div class="content-center gap-4 rounded-lg bg-gray-800 p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
 <h1 class="text-center">Empty</h1>
 </div>
 

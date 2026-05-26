@@ -79,7 +79,7 @@ def game():
     data = file.read().replace("\n", "\\n")
     return render_template("jstest.html", testingtesting = data)
 
-@app.route("/profile", methods = ["GET", "POST"])
+@app.route("/profile", methods=['GET', 'POST'])
 def profile():
     profile_icons = [
         "/static/profilepic/pic1.png",
@@ -104,6 +104,7 @@ def profile():
 
         if request.method == 'POST' and 'profile_icon' in request.form:
             icon = request.form.get("profile_icon")
+            print(f"\n{icon}\n")
             c.execute("UPDATE users SET img = ? WHERE username = ?", (icon, session["username"]))
             db.commit()
             return redirect(url_for('profile'))
