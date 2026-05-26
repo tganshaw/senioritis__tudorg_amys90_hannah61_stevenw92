@@ -5,37 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
   <style>
   body{
-    padding:10px;
-    background-color:lightblue;
-    color:black;
-    font-family: Pokemon;
-  }
-
-  @font-face{
-    font-family: Pokemon;
-    src: url(Pokemon-byFG.ttf)
+    padding:0px;
+    background-color:#900020;
+    color:white;
+    font-family: "Anta";
   }
   </style>
 </head>
 
 <body>
-  <nav class=" bg-gray-400 border-b">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-
-    <a href="/encyclopedia" >
-      Encyclopedia
-    </a>
+  <nav class="bg-gray-800 border-b">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-evenly">
 
     <ul class="flex space-x-4">
-        <a href="/game" class=" hover:text-black">
-          Game
+        <a href="/encyclopedia" class=" hover:text-red-600">
+          Encyclopedia
         </a>
     </ul>
 
     <ul class="flex space-x-4">
-        <a href="/" class=" hover:text-black">
+        <a href="/game" class=" hover:text-red-600">
+          Game
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4 text-blue-700">
+        <a href="/" class=" hover:text-red-600">
           Profile
         </a>
     </ul>
@@ -44,6 +44,7 @@
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Logout</button>
   </form>
 </ul>
+</div>
 </nav>
 
 <div class="p-8">
@@ -53,7 +54,7 @@
   <br>
   <br>
       <div class="text-center group flex items-center" css="display:block; margin-left:auto; margin-right:auto;">
-        <blockquote class="text-center text-2xl font-semibold text-gray-900 italic dark:text-white">
+        <blockquote class="text-center text-2xl font-semibold text-gray-900 dark:text-white">
           User:
           <span class="relative inline-block before:absolute before:-inset-1 before:block before:bg-blue-500">
             <span class="relative text-white dark:text-gray-950">{{user}}</span>

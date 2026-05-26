@@ -5,24 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Encyclopedia</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+  <style>
+  body{
+    padding:0px;
+    background-color:#900020;
+    color:white;
+    font-family: "Anta";
+  }
+  </style>
 </head>
 
-<body class="bg-gray-100">
-  <nav class=" bg-gray-400 border-b">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+<body>
+  <nav class="bg-gray-800 border-b">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-evenly">
 
-    <a href="/encyclopedia" >
-      Encyclopedia
-    </a>
+    <ul class="flex space-x-4 text-blue-700">
+        <a href="/encyclopedia" class=" hover:text-red-600">
+          Encyclopedia
+        </a>
+    </ul>
 
     <ul class="flex space-x-4">
-        <a href="/game" class=" hover:text-black">
+        <a href="/game" class=" hover:text-red-600">
           Game
         </a>
     </ul>
 
     <ul class="flex space-x-4">
-        <a href="/" class=" hover:text-black">
+        <a href="/" class=" hover:text-red-600">
           Profile
         </a>
     </ul>
@@ -31,6 +44,7 @@
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Logout</button>
   </form>
 </ul>
+</div>
 </nav>
 
 <div class="p-8">
@@ -50,7 +64,7 @@
 
       for (let i = 1; i < data.length; i++) {
         document.write(`
-          <div class="bg-white block max-w-sm border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+          <div class="block max-w-sm border border-gray-200 rounded-xl shadow-sm overflow-hidden">
               <a href="/card/${data[i][0]}">
                   <img class="w-full aspect-63/88 object-cover" src="../static/cards/${data[i][0]}.png" alt="Image ${data[i][0]}" />
               </a>
