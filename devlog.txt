@@ -100,7 +100,16 @@ tudorG -- 2026-05-19 18:00
 tudorG -- 2026-05-20 19:00
 - Implementing buffers
 
+hannahG --2026-05-21 11:00
+- Created and finished the mechanic to add cards to your deck via the encyclopedia/cards page
 
+tudorG -- 2026-05-21 18:00
+- Finished Yu force swap & Stephan destiny bond
 
+hannahG --2026-05-22 11:00
+- Added feature to see current deck in cards page
+- updated nav bar to be more aestetically pleasing and uniform across pages
 
-
+tudorG -- 2026-05-25 20:00
+- Added 2 missing cards
+- Replaced pfp templates
