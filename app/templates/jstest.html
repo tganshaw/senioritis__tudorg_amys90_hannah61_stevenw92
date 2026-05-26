@@ -39,19 +39,13 @@
 <script>
 
 /*
-    Order of events:
-        - DEATH ## DONE
-        - Winning ## DONE
-        - Multi target attacks ## DONE
-        - Buffing allies ## DONE
-        - Yu ## DONE
-        - Stephan ## DONE
-        - Citron
         - Novillo
+            - citron
+            - novillo
 */
 
-const set_1 = "7;13;9;0;7;18;12;8".split(";");
-const set_2 = "14;19;20;0;3;15;2;24".split(";");
+const set_1 = "7;13;9;0;3;18;12;8".split(";");
+const set_2 = "14;19;20;0;16;15;2;24".split(";");
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -360,7 +354,7 @@ function oppAddAttack()
     else
     {
         
-        if(buffers_arr.includes(opp_card["card_id"]))
+        if(buffers_arr.includes(parseInt(opp_card["card_id"])))
         {
             var num_cards = 0;
             var rand_swap = parseInt(document.getElementById(`opp-${Math.floor((Math.random() * 4) + 5)}-button`).value);
@@ -459,6 +453,31 @@ function oppAddAttack()
                         action_list.push(new action(active_card["game_id"], parseInt(active_button.value), 1, parseInt(opp_card["spd"])));
                     }
                 }
+                if(active_card["card_id"] == 5)
+                {
+                    var num_cards = 0;
+                    var rand_swap = Math.floor(Math.random() * 4);
+                        while(all_cards[rand_swap]["current_hp"] <= 0)
+                        {
+                            rand_swap = Math.floor(Math.random() * 4);
+                            num_cards++;
+                            if(num_cards > 4){break;}
+                        }
+                    if(all_cards[rand_swap]["current_hp"] > 0)
+                    {
+                        action_list.push(new action(rand_swap, rand_swap, -2, parseInt(opp_card["spd"])));
+                        console.log(action_list[1]);
+                    }
+                    else
+                    {
+                        action_list.push(new action(active_card["game_id"], parseInt(active_button.value), 1, parseInt(opp_card["spd"])));
+                    }
+                }
+                if(active_card["card_id"] == 16)
+                {
+                    opp_card["atk"] = parseInt(opp_card["atk"]) + 1915;
+                    action_list.push(new action (opp_card["game_id"], parseInt(active_button.value), 1915, parseInt(opp_card["spd"])));
+                }
             }
         }
     }
@@ -510,6 +529,10 @@ function yuSwap()
     var user = parseInt(document.getElementById("active-button").value);
     var user_card = all_cards[user];
     var target = parseInt(document.getElementById("swap-target").value);
+    if(user_card["card_id"] == 3)
+    {
+        user = target;
+    }
     if(parseInt(document.getElementById("swap-target").value) == -1)
     {
         target = parseInt(document.getElementById("opp-active-button").value);
@@ -665,7 +688,26 @@ function addAttack()
                         
                         var buff_button = document.getElementById("send-buff");
                         buff_button.addEventListener("click", sendBuff);
-                    } 
+                    }
+                    if(opp_card["card_id"] == 5)
+                    {
+                        get_target.innerHTML += "TARGET: <select id='swap-target'>\n</select>\n<button id='send-swap'>CONFIRM</button>";
+                        var swap_select = document.getElementById("swap-target");
+                        for(let x = 5; x < 9; x++)
+                        {
+                            swap_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`opp-${x}-button`).value)]["name"]}</option>\n`
+                        }
+                        swap_select.innerHTML += `<option value=-1>Attack</option>\n`
+                        
+                        var swap_button = document.getElementById("send-swap");
+                        swap_button.addEventListener("click", yuSwap);
+                    }
+                    if(opp_card["card_id"] == 16)
+                    {
+                        active_card["atk"] = parseInt(active_card["atk"]) +  1915;
+                        action_list.push(new action(active_card["game_id"], parseInt(opp_button.value), 1915, parseInt(active_card["spd"])));
+                        current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
+                    }
                 }
             }
         }
@@ -791,7 +833,7 @@ function play_actions()
                     {
                         multiAttack(this_action["user"]);
                     }
-                    else if(all_cards[this_action["user"]]["card_id"] == 16)
+                    else if(all_cards[this_action["user"]]["card_id"] == 16 || all_cards[this_action["user"]]["atk"] > 1900)
                     {
                         all_cards[this_action["user"]]["atk"] = all_cards[this_action["user"]]["atk"] + 1915;
                         attackCard(this_action["user"], this_action["target"]);
