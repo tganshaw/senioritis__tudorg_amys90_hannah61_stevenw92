@@ -79,6 +79,14 @@ def game():
     data = file.read().replace("\n", "\\n")
     return render_template("jstest.html", testingtesting = data)
 
+@app.route("/win")
+def win():
+    return render_template("win.html")
+    
+@app.route("/lose")
+def lose():
+    return render_template("lose.html")
+    
 @app.route("/profile", methods=['GET', 'POST'])
 def profile():
     profile_icons = [

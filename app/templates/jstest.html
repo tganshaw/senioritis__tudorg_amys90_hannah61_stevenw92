@@ -44,8 +44,8 @@
             - novillo
 */
 
-const set_1 = "7;13;9;0;3;18;12;8".split(";");
-const set_2 = "14;19;20;0;16;15;2;24".split(";");
+const set_1 = "7;13;9;0;6;18;12;8".split(";");
+const set_2 = "14;19;20;0;6;15;2;24".split(";");
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -89,8 +89,8 @@ var debuffers_arr = [
                     10 // 1as-
                 ];
                 
-var copy_pasted = 0;
-var opp_copy_pasted = 0;
+var special_used = 0;
+var opp_special_used = 0;
 
 setYourDeck(cards_1);
 add_swap_id(4);
@@ -132,7 +132,10 @@ function botRandomAction()
                         oppAddAttack();
                     }
                     else
-                        {action_list.push(new action(rand_swap, rand_swap, -3, all_cards[rand_swap]["spd"]));}
+                        {
+                            opp_special_used = 0;
+                            action_list.push(new action(rand_swap, rand_swap, -3, all_cards[rand_swap]["spd"]));
+                        }
                 }
                 else
                 {
@@ -301,8 +304,8 @@ function updateStats()
     console.log(`You have ${your_cards_alive} cards alive on field. Your opponent has ${opp_cards_alive} cards alive on field.`);
     if(just_starting != 0)
     {
-        if(your_cards_alive == 0){window.location.assign("/youlost");}
-        if(opp_cards_alive == 0){window.location.assign("/youwon");}
+        if(your_cards_alive == 0){window.location.assign("/lose");}
+        if(opp_cards_alive == 0){window.location.assign("/win");}
     }
 }
 
@@ -339,21 +342,21 @@ function oppAddAttack()
     var opp_button = document.getElementById("opp-active-button");
     var opp_card = all_cards[parseInt(opp_button.value)];
     
-    if(opp_card["atk"] != "-1")
+    if(opp_card["atk"] != "-1" || opp_special_used != 0)
     {
-    
+        opp_special_used = 0;
         var total_atk = parseInt(opp_card["atk"]) + opp_card["buffs"];
         
         var total_def = parseInt(active_card["def"]) + active_card["buffs"];
         
         var dmg_dealt = total_atk - total_def;
         if(dmg_dealt < 1){dmg_dealt = 1;}
-    
+        
         action_list.push(new action(parseInt(opp_button.value), parseInt(active_button.value), dmg_dealt, parseInt(opp_card["spd"])));
     }
     else
     {
-        
+        opp_special_used++;
         if(buffers_arr.includes(parseInt(opp_card["card_id"])))
         {
             var num_cards = 0;
@@ -371,6 +374,32 @@ function oppAddAttack()
             else
             {
                 action_list.push(new action(opp_card["game_id"], parseInt(active_button.value), 1, parseInt(opp_card["spd"])));
+            }
+        }
+        if(debuffers_arr.includes(parseInt(opp_card["card_id"])))
+        {
+            if(parseInt(opp_card["card_id"]) == 10)
+            {
+                var num_cards = 0;
+                var rand_swap = Math.floor(Math.random() * 4);
+                    while(all_cards[rand_swap]["current_hp"] <= 0)
+                    {
+                        rand_swap = Math.floor(Math.random() * 4);
+                        num_cards++;
+                        if(num_cards > 4){break;}
+                    }
+                if(all_cards[rand_swap]["current_hp"] > 0)
+                {
+                    action_list.push(new action(opp_card["game_id"], rand_swap, -1, parseInt(opp_card["spd"])));
+                }
+                else
+                {
+                    action_list.push(new action(opp_card["game_id"], parseInt(active_button.value), 1, parseInt(opp_card["spd"])));
+                }
+            }
+            if(opp_card["card_id"] == 6)
+            {
+                action_list.push(new action(opp_card["game_id"], parseInt(active_button.value), -1, parseInt(opp_card["spd"])));
             }
         }
         if(opp_card["card_id"] == 5)
@@ -507,7 +536,14 @@ function sendBuff()
         action_list.push(new action(user, target, 1, parseInt(user_card["spd"])));
     }
     else{
-        target = parseInt(document.getElementById(`${target}-button`).value);
+        if(user_card["card_id"] != 10)
+        {
+            target = parseInt(document.getElementById(`${target}-button`).value);
+        }
+        else
+        {
+            target = parseInt(document.getElementById(`opp-${target}-button`).value);
+        }
         console.log("Buffing " + target);
         if(all_cards[target]["current_hp"] <= 0)
         {
@@ -597,7 +633,7 @@ function addAttack()
         var opp_button = document.getElementById("opp-active-button");
         var opp_card = all_cards[parseInt(opp_button.value)];
         
-        if(active_card["atk"] != "-1")
+        if(active_card["atk"] != "-1" || special_used != 0)
         {
         
             var total_atk = parseInt(active_card["atk"]) + active_card["buffs"];
@@ -607,8 +643,16 @@ function addAttack()
             var dmg_dealt = total_atk - total_def;
             if(dmg_dealt < 1){dmg_dealt = 1;}
         
+            
             action_list.push(new action(parseInt(active_button.value), parseInt(opp_button.value), dmg_dealt, parseInt(active_card["spd"])));
-            current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
+            if(active_card["atk"] != -1)
+            {
+                current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
+            }
+            else
+            {
+                current_action.innerHTML = `Special was used last turn. ${active_card["name"]} will attack instead.`;
+            }
         }
         else
         {
@@ -625,6 +669,25 @@ function addAttack()
                 
                 var buff_button = document.getElementById("send-buff");
                 buff_button.addEventListener("click", sendBuff);
+            }
+            if(active_card["card_id"] == 10)
+            {
+                get_target.innerHTML += "TARGET: <select id='buff-target'>\n</select>\n<button id='send-buff'>CONFIRM</button>";
+                var buff_select = document.getElementById("buff-target");
+                for(let x = 5; x < 9; x++)
+                {
+                    buff_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`opp-${x}-button`).value)]["name"]}</option>\n`
+                }
+                buff_select.innerHTML += `<option value=-1>Attack</option>\n`
+                
+                
+                var buff_button = document.getElementById("send-buff");
+                buff_button.addEventListener("click", sendBuff);
+            }
+            if(active_card["card_id"] == 6)
+            {
+                action_list.push(new action(parseInt(active_button.value), parseInt(opp_button.value), -1, parseInt(active_card["spd"])));
+                current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
             }
             if(active_card["card_id"] == 5)
             {
@@ -813,6 +876,11 @@ function play_actions()
     {
         const this_action = action_list[i];
         const this_user = all_cards[this_action["user"]];
+        
+        if(this_user["game_id"] < 5 || ( this_user["game_id"] > 9 && this_user["game_id"] < 13))
+        {
+             special_used = 0;   
+        }
         if(this_user["current_hp"] > 0)
         {
             if(this_action.value == -2)
@@ -857,6 +925,10 @@ function play_actions()
             }
             if(this_action.value == -1)
             {  
+                if(this_user["game_id"] < 5 || ( this_user["game_id"] > 9 && this_user["game_id"] < 13))
+                {
+                     special_used++;   
+                }
                 var target_card = all_cards[this_action["target"]];
                 if(buffers_arr.includes(parseInt(this_user["card_id"])))
                 {
@@ -871,6 +943,32 @@ function play_actions()
                     else
                     {
                         target_card["buffs"] += 1;
+                    }
+                }
+                if(debuffers_arr.includes(parseInt(this_user["card_id"])))
+                {
+                    if(this_user["card_id"] == 10)
+                    {
+                        target_card["buffs"] -= 1;
+                    }
+                    if(this_user["card_id"] == 6)
+                    {
+                        if(this_user["game_id"] < 5 || ( this_user["game_id"] > 9 && this_user["game_id"] < 13))
+                        {
+                            for(let i = 5; i < 9; i++)
+                            {
+                                var card_here = all_cards[parseInt(document.getElementById(`opp-${i}-button`).value)];
+                                card_here["buffs"] -= 2;
+                            }
+                        }
+                        else
+                        {
+                            for(let i = 0; i < 4; i++)
+                            {
+                                var card_here = all_cards[parseInt(document.getElementById(`${i}-button`).value)];
+                                card_here["buffs"] -= 2;
+                            }
+                        }
                     }
                 }
                 if(parseInt(this_user["card_id"]) == 11)
@@ -888,6 +986,7 @@ function play_actions()
     }
     made_action = 0;
     current_action.innerHTML = "No Action Selected"
+    document.getElementById("get-target").innerHTML = "";
     updateStats();
     console.log("-------END TURN-------");
     }

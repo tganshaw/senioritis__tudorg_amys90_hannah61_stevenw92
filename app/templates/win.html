@@ -1,0 +1,44 @@
+<style id="style">
+
+</style>
+
+
+
+<p>
+you win!
+hooray!
+yippee!
+</p>
+
+<div class = "background-tint">
+<img src="https://ih1.redbubble.net/image.511602851.1011/raf,360x360,075,t,fafafa:ca443f4786.u1.jpg">
+<img src="https://www.beyondhorizons.biz/wp-content/uploads/2016/10/celebration.jpg">
+<img src="https://images.huffingtonpost.com/2014-05-29-iStockHuffPostCelebrationMay2920142-thumb.jpg">
+<img src="https://i0.wp.com/justmaths.co.uk/wp-content/uploads/2016/10/celebration-gif.gif?ssl=1">
+<img height=350 src="https://edit.funimada.com/assets/images/500/background-1000.gif">
+</div>
+
+<script>
+
+setInterval(changeColor, 500);
+
+// Source - https://stackoverflow.com/a/1484514
+// Posted by Anatoliy, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-05-21, License - CC BY-SA 3.0
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function changeColor()
+{
+  var style_tag = document.getElementById("style");
+  style_tag.innerHTML = `p\{color:${getRandomColor()}\}\n.navbar\{background-color:${getRandomColor()}\}\nbody\{background-color:${getRandomColor()};background-blend-mode: multiply\}`;
+}
+
+</script>
