@@ -19,7 +19,7 @@ card_id,name,max_hp,atk,def,spd,atk_name,atk_desc
 17,Dr.Winkel,14,2,4,2,Put Away Your Phone,Deals 2 points of damage to a single enemy unit.
 18,Ms.Markova,11,5,3,3,Fitness Gram Pacer Test,Deals 5 points of damage to a single enemy unit.
 19,Mr.Choubaralian,13,4,3,6,Spinning Rollerblades,Deals 4 points of damage to a single enemy unit.
-20,Ms.Choy,12,3,4,2,Swim Test,Deals 3 points of damage to a single enemy unit.
+20,Ms.Choy,13,3,4,2,Swim Test,Deals 3 points of damage to a single enemy unit.
 21,Mr.Jaishankar,15,4,3,1,Anti-Senioritis,Deals 4 points of damage to a single enemy unit.
 22,Mr.Jumash,11,1,4,2,Distribution,Deals 1 point of damage to all enemy units.
 23,Mr.Hiller,10,6,1,4,Forgotten Chain Rule,Deals 6 points of damage to a single enemy unit.

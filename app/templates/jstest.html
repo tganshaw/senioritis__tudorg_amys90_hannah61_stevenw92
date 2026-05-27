@@ -44,8 +44,8 @@
             - novillo
 */
 
-const set_1 = "7;13;9;0;6;18;12;8".split(";");
-const set_2 = "14;19;20;0;6;15;2;24".split(";");
+const set_1 = "7;13;9;0;3;18;12;8".split(";");
+const set_2 = "14;19;20;0;22;15;2;24".split(";");
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -79,6 +79,12 @@ var current_action = document.getElementById("current-action");
 
 var just_starting = 0;
 
+var multiers_arr = [
+    0,
+    22,
+    "0",
+    "22"
+];
 var buffers_arr = [
                     7, // 2hs+
                     9, // 1ds+
@@ -724,7 +730,7 @@ function addAttack()
             if(active_card["card_id"] == 3)
             {
                 var opp_id = opp_card["card_id"];
-                if(opp_card["atk"] != "-1")
+                if(opp_card["atk"] != -1)
                 {
                      var total_atk = parseInt(opp_card["atk"]) + opp_card["buffs"];
             
@@ -826,7 +832,13 @@ function setTheirDeck(deck)
 
 function multiAttack(card_id)
 {
+    console.log("mult");
     const isOpp = (card_id > 4 && card_id < 10) || (card_id > 12);
+    var attack = all_cards[card_id]["atk"];
+    if(all_cards[card_id]["card_id"] == 3)
+    {
+        attack = all_cards[parseInt(document.getElementById("opp-active-button").value)]["atk"];
+    }
     if(!isOpp)
     {
         for(let i = 5; i < 9; i++)
@@ -897,7 +909,8 @@ function play_actions()
                 if(all_cards[this_action["user"]]["current_hp"] > 0)
                 {
                     console.log(`${all_cards[this_action["user"]]["name"]} attacks.`)
-                    if(this_action["user"] == 0 || this_action["user"] == 22) // Mykolyk & Jumash are the only ones w/ multiattacks
+                    console.log(multiers_arr.includes(all_cards[this_action["user"]]["card_id"]));
+                    if(multiers_arr.includes(all_cards[this_action["user"]]["card_id"]) || (all_cards[this_action["user"]]["card_id"] == 3 && multiers_arr.includes(all_cards[this_action["target"]]["card_id"])))
                     {
                         multiAttack(this_action["user"]);
                     }

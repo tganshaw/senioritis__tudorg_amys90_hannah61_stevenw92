@@ -113,3 +113,8 @@ hannahG --2026-05-22 11:00
 tudorG -- 2026-05-25 20:00
 - Added 2 missing cards
 - Replaced pfp templates
+
+tudorG -- 2026-05-27 19:00
+- Fixing multiattacks
+- Adding many bug fixes
+- Adding debuffs to the game
