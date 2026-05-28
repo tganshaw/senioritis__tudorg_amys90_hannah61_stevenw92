@@ -118,3 +118,4 @@ tudorG -- 2026-05-27 19:00
 - Fixing multiattacks
 - Adding many bug fixes
 - Adding debuffs to the game
+- Made buffs show under cards
