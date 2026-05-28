@@ -107,7 +107,7 @@ def game():
     opp_deck = ""
     opp_deck_arr = []
     for i in range(0,8):
-        opp_deck_arr.append(str(random.randint(0, NUM_CARDS)))
+        opp_deck_arr.append(str(random.randint(0, NUM_CARDS - 1)))
     
     opp_deck = ";".join(opp_deck_arr)
     file = open("Data/cards.csv")

@@ -258,6 +258,11 @@ function updateStats()
             }
             this_hp.innerHTML = `HP: ${all_cards[this_button.value]["current_hp"]}`;
         }
+        var this_buffs = document.getElementById(`${i}-buffs`);
+        if(this_buffs)
+        {
+            this_buffs.innerHTML = `Buffs: ${all_cards[this_button.value]["buffs"]}`;
+        }
     }
     for(let i = 5; i < 9; i++)
     {
@@ -277,6 +282,11 @@ function updateStats()
             }
             this_hp.innerHTML = `HP: ${all_cards[this_button.value]["current_hp"]}`;
         }
+        var this_buffs = document.getElementById(`opp-${i}-buffs`);
+        if(this_buffs)
+        {
+            this_buffs.innerHTML = `Buffs: ${all_cards[this_button.value]["buffs"]}`;
+        }
     }
     var active_button = document.getElementById("active-button");
     var active_hp = document.getElementById("active-hp");
@@ -294,6 +304,11 @@ function updateStats()
 
         active_hp.innerHTML = `HP: ${all_cards[active_button.value]["current_hp"]}`;
     }
+    var active_buffs = document.getElementById(`active-buffs`);
+    if(active_buffs)
+    {
+        active_buffs.innerHTML = `Buffs: ${all_cards[active_button.value]["buffs"]}`;
+    }
     var opp_active_button = document.getElementById("opp-active-button");
     var opp_active_hp = document.getElementById("opp-active-hp");
     if(opp_active_hp)
@@ -307,6 +322,11 @@ function updateStats()
             var res_swapped_opp = swapBotReserveActive();
         }
         opp_active_hp.innerHTML = `HP: ${all_cards[opp_active_button.value]["current_hp"]}`;
+    }
+    var opp_active_buffs = document.getElementById(`opp-active-buffs`);
+    if(opp_active_buffs)
+    {
+        opp_active_buffs.innerHTML = `Buffs: ${all_cards[opp_active_button.value]["buffs"]}`;
     }
     
     console.log(`You have ${your_cards_alive} cards alive on field. Your opponent has ${opp_cards_alive} cards alive on field.`);
@@ -322,17 +342,18 @@ function showStats()
     for(let i = 0; i < 4; i++)
     {
         var this_button = document.getElementById(`${i}-button`);
-        this_button.innerHTML += `<p id="${i}-hp">HP: ${all_cards[this_button.value]["current_hp"]}</p>`
+        this_button.innerHTML += `<p id="${i}-hp">HP: ${all_cards[this_button.value]["current_hp"]}</p><p id="${i}-buffs">Buffs: ${all_cards[this_button.value]["buffs"]}</p>`;
+        
     }
     for(let i = 5; i < 9; i++)
     {
         var this_button = document.getElementById(`opp-${i}-button`);
-        this_button.innerHTML += `<p id="opp-${i}-hp">HP: ${all_cards[this_button.value]["current_hp"]}</p>`
+        this_button.innerHTML += `<p id="opp-${i}-hp">HP: ${all_cards[this_button.value]["current_hp"]}</p>\n<p id="opp-${i}-buffs">Buffs: ${all_cards[this_button.value]["buffs"]}</p>`;
     }
     var active_button = document.getElementById("active-button");
-    active_button.innerHTML += `<p id="active-hp">HP: ${all_cards[active_button.value]["current_hp"]}</p>`
+    active_button.innerHTML += `<p id="active-hp">HP: ${all_cards[active_button.value]["current_hp"]}</p>\n<p id="active-buffs">Buffs: ${all_cards[active_button.value]["buffs"]}</p>`;
     var opp_active_button = document.getElementById("opp-active-button");
-    opp_active_button.innerHTML += `<p id="opp-active-hp">HP: ${all_cards[opp_active_button.value]["current_hp"]}</p>`
+    opp_active_button.innerHTML += `<p id="opp-active-hp">HP: ${all_cards[opp_active_button.value]["current_hp"]}</p>\n<p id="opp-active-buffs">Buffs: ${all_cards[opp_active_button.value]["buffs"]}</p>`;
 }
 
 function setActive()
@@ -573,6 +594,7 @@ function yuSwap()
     var user = parseInt(document.getElementById("active-button").value);
     var user_card = all_cards[user];
     var target = parseInt(document.getElementById("swap-target").value);
+    console.log(target);
     if(user_card["card_id"] == 3)
     {
         user = target;
@@ -585,7 +607,6 @@ function yuSwap()
     }
     else
     {
-        target = parseInt(document.getElementById(`opp-${target}-button`).value);
         console.log("Swapping " + target);
         if(all_cards[target]["current_hp"] <= 0)
         {
@@ -1059,6 +1080,7 @@ function action(user, target, value, speed)
 
 function testOppActive(game_id)
 {
+    console.log(game_id);
     var active_value = document.getElementById("opp-active-button").value;
     const av1 = active_value;
     var active_button = document.getElementById("opp-active-button");
