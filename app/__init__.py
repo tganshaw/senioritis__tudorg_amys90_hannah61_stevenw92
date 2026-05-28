@@ -5,6 +5,10 @@ import sqlite3
 import random
 import urllib
 
+
+MAX_DECK_SIZE = 8
+NUM_CARDS = 25
+
 app = Flask(__name__)
 
 app.secret_key = "er34546;'546;'3;'3453453kl345l;45k34905uidkldg593495io;dfop"
@@ -73,11 +77,42 @@ def main():
 
 @app.route("/game")
 def game():
-    # if 'username' not in session:
-    #     return redirect("/")
+    if 'username' not in session:
+        return redirect(url_for("loginhtml"))
+        
+    check_deck = ""
+    with sqlite3.connect(DB_NAME) as db:
+        c = db.cursor()
+        c.execute("SELECT deck1 FROM users WHERE username = ?", (session["username"],))
+        check_deck = c.fetchone()
+        
+        if check_deck is not None:
+            check_deck = check_deck[0]
+        else:
+            check_deck = ""
+        
+    if check_deck == "":
+        return redirect(url_for("encyclopedia"))
+        
+    if(check_deck[0] == ";"):
+        check_deck = check_deck[1::]
+        
+    
+    deck_arr = check_deck.split(";");
+    if(len(deck_arr) != 8):
+        return redirect(url_for("encyclopedia"))
+    random.shuffle(deck_arr)
+    check_deck = ";".join(deck_arr)
+    
+    opp_deck = ""
+    opp_deck_arr = []
+    for i in range(0,8):
+        opp_deck_arr.append(str(random.randint(0, NUM_CARDS)))
+    
+    opp_deck = ";".join(opp_deck_arr)
     file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
-    return render_template("jstest.html", testingtesting = data)
+    return render_template("jstest.html", testingtesting = data, user_deck = check_deck, opp_deck = opp_deck)
 
 @app.route("/win")
 def win():
@@ -146,7 +181,7 @@ def addD1(card_id):
     c.execute("SELECT * FROM users where username=?;",(username,))
     deck=c.fetchall()
     deck=deck[0][4]
-    if(deck.count(str(card_id))<2 and deck.count(";")<5):
+    if(deck.count(str(card_id))<2 and deck.count(";")< MAX_DECK_SIZE):
         deck+=";"+card_id
         print(deck)
         c.execute("UPDATE users SET deck1=? where username=?",(deck,username,))
@@ -177,7 +212,7 @@ def addD2(card_id):
     c.execute("SELECT * FROM users where username=?;",(username,))
     deck=c.fetchall()
     deck=deck[0][5]
-    if(deck.count(str(card_id))<2 and deck.count(";")<5):
+    if(deck.count(str(card_id))<2 and deck.count(";")< MAX_DECK_SIZE):
         deck+=";"+card_id
         c.execute("UPDATE users SET deck2=? where username=?",(deck,username,))
         db.commit()
