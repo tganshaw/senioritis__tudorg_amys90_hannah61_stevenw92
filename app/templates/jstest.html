@@ -16,6 +16,9 @@
     }
 }
 
+.opp-img{
+    filter: hue-rotate(300deg) saturate(125%) contrast(125%) blur({{hard_mode}}px) grayscale({{hard_mode}}%);
+}
 </style>
     
 <h1 id = "current-action">No Action Selected</h1>
@@ -29,7 +32,7 @@
 </button>
 
 <button id ="opp-active-button" value="-1">
-<img id="opp-active-card" width=245 height=337></img>
+<img id="opp-active-card" width=245 height=337 class = "opp-img"></img>
 </button>
 
 <br><br>
@@ -847,7 +850,7 @@ function setTheirDeck(deck)
     {
         var playfield = document.getElementById("playfield")
         playfield.innerHTML += `<button id="opp-${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
-        <img id = "opp-${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
+        <img id = "opp-${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337 class = "opp-img"></img>\n
         </button>\n
         \n`;
     }
@@ -1105,9 +1108,9 @@ function testOppActive(game_id)
     const as1 = active_source;
     var active_img = document.getElementById("opp-active-card");
     
-    var swap_source = document.getElementById(`opp-${sv1}-card`).src;
+    var swap_source = document.getElementById(`opp-${game_id}-card`).src;
     const ss1 = swap_source;
-    var swap_img = document.getElementById(`opp-${sv1}-card`);
+    var swap_img = document.getElementById(`opp-${game_id}-card`);
     
     const temp_source = active_source;
     
@@ -1115,7 +1118,7 @@ function testOppActive(game_id)
     if(parseInt(av1) != -1)
     {
         swap_img.src = as1;
-        swap_img.id = `opp-${av1}-card`;
+        // swap_img.id = `opp-${av1}-card`;
     }
     
     if(parseInt(active_value) == -1)

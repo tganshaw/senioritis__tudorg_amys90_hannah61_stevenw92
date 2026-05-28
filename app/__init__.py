@@ -112,7 +112,11 @@ def game():
     opp_deck = ";".join(opp_deck_arr)
     file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
-    return render_template("jstest.html", testingtesting = data, user_deck = check_deck, opp_deck = opp_deck)
+    
+    hardmode = 0
+    if "hard" in request.args:
+        hardmode = 20
+    return render_template("jstest.html", testingtesting = data, user_deck = check_deck, opp_deck = opp_deck, hard_mode = hardmode)
 
 @app.route("/win")
 def win():
@@ -181,6 +185,8 @@ def addD1(card_id):
     c.execute("SELECT * FROM users where username=?;",(username,))
     deck=c.fetchall()
     deck=deck[0][4]
+    if deck is None:
+        deck = ""
     if(deck.count(str(card_id))<2 and deck.count(";")< MAX_DECK_SIZE):
         deck+=";"+card_id
         print(deck)
