@@ -103,6 +103,10 @@ tudorG -- 2026-05-20 19:00
 hannahG --2026-05-21 11:00
 - Created and finished the mechanic to add cards to your deck via the encyclopedia/cards page
 
+amyS -- 2026-05-21 11:00
+- fix profile picture
+- styling to profile
+
 tudorG -- 2026-05-21 18:00
 - Finished Yu force swap & Stephan destiny bond
 
@@ -114,8 +118,16 @@ tudorG -- 2026-05-25 20:00
 - Added 2 missing cards
 - Replaced pfp templates
 
+amyS -- 2026-05-26 10:50
+- add CSS
+
 tudorG -- 2026-05-27 19:00
 - Fixing multiattacks
 - Adding many bug fixes
 - Adding debuffs to the game
 - Made buffs show under cards
+
+amyS -- 2026-05-28 21:28
+- fixed styling of game, added header
+- fix styling of card decks
+- fix logout
