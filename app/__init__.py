@@ -79,40 +79,40 @@ def main():
 def game():
     if 'username' not in session:
         return redirect(url_for("loginhtml"))
-        
+
     check_deck = ""
     with sqlite3.connect(DB_NAME) as db:
         c = db.cursor()
         c.execute("SELECT deck1 FROM users WHERE username = ?", (session["username"],))
         check_deck = c.fetchone()
-        
+
         if check_deck is not None:
             check_deck = check_deck[0]
         else:
             check_deck = ""
-        
+
     if check_deck == "":
         return redirect(url_for("encyclopedia"))
-        
+
     if(check_deck[0] == ";"):
         check_deck = check_deck[1::]
-        
-    
+
+
     deck_arr = check_deck.split(";");
     if(len(deck_arr) != 8):
         return redirect(url_for("encyclopedia"))
     random.shuffle(deck_arr)
     check_deck = ";".join(deck_arr)
-    
+
     opp_deck = ""
     opp_deck_arr = []
     for i in range(0,8):
         opp_deck_arr.append(str(random.randint(0, NUM_CARDS - 1)))
-    
+
     opp_deck = ";".join(opp_deck_arr)
     file = open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
-    
+
     hardmode = 0
     if "hard" in request.args:
         hardmode = 20
@@ -121,11 +121,11 @@ def game():
 @app.route("/win")
 def win():
     return render_template("win.html")
-    
+
 @app.route("/lose")
 def lose():
     return render_template("lose.html")
-    
+
 @app.route("/profile", methods=['GET', 'POST'])
 def profile():
     profile_icons = [
@@ -240,7 +240,7 @@ def rmD2(card_id):
     db.close()
     return redirect(url_for("card",card_id=card_id))
 
-@app.route("/logout")
+@app.route("/logout", methods=["POST"])
 def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
