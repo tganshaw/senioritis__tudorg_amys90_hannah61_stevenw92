@@ -136,3 +136,6 @@ amyS -- 2026-05-28 22:24
 - fix header placement
 - add decks to profile
 - add clear decks
+
+tudorG -- 2026-05-28 15:00
+- Made enemy cards easier to tell apart from your own cards
