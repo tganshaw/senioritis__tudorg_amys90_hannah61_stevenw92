@@ -15,6 +15,11 @@
     color:white;
     font-family: "Anta";
   }
+
+  #active-text{
+    font-size:120%;
+    margin-bottom:10px;
+  }
   </style>
 </head>
 
@@ -67,7 +72,7 @@
         values[data[0][i]]=data[id][i]
 }
        document.write(`
-          <h1 class="text-4xl font-bold mb-8 text-center">${values["name"]}</h1>
+          <br><br><h1 class="text-4xl font-bold mb-8 text-center">${values["name"]}</h1>
 
   <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-2 gap-10">
 
@@ -138,10 +143,8 @@ deck1=deck1.split(";");
 deck1.shift();
 console.log(deck1);
 document.write(`
-<h1 class="text-center">Deck1:</h1>
-<div class="grid grid-cols-7">
-<div>
-</div>
+<h1 class="sticky top-0 group text-blue-500 text-center" id="active-text">Your Saved Deck 1:</h1>
+<div class="grid grid-cols-8">
 
 `)
 
@@ -153,7 +156,7 @@ for (var i=0;i<deck1.length;i++){
 </div>
 `)
 }
-for(var i=0;i<5-deck1.length;i++){
+for(var i=0;i<8-deck1.length;i++){
     document.write(`
 <div class="content-center gap-4 rounded-lg bg-gray-800 p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
 <h1 class="text-center">Empty</h1>
@@ -172,10 +175,8 @@ document.write(`
 <br>
 <br>
 <br>
-<h1 class="text-center">Deck2:</h1>
-<div class="grid grid-cols-7">
-<div>
-</div>
+<h1 class="sticky top-0 group text-blue-500 text-center" id="active-text">Your Saved Deck 2:</h1>
+<div class="grid grid-cols-8">
 `)
 
 for (var i=0;i<deck2.length;i++){
@@ -186,7 +187,7 @@ for (var i=0;i<deck2.length;i++){
 </div>
 `)
 }
-for(var i=0;i<5-deck2.length;i++){
+for(var i=0;i<8-deck2.length;i++){
     document.write(`
 <div class="content-center gap-4 rounded-lg bg-gray-800 p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
 <h1 class="text-center">Empty</h1>
