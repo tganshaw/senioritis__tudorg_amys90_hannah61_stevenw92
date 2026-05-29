@@ -144,6 +144,8 @@ def profile():
         c = db.cursor()
         c.execute("SELECT * FROM users WHERE username = ?", (session["username"],))
         user = c.fetchone()
+        deck1=user[4]
+        deck2=user[5]
 
         if user is None:
             session.pop("username")
@@ -156,7 +158,10 @@ def profile():
             db.commit()
             return redirect(url_for('profile'))
     sprite = user[3]
-    return render_template("profile.html", profile_icons=profile_icons, user=user[0], sprite=sprite)
+
+    file=open("Data/cards.csv")
+    data = file.read().replace("\n", "\\n")
+    return render_template("profile.html",profile_icons=profile_icons, user=user[0], sprite=sprite,data=data,deck1=deck1,deck2=deck2)
 
 @app.route("/encyclopedia")
 def encyclopedia():

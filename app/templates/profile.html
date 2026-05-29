@@ -15,11 +15,24 @@
     color:white;
     font-family: "Anta";
   }
+
+  #notnav{
+    padding:50px;
+  }
+
+  #active-text{
+    font-size:120%;
+    margin-bottom:10px;
+  }
+
+  #header{
+    font-size:150%;
+  }
   </style>
 </head>
 
 <body>
-  <nav class="bg-gray-800 border-b">
+  <nav class="bg-gray-800 border-b fixed top-0 right-0 left-0 w-full z-50">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-evenly">
 
     <ul class="flex space-x-4">
@@ -47,17 +60,18 @@
 </div>
 </nav>
 
-<div class="p-8">
-
-
-  <br>
-  <br>
+<div class="p-8" id="notnav">
+  <div class="p-8">
+    <br>
+    <br>
+    <h1 class="text-4xl font-bold mb-8 text-center">Profile</h1>
+  </div>
   <br>
       <div class="text-center group flex items-center" css="display:block; margin-left:auto; margin-right:auto;">
-        <blockquote class="text-center text-2xl font-semibold text-gray-900 dark:text-white">
+        <blockquote class="text-center text-2xl font-semibold text-gray-900 dark:text-white" id="header">
           User:
           <span class="relative inline-block before:absolute before:-inset-1 before:block before:bg-blue-500">
-            <span class="relative text-white dark:text-gray-950">{{user}}</span>
+            <span class="relative text-white dark:text-gray-950 italic">{{user}}</span>
           </span>
         </blockquote>
         <img src= "{{ sprite }}" class= "img-fluid h-10 w-10 rounded-full" alt= "profilepic" style="width:150px; height:150px; object-fit:cover;">
@@ -70,7 +84,6 @@
          <div class = "profile-icons ml-3 overflow-hidden">
             {% for icon in profile_icons %}
             <form action = "/profile" method = "POST" style="display: inline;">
-              <form action = "/profile" method = "POST" style="display: inline;">
                <input type = "hidden" name = "profile_icon" value = "{{ icon }}">
                <button type = "submit" class = "icon-button profile-icon">
                <img src = "{{ icon }}" class = "profile-icon h-12 w-12 shrink-0 rounded-full" alt = "Profile Icon {{ loop.index }}" style="width:150px; height:150px; object-fit:cover;">
@@ -78,7 +91,83 @@
             </form>
             {% endfor %}
          </div>
-
       </details>
+    </div>
+
+    <br>
+
+    <div class="p-8" id="notnav">
+        <script>
+          var deck1="{{deck1}}"
+          var deck2="{{deck2}}"
+          var num_deck1=(deck1.split("{{card_id}}").length-1)
+          var num_deck2=(deck2.split("{{card_id}}").length-1)
+
+
+          var data = "{{data}}";
+          const id=parseInt("{{card_id}}")+1
+          data = data.split("\n");
+          for (let i = 0; i<data.length;i++){
+            data[i]=data[i].split(",");
+    }
+
+
+    deck1=deck1.split(";");
+    deck1.shift();
+    console.log(deck1);
+    document.write(`
+    <h1 class="sticky top-0 group text-blue-500 text-center" id="active-text">Your Saved Deck 1:</h1>
+    <div class="grid grid-cols-8">
+
+    `)
+
+    for (var i=0;i<deck1.length;i++){
+        document.write(`
+
+    <div>
+        <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${deck1[i]}.png" alt="Image ${deck1[i]}" />
+    </div>
+    `)
+    }
+    for(var i=0;i<8-deck1.length;i++){
+        document.write(`
+    <div class="content-center gap-4 rounded-lg bg-gray-800 p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
+    <h1 class="text-center">Empty</h1>
+    </div>
+
+    `)
+    }
+
+
+
+    deck2=deck2.split(";");
+    deck2.shift();
+    console.log(deck2);
+    document.write(`
+    </div>
+    <br>
+    <br>
+    <br>
+    <h1 class="sticky top-0 group text-blue-500 text-center" id="active-text">Your Saved Deck 2:</h1><div class="grid grid-cols-8">
+    `)
+
+    for (var i=0;i<deck2.length;i++){
+        document.write(`
+
+    <div>
+        <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${deck2[i]}.png" alt="Image ${deck2[i]}" />
+    </div>
+    `)
+    }
+    for(var i=0;i<8-deck2.length;i++){
+        document.write(`
+    <div class="content-center gap-4 rounded-lg bg-gray-800 p-6 shadow-md outline outline-black/5 dark:bg-gray-800">
+    <h1 class="text-center">Empty</h1>
+    </div>
+
+    `)
+    }
+        </script>
+      </div>
    </body>
 </html>
