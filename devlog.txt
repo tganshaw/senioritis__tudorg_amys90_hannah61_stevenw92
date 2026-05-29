@@ -131,3 +131,7 @@ amyS -- 2026-05-28 21:28
 - fixed styling of game, added header
 - fix styling of card decks
 - fix logout
+
+amyS -- 2026-05-28 22:04
+- fix header placement
+- add decks to profile
