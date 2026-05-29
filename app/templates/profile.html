@@ -28,6 +28,16 @@
   #header{
     font-size:150%;
   }
+
+  #clear-decks{
+    position:relative;
+  }
+
+  #deck2{
+    position: absolute;
+    top:0%;
+    right:0px;
+  }
   </style>
 </head>
 
@@ -94,9 +104,24 @@
       </details>
     </div>
 
+    <div class="p-8" id="notnav">
+
+    <br>
+    <br>
+    <div id="clear-decks">
+    <div id="deck1">
+    <a href="/clearDeck1" type="submit" class="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Clear Deck 1</a>
+    </div>
+
+    <br>
+    <br>
+    <div id="deck2">
+      <a href="/clearDeck2" type="submit" class="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Clear Deck 2</a>
+    </div>
+  </div>
+
     <br>
 
-    <div class="p-8" id="notnav">
         <script>
           var deck1="{{deck1}}"
           var deck2="{{deck2}}"
@@ -169,5 +194,6 @@
     }
         </script>
       </div>
+<br>
    </body>
 </html>

@@ -245,6 +245,26 @@ def rmD2(card_id):
     db.close()
     return redirect(url_for("card",card_id=card_id))
 
+@app.route("/clearDeck1")
+def cD1():
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    username=session["username"]
+    c.execute("UPDATE users SET deck1=? where username=?",("",username,))
+    db.commit()
+    db.close()
+    return redirect(url_for("profile"))
+
+@app.route("/clearDeck2")
+def cD2():
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    username=session["username"]
+    c.execute("UPDATE users SET deck2=? where username=?",("",username,))
+    db.commit()
+    db.close()
+    return redirect(url_for("profile"))
+
 @app.route("/logout", methods=["POST"])
 def logout():
     session.pop("username", None)
