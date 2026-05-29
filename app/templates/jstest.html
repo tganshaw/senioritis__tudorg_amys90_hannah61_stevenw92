@@ -1,18 +1,58 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
 <style>
+body{
+  padding:0px;
+  background-color:#900020;
+  color:white;
+  margin:0px;
+  font-family: "Anta";
+}
+
+.notnav{
+  padding:50px;
+}
+
+#playfield{
+  position:relative;
+}
+
+#opp-active-button{
+  position: absolute;
+  top:25px;
+  right:0px;
+}
+
+#current-action{
+  font-size:130%;
+}
+
+#active-text{
+  font-size:120%;
+  margin-bottom:10px;
+}
+
+select{
+  background-color:#900020;
+  color:black;
+}
 
 @media (prefers-color-scheme: dark) {
     html{
-        background-color: #56646E
+        background-color: #56646E;
     }
     button{
         background-color: #404952;
-        color: #D9E9FA
+        color: #D9E9FA;
     }
     input{
         background-color: #404952;
-        color: #D9E9FA
+        color: #D9E9FA;
     }
 }
 
@@ -20,23 +60,67 @@
     filter: hue-rotate(300deg) saturate(125%) contrast(125%) blur({{hard_mode}}px) grayscale({{hard_mode}}%);
 }
 </style>
-    
-<h1 id = "current-action">No Action Selected</h1>
+</head>
+
+<body>
+  <nav class="bg-gray-800 border-b fixed top-0 right-0 left-0 w-full z-50">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-evenly">
+
+    <ul class="flex space-x-4 text-blue-700">
+        <a href="/encyclopedia" class=" hover:text-red-600">
+          Encyclopedia
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4">
+        <a href="/game" class=" hover:text-red-600">
+          Game
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4">
+        <a href="/" class=" hover:text-red-600">
+          Profile
+        </a>
+    </ul>
+<ul class="flex space-x-4">
+  <form action="{{url_for('logout')}}" method="POST">
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Logout</button>
+  </form>
+</ul>
+</div>
+</nav>
+
+<div class="notnav">
+<div class="p-8">
+  <br>
+  <br>
+  <h1 class="text-4xl font-bold mb-8 text-center">Game</h1>
+</div>
+
+<h1 class="mb-5" id = "current-action">No Action Selected</h1>
 <h2 id = "get-target"></h2>
-<button id="send-actions">Send Actions</button>
 
-<div id = "playfield">
+<button type="submit" class="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" id="send-actions">Send Actions</button>
 
-<button id="active-button" value="-1">
+<div class="static" id = "playfield">
+<div class="sticky top-0 group text-blue-500" id="active-text">Active Cards</div>
+<div>
+<button class="mb-6" id="active-button" value="-1">
 <img id="active-card" width=245 height=337></img>
 </button>
 
 <button id ="opp-active-button" value="-1">
 <img id="opp-active-card" width=245 height=337 class = "opp-img"></img>
 </button>
-
-<br><br>
 </div>
+<br>
+<br>
+<div class="sticky top-0 group text-blue-500" id="active-text">Your Deck</div>
+</div>
+
+</div>
+</body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
 <script>
@@ -99,7 +183,7 @@ var debuffers_arr = [
                     6, // 2dm-
                     10 // 1as-
                 ];
-                
+
 var special_used = 0;
 var opp_special_used = 0;
 
@@ -107,7 +191,7 @@ setYourDeck(cards_1);
 add_swap_id(4);
 play_actions();
 var playfield_div = document.getElementById("playfield");
-playfield_div.innerHTML += "<br>";
+playfield_div.innerHTML += "<br><br><div class='sticky top-0 group text-blue-500' id='active-text'>Opponent's Deck</div>";
 setTheirDeck(cards_2);
 buttonTime(cards_1);
 testOppActive(9);
@@ -122,13 +206,13 @@ function botRandomAction()
     if(active_button)
     {
         var active_card = all_cards[parseInt(active_button.value)];
-        
+
         if(active_card)
         {
             if(active_card["current_hp"] < active_card["max_hp"] / 2)
             {
-                var num_cards = 0;    
-                
+                var num_cards = 0;
+
                 if( Math.random() * 4 < 2 || active_card["current_hp"] == 0)
                 {
                     var rand_swap = Math.floor((Math.random() * 4) + 5);
@@ -166,14 +250,14 @@ function swapReserveActive()
     if(reserves_1 == 0){return -1;}
     var res_card = cards_1[4 + reserves_1];
     // console.log(res_card);
-    
+
     var active_button = document.getElementById("active-button");
     var active_img = document.getElementById("active-card");
     var active_hp = document.getElementById("active-hp");
-    
+
     var active_card = all_cards[parseInt(active_button.value)];
-    
-    current_action.innerHTML = `${active_card["name"]} has fainted. ${res_card["name"]} swapped in.`;   
+
+    current_action.innerHTML = `${active_card["name"]} has fainted. ${res_card["name"]} swapped in.`;
     active_button.value = res_card["game_id"];
     active_img.src = `https://senioritis.dev/static/cards/${res_card["card_id"]}.png`;
     active_hp.innerHTML = `HP: ${res_card["current_hp"]}`;
@@ -186,14 +270,14 @@ function swapReserveId(id)
 {
     if(reserves_1 == 0){return -1;}
     var res_card = cards_1[4+ reserves_1];
-    
+
     var active_button = document.getElementById(`${id}-button`);
     var active_img = document.getElementById(`${id}-card`);
     var active_hp = document.getElementById(`${id}-card`);
-    
+
     var active_card = all_cards[parseInt(active_button.value)];
-    
-    current_action.innerHTML = `${active_card["name"]} has fainted. ${res_card["name"]} swapped in.`;   
+
+    current_action.innerHTML = `${active_card["name"]} has fainted. ${res_card["name"]} swapped in.`;
     active_button.value = res_card["game_id"];
     active_img.src = `https://senioritis.dev/static/cards/${res_card["card_id"]}.png`;
     active_hp.innerHTML = `HP: ${res_card["current_hp"]}`;
@@ -210,7 +294,7 @@ function swapBotReserveId(id)
     var active_button = document.getElementById(`opp-${id}-button`);
     var active_img = document.getElementById(`opp-${parseInt(active_button.value)}-card`);
     var active_hp = document.getElementById(`opp-${id}-card`);
-    
+
     var active_card = all_cards[parseInt(active_button.value)];
 
     active_button.value = res_card["game_id"];
@@ -225,14 +309,14 @@ function swapBotReserveActive()
 {
     if(reserves_2 == 0){return -1;}
     var res_card = cards_2[4 + reserves_2];
-    
+
     var active_button = document.getElementById("opp-active-button");
     var active_img = document.getElementById("opp-active-card");
     var active_hp = document.getElementById("opp-active-hp");
-    
+
     var active_card = all_cards[parseInt(active_button.value)];
-    
-    current_action.innerHTML = `${active_card["name"]} has fainted. ${res_card["name"]} swapped in.`;   
+
+    current_action.innerHTML = `${active_card["name"]} has fainted. ${res_card["name"]} swapped in.`;
     active_button.value = res_card["game_id"];
     active_img.src = `https://senioritis.dev/static/cards/${res_card["card_id"]}.png`;
     active_hp.innerHTML = `HP: ${res_card["current_hp"]}`;
@@ -302,7 +386,7 @@ function updateStats()
         else
         {
             var res_swapped = swapReserveActive();
-            
+
         }
 
         active_hp.innerHTML = `HP: ${all_cards[active_button.value]["current_hp"]}`;
@@ -331,7 +415,7 @@ function updateStats()
     {
         opp_active_buffs.innerHTML = `Buffs: ${all_cards[opp_active_button.value]["buffs"]}`;
     }
-    
+
     console.log(`You have ${your_cards_alive} cards alive on field. Your opponent has ${opp_cards_alive} cards alive on field.`);
     if(just_starting != 0)
     {
@@ -346,7 +430,7 @@ function showStats()
     {
         var this_button = document.getElementById(`${i}-button`);
         this_button.innerHTML += `<p id="${i}-hp">HP: ${all_cards[this_button.value]["current_hp"]}</p><p id="${i}-buffs">Buffs: ${all_cards[this_button.value]["buffs"]}</p>`;
-        
+
     }
     for(let i = 5; i < 9; i++)
     {
@@ -370,20 +454,20 @@ function oppAddAttack()
 {
     var active_button = document.getElementById("active-button");
     var active_card = all_cards[parseInt(active_button.value)];
-    
+
     var opp_button = document.getElementById("opp-active-button");
     var opp_card = all_cards[parseInt(opp_button.value)];
-    
+
     if(opp_card["atk"] != "-1" || opp_special_used != 0)
     {
         opp_special_used = 0;
         var total_atk = parseInt(opp_card["atk"]) + opp_card["buffs"];
-        
+
         var total_def = parseInt(active_card["def"]) + active_card["buffs"];
-        
+
         var dmg_dealt = total_atk - total_def;
         if(dmg_dealt < 1){dmg_dealt = 1;}
-        
+
         action_list.push(new action(parseInt(opp_button.value), parseInt(active_button.value), dmg_dealt, parseInt(opp_card["spd"])));
     }
     else
@@ -484,19 +568,19 @@ function oppAddAttack()
             if(active_card["atk"] != "-1")
                 {
                      var total_atk = parseInt(active_card["atk"]) + active_card["buffs"];
-            
+
                      var total_def = parseInt(active_card["def"]) + active_card["buffs"];
-                        
+
                      var dmg_dealt = total_atk - total_def;
                      if(dmg_dealt < 1){dmg_dealt = 1;}
-                    
+
                      action_list.push(new action(parseInt(opp_button.value), parseInt(active_button.value), dmg_dealt, parseInt(opp_card["spd"])));
                 }
             else
             {
                 if(buffers_arr.includes(parseInt(active_card["card_id"])))
                 {
-                    
+
                     var num_cards = 0;
                     var rand_swap = parseInt(document.getElementById(`opp-${Math.floor((Math.random() * 4) + 5)}-button`).value);
                         while(all_cards[rand_swap]["current_hp"] <= 0 || all_cards[rand_swap]["current_hp"] == all_cards[rand_swap]["max_hp"])
@@ -550,7 +634,7 @@ function oppSendBuff(target)
     var user_card = all_cards[user];
     action_list.push(new action(user, target, -1, parseInt(user_card["spd"])));
 }
- 
+
 function sendBuff()
 {
     if(made_action != 0){action_list.pop();}
@@ -583,7 +667,7 @@ function sendBuff()
         }
         else
         {
-            
+
             action_list.push(new action(user, target, -1, parseInt(user_card["spd"])));
             made_action += 1;
             current_action.innerHTML = `${user_card["name"]} will use ${user_card["atk_name"]} on ${all_cards[target]["name"]}`;
@@ -647,11 +731,11 @@ function citronRes()
         {
             action_list.push(new action(user, target, -1, parseInt(user_card["spd"])));
             made_action += 1;
-            current_action.innerHTML =  `${user_card["name"]} will use ${user_card["atk_name"]} on ${all_cards[target]["name"]}`; 
+            current_action.innerHTML =  `${user_card["name"]} will use ${user_card["atk_name"]} on ${all_cards[target]["name"]}`;
         }
     }
 }
- 
+
 function addAttack()
 {
     if(made_action != 0){action_list.pop();}
@@ -661,21 +745,21 @@ function addAttack()
     get_target.innerHTML = "";
     if(active_card["current_hp"] > 0)
     {
-        
+
         var opp_button = document.getElementById("opp-active-button");
         var opp_card = all_cards[parseInt(opp_button.value)];
-        
+
         if(active_card["atk"] != "-1" || special_used != 0)
         {
-        
+
             var total_atk = parseInt(active_card["atk"]) + active_card["buffs"];
-            
+
             var total_def = parseInt(opp_card["def"]) + opp_card["buffs"];
-            
+
             var dmg_dealt = total_atk - total_def;
             if(dmg_dealt < 1){dmg_dealt = 1;}
-        
-            
+
+
             action_list.push(new action(parseInt(active_button.value), parseInt(opp_button.value), dmg_dealt, parseInt(active_card["spd"])));
             if(active_card["atk"] != -1)
             {
@@ -697,8 +781,8 @@ function addAttack()
                     buff_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`${x}-button`).value)]["name"]}</option>\n`
                 }
                 buff_select.innerHTML += `<option value=-1>Attack</option>\n`
-                
-                
+
+
                 var buff_button = document.getElementById("send-buff");
                 buff_button.addEventListener("click", sendBuff);
             }
@@ -711,8 +795,8 @@ function addAttack()
                     buff_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`opp-${x}-button`).value)]["name"]}</option>\n`
                 }
                 buff_select.innerHTML += `<option value=-1>Attack</option>\n`
-                
-                
+
+
                 var buff_button = document.getElementById("send-buff");
                 buff_button.addEventListener("click", sendBuff);
             }
@@ -730,7 +814,7 @@ function addAttack()
                     swap_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`opp-${x}-button`).value)]["name"]}</option>\n`
                 }
                 swap_select.innerHTML += `<option value=-1>Attack</option>\n`
-                
+
                 var swap_button = document.getElementById("send-swap");
                 swap_button.addEventListener("click", yuSwap);
             }
@@ -749,7 +833,7 @@ function addAttack()
                     res_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`${x}-button`).value)]["name"]}</option>\n`
                 }
                 res_select.innerHTML += `<option value=-1>Attack</option>\n`
-                
+
                 var res_button = document.getElementById("send-res");
                 res_button.addEventListener("click", citronRes);
             }
@@ -759,12 +843,12 @@ function addAttack()
                 if(opp_card["atk"] != -1)
                 {
                      var total_atk = parseInt(opp_card["atk"]) + opp_card["buffs"];
-            
+
                      var total_def = parseInt(opp_card["def"]) + opp_card["buffs"];
-                        
+
                      var dmg_dealt = total_atk - total_def;
                      if(dmg_dealt < 1){dmg_dealt = 1;}
-                    
+
                      action_list.push(new action(parseInt(active_button.value), parseInt(opp_button.value), dmg_dealt, parseInt(active_card["spd"])));
                      current_action.innerHTML = `${active_card["name"]} will use ${opp_card["atk_name"]}`;
                 }
@@ -779,8 +863,8 @@ function addAttack()
                             buff_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`${x}-button`).value)]["name"]}</option>\n`
                         }
                         buff_select.innerHTML += `<option value=-1>Attack</option>\n`
-                        
-                        
+
+
                         var buff_button = document.getElementById("send-buff");
                         buff_button.addEventListener("click", sendBuff);
                     }
@@ -793,7 +877,7 @@ function addAttack()
                             swap_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`opp-${x}-button`).value)]["name"]}</option>\n`
                         }
                         swap_select.innerHTML += `<option value=-1>Attack</option>\n`
-                        
+
                         var swap_button = document.getElementById("send-swap");
                         swap_button.addEventListener("click", yuSwap);
                     }
@@ -808,7 +892,7 @@ function addAttack()
         }
         made_action = 1;
         console.log(`${active_card["name"]} will use ${active_card["atk_name"]}`);
-        
+
     }
     else
     {
@@ -914,10 +998,10 @@ function play_actions()
     {
         const this_action = action_list[i];
         const this_user = all_cards[this_action["user"]];
-        
+
         if(this_user["game_id"] < 5 || ( this_user["game_id"] > 9 && this_user["game_id"] < 13))
         {
-             special_used = 0;   
+             special_used = 0;
         }
         if(this_user["current_hp"] > 0)
         {
@@ -950,8 +1034,8 @@ function play_actions()
                     {
                         attackCard(this_action["user"], this_action["target"]);
                     }
-                    
-                    
+
+
                 }
             }
             if(this_action.value == -3)
@@ -963,10 +1047,10 @@ function play_actions()
                 }
             }
             if(this_action.value == -1)
-            {  
+            {
                 if(this_user["game_id"] < 5 || ( this_user["game_id"] > 9 && this_user["game_id"] < 13))
                 {
-                     special_used++;   
+                     special_used++;
                 }
                 var target_card = all_cards[this_action["target"]];
                 if(buffers_arr.includes(parseInt(this_user["card_id"])))
@@ -1016,9 +1100,9 @@ function play_actions()
                     this_user["current_hp"] -= 8;
                 }
             }
-        } 
+        }
     }
-    
+
     while(action_list.length != 0)
     {
         action_list.shift();
@@ -1050,8 +1134,8 @@ function add_swap_id(button)
     var button_val = parseInt(name.substring(0,1));
     action_list.push(new action(parseInt(this_card["game_id"]), button_val, -2, parseInt(this_card["spd"])));
 
-}     
-      
+}
+
 function add_swap(event)
 {
     if(made_action != 0){action_list.pop();}
@@ -1087,40 +1171,40 @@ function testOppActive(game_id)
     var active_value = document.getElementById("opp-active-button").value;
     const av1 = active_value;
     var active_button = document.getElementById("opp-active-button");
-    
-    
+
+
     var event = document.getElementById(`opp-${game_id}-button`)
     var swap_value = event.value;
     const sv1 = swap_value;
     var swap_button = event;
-    
+
     const temp_value = av1;
-    
-    
-    
+
+
+
     active_button.value = sv1;
     if(parseInt(av1) != -1)
     {
         swap_button.value = av1;
     }
-    
+
     var active_source = document.getElementById("opp-active-card").src;
     const as1 = active_source;
     var active_img = document.getElementById("opp-active-card");
-    
+
     var swap_source = document.getElementById(`opp-${game_id}-card`).src;
     const ss1 = swap_source;
     var swap_img = document.getElementById(`opp-${game_id}-card`);
-    
+
     const temp_source = active_source;
-    
+
     active_img.src = ss1;
     if(parseInt(av1) != -1)
     {
         swap_img.src = as1;
         // swap_img.id = `opp-${av1}-card`;
     }
-    
+
     if(parseInt(active_value) == -1)
     {
         event.remove();
@@ -1129,42 +1213,42 @@ function testOppActive(game_id)
 
 function swap_in(event)
 {
-   
+
     var active_value = document.getElementById("active-button").value;
     const av1 = active_value;
     var active_button = document.getElementById("active-button");
-    
+
     var swap_value = event.value;
     const sv1 = swap_value;
     var swap_button = event;
-    
+
     const temp_value = av1;
-    
-    
-    
+
+
+
     active_button.value = sv1;
     if(parseInt(av1) != -1)
     {
         swap_button.value = av1;
     }
-    
+
     var active_source = document.getElementById("active-card").src;
     const as1 = active_source;
     var active_img = document.getElementById("active-card");
-    
+
     var swap_source = document.getElementById(`${sv1}-card`).src;
     const ss1 = swap_source;
     var swap_img = document.getElementById(`${sv1}-card`);
-    
+
     const temp_source = active_source;
-    
+
     active_img.src = ss1;
     if(parseInt(av1) != -1)
     {
         swap_img.src = as1;
         swap_img.id = `${av1}-card`;
     }
-    
+
     if(parseInt(active_value) == -1)
     {
         event.remove();
@@ -1184,14 +1268,14 @@ function attackCard(attacker_id, defender_id)
     {
         final_damage = 1;
     }
-    
+
     if(final_damage > -1)
     {
         damageCard(defender_id, final_damage);
     }
-    
+
     //  all_cards[defender_id]["current_hp"] = all_cards[defender_id]["current_hp"] - final_damage;
-    
+
     if(all_cards[defender_id]["current_hp"] <= 0)
     {
         setHP(defender_id, 0);
@@ -1210,7 +1294,7 @@ function damageCard(card_id, damage)
 {
     all_cards[card_id]["current_hp"] = all_cards[card_id]["current_hp"] - damage;
     var card_hp = parseInt(all_cards[card_id]["current_hp"]);
-    
+
 }
 
 function fillDeck(set)
@@ -1223,7 +1307,7 @@ function fillDeck(set)
         all_cards.push(cards[i]);
         numCards++;
     }
-    
+
     return cards;
 }
 
@@ -1234,9 +1318,9 @@ function fillReserves(set, cards)
        var current = data[set[i]];
         cards.push(new Card(current["card_id"], current["max_hp"], current["atk"], current["def"], current["spd"], current["max_hp"], 0, 0, numCards, current["name"], current["atk_name"], current["atk_desc"] ));
         all_cards.push(cards[i]);
-        numCards++; 
+        numCards++;
     }
-    
+
 }
 
 function Card(card_id, max_hp, atk, def, spd, current_hp, buffs, used_special, game_id, name, atk_name, atk_desc)
