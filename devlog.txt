@@ -139,3 +139,13 @@ amyS -- 2026-05-28 22:24
 
 tudorG -- 2026-05-28 15:00
 - Made enemy cards easier to tell apart from your own cards
+
+tudorG, amyS, hannahG, stevenW -- 2026-06-01 19:00
+DEVELOPER PREVIEWS: The Aftermath
+- Stats could use some work (will be annoying as it'd require redoing all card images but doable)
+    - In specific defenses are too high and attacks are too low, should probably up minimum attack by one and decrease maximum defense by one
+- Clearer dellineation of friend and foe. Should be fixed by now but will have to get more feedback from colleagues
+- Some pages have less than stellar styling
+- Should be clearer about when errors happen, ie: showing an error message when user has too few cards in deck instead of silently redirecting them back to encyclopedia
+- How to Play page would be nice
+- Some suggested we add a leaderboard or a game statistics page
