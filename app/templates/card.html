@@ -94,6 +94,9 @@
 
 <div class="text-center">
 <h2>Number in Deck1: ${num_deck1}</h2>
+`);
+if (num_deck1 < 2){
+document.write(`
 
 <a
             href="/addDeck1/${values["card_id"]}"
@@ -101,6 +104,9 @@
           >
             +
           </a>
+`);
+}
+document.write(`
 <a
             href="/removeDeck1/${values["card_id"]}"
             class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
@@ -110,6 +116,7 @@
 
 <br>
 <br>
+
 
 <h2>Number in Deck2: ${num_deck2}</h2>
 
