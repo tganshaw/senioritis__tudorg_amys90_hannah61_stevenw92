@@ -265,7 +265,7 @@ def cD2():
     db.close()
     return redirect(url_for("profile"))
 
-@app.route("/logout", methods=["POST"])
+@app.route("/logout", methods=["GET", "POST"])
 def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
