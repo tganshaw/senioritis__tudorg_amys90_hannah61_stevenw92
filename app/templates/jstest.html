@@ -927,7 +927,7 @@ function setYourDeck(deck)
     {
         var playfield = document.getElementById("playfield");
         playfield.innerHTML += `<button id="${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
-        <img id = "${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
+        <img id = "${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" alt="${deck[i]["name"]}" width=245 height=337></img>\n
         </button>\n
         \n`;
     }
@@ -944,7 +944,7 @@ function setTheirDeck(deck)
     {
         var playfield = document.getElementById("playfield")
         playfield.innerHTML += `<button id="opp-${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
-        <img id = "opp-${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337 class = "opp-img"></img>\n
+        <img id = "opp-${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" alt="${deck[i]["name"]}" width=245 height=337 class = "opp-img"></img>\n
         </button>\n
         \n`;
     }

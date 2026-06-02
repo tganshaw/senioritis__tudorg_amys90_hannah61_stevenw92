@@ -137,13 +137,15 @@ def profile():
     ]
     if 'username' in session:
         user = session["username"]
+        print(user)
     else:
-        user = ""
+        return(redirect(url_for('login')))
 
     with sqlite3.connect(DB_NAME) as db:
         c = db.cursor()
         c.execute("SELECT * FROM users WHERE username = ?", (session["username"],))
         user = c.fetchone()
+        print(user)
         deck1=user[4]
         deck2=user[5]
 
@@ -265,7 +267,24 @@ def cD2():
     db.close()
     return redirect(url_for("profile"))
 
-@app.route("/logout", methods=["POST"])
+
+@app.route("/switch")
+def switch():
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    username=session["username"]
+    c.execute("SELECT * FROM users where username=?;",(username,))
+    deck=c.fetchall()
+    deck1=deck[0][5]
+    deck2=deck[0][4]
+    c.execute("UPDATE users SET deck1=? where username=?",(deck1,username,))
+    c.execute("UPDATE users SET deck2=? where username=?",(deck2,username,))
+    db.commit()
+    db.close()
+    return redirect(url_for("profile"))
+
+@app.route("/logout", methods=["GET","POST"])
+
 def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
