@@ -131,10 +131,10 @@ select{
             - novillo
 */
 
-//const set_1 = "7;13;9;0;3;18;12;8".split(";");
-const set_1 = "{{user_deck}}".split(";");
-// const set_2 = "14;19;20;0;22;15;2;24".split(";");
-const set_2 = "{{opp_deck}}".split(";")
+const set_1 = "7;13;9;0;3;18;12;8".split(";");
+// const set_1 = "{{user_deck}}".split(";");
+const set_2 = "14;19;20;0;11;15;2;24".split(";");
+// const set_2 = "{{opp_deck}}".split(";")
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -724,6 +724,10 @@ function citronRes()
     var user = parseInt(document.getElementById("active-button").value);
     var user_card = all_cards[user];
     var target = parseInt(document.getElementById("res-target").value);
+    if(user_card["card_id"] == 3)
+    {
+        user = parseInt(document.getElementById("opp-active-button").value);
+    }
     if(parseInt(document.getElementById("res-target").value) == -1)
     {
         target = parseInt(document.getElementById("opp-active-button").value);
@@ -896,6 +900,19 @@ function addAttack()
                         active_card["atk"] = parseInt(active_card["atk"]) +  1915;
                         action_list.push(new action(active_card["game_id"], parseInt(opp_button.value), 1915, parseInt(active_card["spd"])));
                         current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
+                    }
+                    if(opp_card["card_id"] == 11)
+                    {
+                        get_target.innerHTML += "TARGET: <select id='res-target'>\n</select>\n<button id='send-res'>CONFIRM</button>";
+                        var res_select = document.getElementById("res-target");
+                        for(let x = 0; x < 4; x++)
+                        {
+                            res_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`${x}-button`).value)]["name"]}</option>\n`
+                        }
+                        res_select.innerHTML += `<option value=-1>Attack</option>\n`
+        
+                        var res_button = document.getElementById("send-res");
+                        res_button.addEventListener("click", citronRes);
                     }
                 }
             }
@@ -1229,6 +1246,9 @@ function swap_in(event)
     const av1 = active_value;
     var active_button = document.getElementById("active-button");
 
+    var event_value = parseInt(event.id.split("-")[0]);
+    console.log(`THIS IS EVENT_VALUE: ${event_value}`);
+    console.log
     var swap_value = event.value;
     const sv1 = swap_value;
     var swap_button = event;
@@ -1247,9 +1267,9 @@ function swap_in(event)
     const as1 = active_source;
     var active_img = document.getElementById("active-card");
 
-    var swap_source = document.getElementById(`${sv1}-card`).src;
+    var swap_source = document.getElementById(`${event_value}-card`).src;
     const ss1 = swap_source;
-    var swap_img = document.getElementById(`${sv1}-card`);
+    var swap_img = document.getElementById(`${event_value}-card`);
 
     const temp_source = active_source;
 
@@ -1257,7 +1277,6 @@ function swap_in(event)
     if(parseInt(av1) != -1)
     {
         swap_img.src = as1;
-        swap_img.id = `${av1}-card`;
     }
 
     if(parseInt(active_value) == -1)
