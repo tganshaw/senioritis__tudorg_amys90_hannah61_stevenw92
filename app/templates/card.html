@@ -29,6 +29,12 @@
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-evenly">
 
     <ul class="flex space-x-4">
+        <a href="/home" class=" hover:text-red-600">
+          Home
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4">
         <a href="/encyclopedia" class=" hover:text-red-600">
           Encyclopedia
         </a>
@@ -41,7 +47,7 @@
     </ul>
 
     <ul class="flex space-x-4">
-        <a href="/" class=" hover:text-red-600">
+        <a href="/profile" class=" hover:text-red-600">
           Profile
         </a>
     </ul>
@@ -82,7 +88,7 @@
   <div class="grid grid-rows-3 grid-cols-1 sm:grid-cols-2 gap-10">
 
 <div class="row-span-3">
-                  <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${values["card_id"]}.png" alt="${values["name"]}" />
+                  <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${values["card_id"]}.png" alt="Image ${values["card_id"]}" />
 </div>
 <div class=" text-center">
 <h2>Health: ${values["max_hp"]} Defense: ${values["def"]} Speed: ${values["spd"]}</h2>
@@ -94,9 +100,6 @@
 
 <div class="text-center">
 <h2>Number in Deck1: ${num_deck1}</h2>
-`);
-if (num_deck1 < 2){
-document.write(`
 
 <a
             href="/addDeck1/${values["card_id"]}"
@@ -104,9 +107,6 @@ document.write(`
           >
             +
           </a>
-`);
-}
-document.write(`
 <a
             href="/removeDeck1/${values["card_id"]}"
             class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
@@ -116,7 +116,6 @@ document.write(`
 
 <br>
 <br>
-
 
 <h2>Number in Deck2: ${num_deck2}</h2>
 
