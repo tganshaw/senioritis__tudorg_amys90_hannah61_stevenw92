@@ -70,7 +70,14 @@ def favicon():
 
 @app.route("/")
 def main():
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
     if "username" not in session:
+        return redirect(url_for("loginhtml"))
+    username=session["username"]
+    c.execute("SELECT * FROM users where username=?;",(username,))
+    deck=c.fetchall()
+    if deck==None:
         return redirect(url_for("loginhtml"))
     else:
         return redirect(url_for("home"))
@@ -199,11 +206,18 @@ def addD1(card_id):
     deck=deck[0][4]
     if deck is None:
         deck = ""
+    deck=deck.split(";")
+    
     if(deck.count(str(card_id))<2 and deck.count(";")< MAX_DECK_SIZE):
+        deck=";".join(deck)
+        print("hi")
         deck+=";"+card_id
-        print(deck)
         c.execute("UPDATE users SET deck1=? where username=?",(deck,username,))
         db.commit()
+    else:
+        deck=";".join(deck)
+        print("no")
+
     db.close()
     return redirect(url_for("card",card_id=card_id))
 
@@ -216,7 +230,11 @@ def rmD1(card_id):
     c.execute("SELECT * FROM users where username=?;",(username,))
     deck=c.fetchall()
     deck=deck[0][4]
-    deck=deck.replace(f";{card_id}","",1)
+    deck=deck.split(";")
+    if str(card_id) in deck:
+        deck.remove(str(card_id))
+    deck=";".join(deck)
+    print(deck)
     c.execute("UPDATE users SET deck1=? where username=?",(deck,username,))
     db.commit()
     db.close()
@@ -230,10 +248,17 @@ def addD2(card_id):
     c.execute("SELECT * FROM users where username=?;",(username,))
     deck=c.fetchall()
     deck=deck[0][5]
+    deck=deck.split(";")
+    
     if(deck.count(str(card_id))<2 and deck.count(";")< MAX_DECK_SIZE):
+        deck=";".join(deck)
+        print("hi")
         deck+=";"+card_id
         c.execute("UPDATE users SET deck2=? where username=?",(deck,username,))
         db.commit()
+    else:
+        deck=";".join(deck)
+        print("no")
     db.close()
     return redirect(url_for("card",card_id=card_id))
 
@@ -246,7 +271,11 @@ def rmD2(card_id):
     c.execute("SELECT * FROM users where username=?;",(username,))
     deck=c.fetchall()
     deck=deck[0][5]
-    deck=deck.replace(f";{card_id}","",1)
+    deck=deck.split(";")
+    if str(card_id) in deck:
+        deck.remove(str(card_id))
+    deck=";".join(deck)
+    print(deck)
     c.execute("UPDATE users SET deck2=? where username=?",(deck,username,))
     db.commit()
     db.close()

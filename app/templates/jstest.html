@@ -133,14 +133,14 @@ select{
 
 /*
         - Novillo
-            - citron
             - novillo
 */
 
-// const set_1 = "7;13;9;0;3;18;12;8".split(";");
-const set_1 = "{{user_deck}}".split(";");
-// const set_2 = "14;19;20;0;22;15;2;24".split(";");
-const set_2 = "{{opp_deck}}".split(";")
+const set_1 = "7;13;9;0;11;18;12;8".split(";");
+// const set_1 = "{{user_deck}}".split(";");
+const set_2 = "14;19;20;0;3;15;2;24".split(";");
+// const set_2 = "{{opp_deck}}".split(";")
+
 
 const csv_str = "{{testingtesting}}";
 var data = Papa.parse(csv_str,
@@ -192,6 +192,7 @@ var debuffers_arr = [
 
 var special_used = 0;
 var opp_special_used = 0;
+var num_turns = -1;
 
 setYourDeck(cards_1);
 add_swap_id(4);
@@ -425,8 +426,8 @@ function updateStats()
     console.log(`You have ${your_cards_alive} cards alive on field. Your opponent has ${opp_cards_alive} cards alive on field.`);
     if(just_starting != 0)
     {
-        if(your_cards_alive == 0){window.location.assign("/lose");}
-        if(opp_cards_alive == 0){window.location.assign("/win");}
+        if(your_cards_alive == 0){window.location.assign(`/lose?num_turns=${num_turns}`);}
+        if(opp_cards_alive == 0){window.location.assign(`/win?num_turns=${num_turns}`);}
     }
 }
 
@@ -629,6 +630,26 @@ function oppAddAttack()
                     opp_card["atk"] = parseInt(opp_card["atk"]) + 1915;
                     action_list.push(new action (opp_card["game_id"], parseInt(active_button.value), 1915, parseInt(opp_card["spd"])));
                 }
+                if(active_card["card_id"] == 11)
+                {
+                    var num_cards = 0;
+                    var rand_swap = parseInt(document.getElementById(`opp-${Math.floor((Math.random() * 4) + 5)}-button`).value);
+                        while(all_cards[rand_swap]["current_hp"] > 0)
+                        {
+                            rand_swap = parseInt(document.getElementById(`opp-${Math.floor((Math.random() * 4) + 5)}-button`).value);
+                            num_cards++;
+                            if(num_cards > 4){break;}
+                        }
+                    if(all_cards[rand_swap]["current_hp"] <= 0)
+                    {
+                        action_list.push(new action(active_card["game_id"], rand_swap, -1, parseInt(opp_card["spd"])));
+                        console.log(action_list[1]);
+                    }
+                    else
+                    {
+                        action_list.push(new action(opp_card["game_id"], parseInt(active_button.value), 1, parseInt(opp_card["spd"])));
+                    }
+                }
             }
         }
     }
@@ -720,6 +741,10 @@ function citronRes()
     var user = parseInt(document.getElementById("active-button").value);
     var user_card = all_cards[user];
     var target = parseInt(document.getElementById("res-target").value);
+    if(user_card["card_id"] == 3)
+    {
+        user = parseInt(document.getElementById("opp-active-button").value);
+    }
     if(parseInt(document.getElementById("res-target").value) == -1)
     {
         target = parseInt(document.getElementById("opp-active-button").value);
@@ -893,6 +918,19 @@ function addAttack()
                         action_list.push(new action(active_card["game_id"], parseInt(opp_button.value), 1915, parseInt(active_card["spd"])));
                         current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
                     }
+                    if(opp_card["card_id"] == 11)
+                    {
+                        get_target.innerHTML += "TARGET: <select id='res-target'>\n</select>\n<button id='send-res'>CONFIRM</button>";
+                        var res_select = document.getElementById("res-target");
+                        for(let x = 0; x < 4; x++)
+                        {
+                            res_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`${x}-button`).value)]["name"]}</option>\n`
+                        }
+                        res_select.innerHTML += `<option value=-1>Attack</option>\n`
+        
+                        var res_button = document.getElementById("send-res");
+                        res_button.addEventListener("click", citronRes);
+                    }
                 }
             }
         }
@@ -997,6 +1035,7 @@ function play_actions()
 {
     if(action_list.length > 0)
     {
+    num_turns += 1;
     console.log("-------NEW TURN-------");
     botRandomAction();
     action_list = action_list.sort(sort_by_spd);
@@ -1224,6 +1263,9 @@ function swap_in(event)
     const av1 = active_value;
     var active_button = document.getElementById("active-button");
 
+    var event_value = parseInt(event.id.split("-")[0]);
+    console.log(`THIS IS EVENT_VALUE: ${event_value}`);
+    console.log
     var swap_value = event.value;
     const sv1 = swap_value;
     var swap_button = event;
@@ -1242,9 +1284,9 @@ function swap_in(event)
     const as1 = active_source;
     var active_img = document.getElementById("active-card");
 
-    var swap_source = document.getElementById(`${sv1}-card`).src;
+    var swap_source = document.getElementById(`${event_value}-card`).src;
     const ss1 = swap_source;
-    var swap_img = document.getElementById(`${sv1}-card`);
+    var swap_img = document.getElementById(`${event_value}-card`);
 
     const temp_source = active_source;
 
@@ -1252,7 +1294,6 @@ function swap_in(event)
     if(parseInt(av1) != -1)
     {
         swap_img.src = as1;
-        swap_img.id = `${av1}-card`;
     }
 
     if(parseInt(active_value) == -1)

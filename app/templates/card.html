@@ -62,9 +62,15 @@
 <div class="p-8">
     <script>
       var deck1="{{deck1}}"
+deck1=deck1.split(";");
+deck1.shift();
+console.log(deck1);
       var deck2="{{deck2}}"
-      var num_deck1=(deck1.split("{{card_id}}").length-1)
-      var num_deck2=(deck2.split("{{card_id}}").length-1)
+deck2=deck2.split(";");
+deck2.shift();
+console.log(deck2);
+      var num_deck1=(deck1.filter(x=>x=="{{card_id}}").length)
+      var num_deck2=(deck2.filter(x=>x=="{{card_id}}").length)
 
       var data = "{{data}}";
       const id=parseInt("{{card_id}}")+1
@@ -101,12 +107,7 @@
 <div class="text-center">
 <h2>Number in Deck1: ${num_deck1}</h2>
 
-<a
-            href="/addDeck1/${values["card_id"]}"
-            class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
-          >
-            +
-          </a>
+
 <a
             href="/removeDeck1/${values["card_id"]}"
             class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
@@ -114,25 +115,48 @@
             -
           </a>
 
+
+`);
+
+if (num_deck1 < 2){
+document.write(`
+
+<a
+            href="/addDeck1/${values["card_id"]}"
+            class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
+          >
+            +
+          </a>
+
+`);
+}
+
+
+document.write(`
 <br>
 <br>
 
 <h2>Number in Deck2: ${num_deck2}</h2>
 
-
-<a
-            href="/addDeck2/${values["card_id"]}"
-            class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
-          >
-            +
-          </a>
 <a
             href="/removeDeck2/${values["card_id"]}"
             class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
           >
             -
           </a>
+`);
 
+if (num_deck2 < 2){
+document.write(`
+<a
+            href="/addDeck2/${values["card_id"]}"
+            class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
+          >
+            +
+          </a>
+`);}
+
+document.write(`
 
 </div>
 </div>
@@ -150,9 +174,7 @@
 `);
 
 
-deck1=deck1.split(";");
-deck1.shift();
-console.log(deck1);
+
 document.write(`
 <h1 class="sticky top-0 group text-blue-500 text-center" id="active-text">Your Saved Deck 1:</h1>
 <div class="grid grid-cols-8">
@@ -178,9 +200,7 @@ for(var i=0;i<8-deck1.length;i++){
 
 
 
-deck2=deck2.split(";");
-deck2.shift();
-console.log(deck2);
+
 document.write(`
 </div>
 <br>
