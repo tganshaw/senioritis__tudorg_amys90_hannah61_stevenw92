@@ -131,7 +131,7 @@ select{
             - novillo
 */
 
-// const set_1 = "7;13;9;0;3;18;12;8".split(";");
+//const set_1 = "7;13;9;0;3;18;12;8".split(";");
 const set_1 = "{{user_deck}}".split(";");
 // const set_2 = "14;19;20;0;22;15;2;24".split(";");
 const set_2 = "{{opp_deck}}".split(";")
@@ -187,6 +187,7 @@ var debuffers_arr = [
 var special_used = 0;
 var opp_special_used = 0;
 
+
 setYourDeck(cards_1);
 add_swap_id(4);
 play_actions();
@@ -211,25 +212,34 @@ function botRandomAction()
         {
             if(active_card["current_hp"] < active_card["max_hp"] / 2)
             {
+                console.log("im dying!");
                 var num_cards = 0;
+                console.log(active_card["current_hp"])
 
                 if( Math.random() * 4 < 2 || active_card["current_hp"] == 0)
                 {
+                    console.log("im still dying!");
                     var rand_swap = Math.floor((Math.random() * 4) + 5);
-                    while(all_cards[rand_swap]["current_hp"] <= 0)
+                    var rand_button = parseInt(document.getElementById(`opp-${rand_swap}-button`).value);
+                    while(all_cards[rand_button]["current_hp"] <= 0)
                     {
+                        console.log(all_cards[rand_button]);
                         rand_swap = Math.floor((Math.random() * 4) + 5);
+                        rand_button = parseInt(document.getElementById(`opp-${rand_swap}-button`).value);
                         num_cards++;
                         if(num_cards > 4){break;}
                     }
                     if(num_cards > 4)
                     {
+                        console.log("attack!")
                         oppAddAttack();
                     }
                     else
                         {
+                            console.log("huh?");
                             opp_special_used = 0;
-                            action_list.push(new action(rand_swap, rand_swap, -3, all_cards[rand_swap]["spd"]));
+                            action_list.push(new action(rand_button, rand_swap, -3, all_cards[rand_swap]["spd"]));
+                            console.log(action_list);
                         }
                 }
                 else
@@ -917,7 +927,7 @@ function setYourDeck(deck)
     {
         var playfield = document.getElementById("playfield");
         playfield.innerHTML += `<button id="${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
-        <img id = "${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337></img>\n
+        <img id = "${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" alt="${deck[i]["name"]}" width=245 height=337></img>\n
         </button>\n
         \n`;
     }
@@ -934,7 +944,7 @@ function setTheirDeck(deck)
     {
         var playfield = document.getElementById("playfield")
         playfield.innerHTML += `<button id="opp-${deck[i]["game_id"]}-button" value="${deck[i]["game_id"]}">\n
-        <img id = "opp-${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" width=245 height=337 class = "opp-img"></img>\n
+        <img id = "opp-${deck[i]["game_id"]}-card" src="../static/cards/${deck[i]["card_id"]}.png" alt="${deck[i]["name"]}" width=245 height=337 class = "opp-img"></img>\n
         </button>\n
         \n`;
     }
@@ -1043,7 +1053,7 @@ function play_actions()
                 if(all_cards[this_action["user"]]["current_hp"] > 0)
                 {
                     console.log(`${all_cards[this_action["user"]]["name"]} swaps in.`)
-                    testOppActive(this_action["user"]);
+                    testOppActive(this_action["target"]);
                 }
             }
             if(this_action.value == -1)
@@ -1168,6 +1178,7 @@ function action(user, target, value, speed)
 function testOppActive(game_id)
 {
     console.log(game_id);
+    console.log("bro what");
     var active_value = document.getElementById("opp-active-button").value;
     const av1 = active_value;
     var active_button = document.getElementById("opp-active-button");
