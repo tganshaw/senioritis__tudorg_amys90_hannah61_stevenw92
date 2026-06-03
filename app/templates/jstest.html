@@ -133,13 +133,12 @@ select{
 
 /*
         - Novillo
-            - citron
             - novillo
 */
 
-const set_1 = "7;13;9;0;3;18;12;8".split(";");
+const set_1 = "7;13;9;0;11;18;12;8".split(";");
 // const set_1 = "{{user_deck}}".split(";");
-const set_2 = "14;19;20;0;11;15;2;24".split(";");
+const set_2 = "14;19;20;0;3;15;2;24".split(";");
 // const set_2 = "{{opp_deck}}".split(";")
 
 
@@ -629,6 +628,26 @@ function oppAddAttack()
                 {
                     opp_card["atk"] = parseInt(opp_card["atk"]) + 1915;
                     action_list.push(new action (opp_card["game_id"], parseInt(active_button.value), 1915, parseInt(opp_card["spd"])));
+                }
+                if(active_card["card_id"] == 11)
+                {
+                    var num_cards = 0;
+                    var rand_swap = parseInt(document.getElementById(`opp-${Math.floor((Math.random() * 4) + 5)}-button`).value);
+                        while(all_cards[rand_swap]["current_hp"] > 0)
+                        {
+                            rand_swap = parseInt(document.getElementById(`opp-${Math.floor((Math.random() * 4) + 5)}-button`).value);
+                            num_cards++;
+                            if(num_cards > 4){break;}
+                        }
+                    if(all_cards[rand_swap]["current_hp"] <= 0)
+                    {
+                        action_list.push(new action(active_card["game_id"], rand_swap, -1, parseInt(opp_card["spd"])));
+                        console.log(action_list[1]);
+                    }
+                    else
+                    {
+                        action_list.push(new action(opp_card["game_id"], parseInt(active_button.value), 1, parseInt(opp_card["spd"])));
+                    }
                 }
             }
         }

@@ -98,8 +98,20 @@
 
       <br>
       <h1 id="head1" class="text-blue-500"> Gameplay </h1>
-      <h2>Specials</h2>
-      <p>Buffs have a positive value, debuffs have a negative value.</p>
+         <h3 id="how-to-play-">How To Play:</h3>
+            <ul>
+            <li>Each player has a deck of 8 cards. (The other player is a bot we don&#39;t have multiplayer sorry)</li>
+            <li>1 card is active, 4 are in your hand, and the other 3 are &quot;reserves&quot;.</li>
+            <li>Each turn, you can choose to either use your active card&#39;s move, or swap in a card from your hand to your active slot.</li>
+            <li>Certain cards have special moves, which have an effect other than simply dealing damage. As they are usually stronger than normal attacks, they can be used only one every other turn.</li>
+            <li>Once both players make their action, they get played out in order of speed, with higher speed cards going first. This also applies for swaps, where the speed used is the speed of the card swapping in.</li>
+            <li>For any damaging attacks, the damage dealt follows the following formula:</li>
+            </ul>
+            <p><code>(atk stat of attacker + buffs of attacker) - (def stat of defender + buffs of defender)</code></p>
+            <ul>
+            <li>When your active card&#39;s HP reaches 0, a reserve card will swap in for it.  If you have no reserves left, you will simply need to swap out your card for one in your hand before continuing.</li>
+            <li>The game ends when one side has no more cards that can fight.</li>
+            </ul>
 
     </div>
 <br>
