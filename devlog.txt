@@ -152,3 +152,7 @@ DEVELOPER PREVIEWS: The Aftermath
 
 tudorG -- 2026-06-02 10:00
 - Fixed an issue regarding bot swapping behavior
+
+amyS -- 2026-06-03 11:06
+- fix headers
+- add encyclopedia errors
