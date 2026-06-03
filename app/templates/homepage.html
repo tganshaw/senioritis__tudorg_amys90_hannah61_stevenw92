@@ -2,13 +2,106 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+  <style>
+  body{
+    padding:0px;
+    background-color:#900020;
+    color:white;
+    font-family: "Anta";
+  }
+
+  #head1{
+    font-size:110%;
+    font-weight:bold;
+  }
+
+  #notnav{
+    padding:50px;
+  }
+
+  #active-text{
+    font-size:120%;
+    margin-bottom:10px;
+  }
+
+  #header{
+    font-size:150%;
+  }
+  </style>
 </head>
+
 <body>
-  <header class=>
-  </header>
-</body>
+  <nav class="bg-gray-800 border-b fixed top-0 right-0 left-0 w-full z-50">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-evenly">
+
+    <ul class="flex space-x-4 text-blue-700">
+        <a href="/home" class=" hover:text-red-600">
+          Home
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4">
+        <a href="/encyclopedia" class=" hover:text-red-600">
+          Encyclopedia
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4">
+        <a href="/game" class=" hover:text-red-600">
+          Game
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4">
+        <a href="/" class=" hover:text-red-600">
+          Profile
+        </a>
+    </ul>
+<ul class="flex space-x-4">
+  <form action="{{url_for('logout')}}" method="POST">
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Logout</button>
+  </form>
+</ul>
+</div>
+</nav>
+
+<div class="p-8" id="notnav">
+  <div class="p-8">
+    <br>
+    <br>
+    <h1 class="text-4xl font-bold mb-8 text-center">Home</h1>
+  </div>
+
+  <br>
+
+      <div class="justify-center text-center group flex items-center" css="display:block; margin-left:auto; margin-right:auto;">
+        <blockquote class="text-center text-2xl font-semibold text-gray-900 dark:text-white" id="header">
+          Welcome,
+          <span class="relative inline-block before:absolute before:-inset-1 before:block before:bg-blue-500">
+            <span class="relative text-white dark:text-gray-950 italic">{{user}}</span>
+          </span>
+          !
+        </blockquote>
+      </div>
+
+      <br>
+      <br>
+
+      <h1 id="head1" class="text-blue-500"> What is StuyTCG? </h1>
+      <p>StuyTCG is web-based trading card game (TCG) themed around Stuyvesant. Users will be able to pull cards, show off their collections, and battle other users using teacher cards from different departments. Cards will have 4 values: HP, Attack (or Special), Defense, and Speed. Users can also tour the card encyclopedia of 24 cards, where users can choose their starting 8 cards (they can choose at most 2 of a card). Out of those 8 cards, users will keep 5 on hand, one of which will be the active card in battle, and 3 cards in the deck. If a card has 0 or less HP remaining, that card is “KO’d” and goes into the user’s discard pile. The user must then select a new card from their hand to become their active card, and pull a new card from their deck into their hand. One side wins when the other player no longer has any cards left to play.</p>
+
+      <br>
+      <h1 id="head1" class="text-blue-500"> Gameplay </h1>
+      <h2>Specials</h2>
+      <p>Buffs have a positive value, debuffs have a negative value.</p>
+
+    </div>
+<br>
+   </body>
 </html>

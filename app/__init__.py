@@ -73,7 +73,7 @@ def main():
     if "username" not in session:
         return redirect(url_for("loginhtml"))
     else:
-        return redirect(url_for("profile"))
+        return redirect(url_for("home"))
 
 @app.route("/game")
 def game():
@@ -168,6 +168,10 @@ def encyclopedia():
     file=open("Data/cards.csv")
     data=file.read().replace("\n","\\n")
     return render_template("encyclopedia.html", data=data)
+
+@app.route("/home")
+def home():
+    return render_template("homepage.html", user=session["username"])
 
 @app.route("/card/<card_id>", methods=["GET","POST"])
 def card(card_id):
