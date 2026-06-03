@@ -149,3 +149,6 @@ DEVELOPER PREVIEWS: The Aftermath
 - Should be clearer about when errors happen, ie: showing an error message when user has too few cards in deck instead of silently redirecting them back to encyclopedia
 - How to Play page would be nice
 - Some suggested we add a leaderboard or a game statistics page
+
+tudorG -- 2026-06-02 10:00
+- Fixed an issue regarding bot swapping behavior
