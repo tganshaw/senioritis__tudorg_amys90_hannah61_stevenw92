@@ -92,7 +92,8 @@ def game():
             check_deck = ""
 
     if check_deck == "":
-        return redirect(url_for("encyclopedia"))
+        return encyclopedia(error="Missing deck. Please add 8 cards.")
+        #return render_template("encyclopedia.html", error="Missing deck. Please add 8 cards.")
 
     if(check_deck[0] == ";"):
         check_deck = check_deck[1::]
@@ -100,7 +101,9 @@ def game():
 
     deck_arr = check_deck.split(";");
     if(len(deck_arr) != 8):
-        return redirect(url_for("encyclopedia"))
+        num = len(deck_arr)
+        #return encyclopedia(error=f"Current deck is incomplete. You need to add {(8-num)} more cards.")
+        return redirect(url_for("encyclopedia.html", error=f"Current deck is incomplete. You need to add {(8-num)} more cards."))
     random.shuffle(deck_arr)
     check_deck = ";".join(deck_arr)
 
@@ -117,6 +120,12 @@ def game():
     if "hard" in request.args:
         hardmode = 20
     return render_template("jstest.html", testingtesting = data, user_deck = check_deck, opp_deck = opp_deck, hard_mode = hardmode)
+
+@app.route("/encyclopedia")
+def encyclopedia(error=""):
+    file=open("Data/cards.csv")
+    data=file.read().replace("\n","\\n")
+    return render_template("encyclopedia.html", data=data, error=error)
 
 @app.route("/win")
 def win():
@@ -162,12 +171,6 @@ def profile():
     file=open("Data/cards.csv")
     data = file.read().replace("\n", "\\n")
     return render_template("profile.html",profile_icons=profile_icons, user=user[0], sprite=sprite,data=data,deck1=deck1,deck2=deck2)
-
-@app.route("/encyclopedia")
-def encyclopedia():
-    file=open("Data/cards.csv")
-    data=file.read().replace("\n","\\n")
-    return render_template("encyclopedia.html", data=data)
 
 @app.route("/home")
 def home():
