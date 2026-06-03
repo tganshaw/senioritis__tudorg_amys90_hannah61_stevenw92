@@ -70,7 +70,14 @@ def favicon():
 
 @app.route("/")
 def main():
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
     if "username" not in session:
+        return redirect(url_for("loginhtml"))
+    username=session["username"]
+    c.execute("SELECT * FROM users where username=?;",(username,))
+    deck=c.fetchall()
+    if deck==None:
         return redirect(url_for("loginhtml"))
     else:
         return redirect(url_for("home"))
