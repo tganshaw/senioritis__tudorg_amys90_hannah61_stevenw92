@@ -192,6 +192,7 @@ var debuffers_arr = [
 
 var special_used = 0;
 var opp_special_used = 0;
+var num_turns = -1;
 
 setYourDeck(cards_1);
 add_swap_id(4);
@@ -425,8 +426,8 @@ function updateStats()
     console.log(`You have ${your_cards_alive} cards alive on field. Your opponent has ${opp_cards_alive} cards alive on field.`);
     if(just_starting != 0)
     {
-        if(your_cards_alive == 0){window.location.assign("/lose");}
-        if(opp_cards_alive == 0){window.location.assign("/win");}
+        if(your_cards_alive == 0){window.location.assign(`/lose?num_turns=${num_turns}`);}
+        if(opp_cards_alive == 0){window.location.assign(`/win?num_turns=${num_turns}`);}
     }
 }
 
@@ -1034,6 +1035,7 @@ function play_actions()
 {
     if(action_list.length > 0)
     {
+    num_turns += 1;
     console.log("-------NEW TURN-------");
     botRandomAction();
     action_list = action_list.sort(sort_by_spd);
