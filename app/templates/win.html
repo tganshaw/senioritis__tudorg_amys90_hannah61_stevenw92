@@ -21,7 +21,10 @@ yippee!
 <script>
 
 let params = new URLSearchParams(document.location.search);
-console.log(params.get("num_turns"));
+num_turns = params.get("num_turns");
+state = window.location.pathname.substring(1);
+deck = params.get("deck");
+fetch(`/send_stats?state=${state}&num_turns=${num_turns}&deck=${deck}`);
 setInterval(changeColor, 500);
 
 // Source - https://stackoverflow.com/a/1484514

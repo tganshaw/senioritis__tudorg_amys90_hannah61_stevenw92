@@ -136,10 +136,10 @@ select{
             - novillo
 */
 
-const set_1 = "7;13;9;0;11;18;12;8".split(";");
-// const set_1 = "{{user_deck}}".split(";");
-const set_2 = "14;19;20;0;3;15;2;24".split(";");
-// const set_2 = "{{opp_deck}}".split(";")
+// const set_1 = "7;13;9;0;11;18;12;8".split(";");
+const set_1 = "{{user_deck}}".split(";");
+// const set_2 = "14;19;20;0;3;15;2;24".split(";");
+const set_2 = "{{opp_deck}}".split(";")
 
 
 const csv_str = "{{testingtesting}}";
@@ -427,12 +427,10 @@ function updateStats()
     if(just_starting != 0)
     {
         if(your_cards_alive == 0){
-            fetch(`/send_stats?state=lose&num_turns=${num_turns}`);
-            window.location.assign(`/lose`);
+            window.location.assign(`/lose?num_turns=${num_turns}&deck=${set_1}`);
             }
         if(opp_cards_alive == 0){
-            fetch(`/send_stats?state=win&num_turns=${num_turns}`);
-            window.location.assign(`/win`);
+            window.location.assign(`/win?num_turns=${num_turns}&deck=${set_1}`);
         }
     }
 }
@@ -933,7 +931,7 @@ function addAttack()
                             res_select.innerHTML += `<option value=${x}>${all_cards[parseInt(document.getElementById(`${x}-button`).value)]["name"]}</option>\n`
                         }
                         res_select.innerHTML += `<option value=-1>Attack</option>\n`
-        
+
                         var res_button = document.getElementById("send-res");
                         res_button.addEventListener("click", citronRes);
                     }

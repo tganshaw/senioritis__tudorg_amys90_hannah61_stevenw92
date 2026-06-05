@@ -51,6 +51,13 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS game_cards(
     FOREIGN KEY (atkName, atkDesc) REFERENCES all_cards(atkName, atkDesc)
 );""")
 
+DBC.execute("""CREATE TABLE IF NOT EXISTS games(
+    deck TEXT,
+    num_turns INT,
+    state TEXT,
+    user_id INT
+    );""")
+
 with open('Data/cards.csv', 'r') as f:
     d = f.read().replace("/n", "")[:-1]
     new_d = []
@@ -303,9 +310,17 @@ def cD2():
 
 @app.route("/send_stats")
 def send_stats():
-    print(request.args["state"])
+    if "state" not in request.args or "num_turns" not in request.args or "deck" not in request.args:
+        return redirect("/")
+    state = request.args["state"]
+    num_turns = request.args["num_turns"]
+    deck = request.args["deck"]
+    print(f"{state} in {num_turns} turns with {deck}")
+
+    # add to game database
+    # on leaderboard page, show top useres by winrate
     return "test"
-    
+
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
     session.pop("username", None)
