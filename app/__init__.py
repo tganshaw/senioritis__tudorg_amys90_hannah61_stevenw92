@@ -4,6 +4,7 @@ import json
 import sqlite3
 import random
 import urllib
+import csv
 
 
 MAX_DECK_SIZE = 8
@@ -55,7 +56,7 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS games(
     deck TEXT,
     num_turns INT,
     state TEXT,
-    user_id INT
+    username TEXT
     );""")
 
 with open('Data/cards.csv', 'r') as f:
@@ -317,9 +318,68 @@ def send_stats():
     deck = request.args["deck"]
     print(f"{state} in {num_turns} turns with {deck}")
 
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    c.execute("INSERT INTO games VALUES (?, ?, ?, ?);", (deck, num_turns, state, session["username"]))
+    db.commit()
+    db.close()
     # add to game database
     # on leaderboard page, show top useres by winrate
-    return "test"
+    return "stats logged"
+
+@app.route("/leaderboard")
+def leaderboard():
+    if "username" not in session:
+        return redirect("/")
+
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    c.execute("SELECT * FROM games;")
+    fetch = c.fetchall()
+
+
+    game_arr = []
+    if fetch is None:
+        game_arr = "No Games Finished Yet"
+    else:
+        for game in fetch:
+            this_game = {}
+            deck = game[0].split(",")
+            this_game["deck"] = deck
+            this_game["turns"] = game[1]
+            this_game["state"] = game[2]
+            this_game["player"] = game[3]
+            game_arr.append(this_game)
+
+    card_list = []
+    with open("Data/cards.csv", "r") as f:
+        data = csv.DictReader(f)
+        for row in data:
+            card_list.append(row)
+
+    card_dict = {}
+    for game in game_arr:
+        print(game)
+        if game["state"] == "win":
+            game_state = 1
+        else:
+            game_state = 0
+
+        game_card_arr = []
+        for card in game["deck"]:
+            if card not in game_card_arr:
+                game_card_arr.append(card)
+        print(game_card_arr)
+        for card in game_card_arr:
+            if card_list[int(card)]["name"] not in card_dict:
+                card_dict[card_list[int(card)]["name"]] = game_state
+            else:
+                card_dict[card_list[int(card)]["name"]] += game_state
+
+    card_dict = dict(sorted(card_dict.items(), key=lambda item: item[1], reverse=True))
+
+
+    return card_dict
 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
