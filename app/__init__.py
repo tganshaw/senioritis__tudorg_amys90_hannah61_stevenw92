@@ -109,8 +109,8 @@ def game():
     deck_arr = check_deck.split(";");
     if(len(deck_arr) != 8):
         num = len(deck_arr)
-        #return encyclopedia(error=f"Current deck is incomplete. You need to add {(8-num)} more cards.")
-        return redirect(url_for("encyclopedia.html", error=f"Current deck is incomplete. You need to add {(8-num)} more cards."))
+        return encyclopedia(error=f"Current deck is incomplete. You need to add {(8-num)} more cards.")
+        #return redirect(url_for("encyclopedia.html", error=f"Current deck is incomplete. You need to add {(8-num)} more cards."))
     random.shuffle(deck_arr)
     check_deck = ";".join(deck_arr)
 
@@ -207,7 +207,7 @@ def addD1(card_id):
     if deck is None:
         deck = ""
     deck=deck.split(";")
-    
+
     if(deck.count(str(card_id))<2 and deck.count(";")< MAX_DECK_SIZE):
         deck=";".join(deck)
         print("hi")
@@ -249,7 +249,7 @@ def addD2(card_id):
     deck=c.fetchall()
     deck=deck[0][5]
     deck=deck.split(";")
-    
+
     if(deck.count(str(card_id))<2 and deck.count(";")< MAX_DECK_SIZE):
         deck=";".join(deck)
         print("hi")
