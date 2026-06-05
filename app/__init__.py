@@ -301,6 +301,11 @@ def cD2():
     db.close()
     return redirect(url_for("profile"))
 
+@app.route("/send_stats")
+def send_stats():
+    print(request.args["state"])
+    return "test"
+    
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
     session.pop("username", None)
