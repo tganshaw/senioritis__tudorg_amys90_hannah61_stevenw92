@@ -106,6 +106,9 @@ console.log(deck2);
 
 <div class="text-center">
 <h2>Number in Deck1: ${num_deck1}</h2>
+`);
+if (num_deck1 > 0){
+  document.write(`
 
 
 <a
@@ -117,7 +120,7 @@ console.log(deck2);
 
 
 `);
-
+}
 if (num_deck1 < 2){
 document.write(`
 
@@ -130,8 +133,7 @@ document.write(`
 
 `);
 }
-
-
+// if (num_deck2 > 0){
 document.write(`
 <br>
 <br>
@@ -145,7 +147,7 @@ document.write(`
             -
           </a>
 `);
-
+// }
 if (num_deck2 < 2){
 document.write(`
 <a
@@ -154,7 +156,8 @@ document.write(`
           >
             +
           </a>
-`);}
+`);
+}
 
 document.write(`
 
@@ -185,7 +188,9 @@ for (var i=0;i<deck1.length;i++){
     document.write(`
 
 <div>
+<a href=/card/${deck1[i]}>
     <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${deck1[i]}.png" alt="Image ${deck1[i]}" />
+</a>
 </div>
 `)
 }
@@ -214,7 +219,9 @@ for (var i=0;i<deck2.length;i++){
     document.write(`
 
 <div>
+  <a href=/card/${deck2[i]}>
     <img class="w-200 aspect-63/88 object-cover" src="../static/cards/${deck2[i]}.png" alt="Image ${deck2[i]}" />
+  </a>
 </div>
 `)
 }
