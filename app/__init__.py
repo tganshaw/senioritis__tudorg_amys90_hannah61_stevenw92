@@ -25,6 +25,8 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS users(
     img TEXT,
     deck1 TEXT,
     deck2 TEXT,
+    numWins INT,
+    gamesPlayed INT,
     id INTEGER PRIMARY KEY AUTOINCREMENT
 );""")
 
@@ -36,7 +38,9 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS all_cards(
     defense INTEGER,
     speed INTEGER,
     atkName TEXT,
-    atkDesc TEXT
+    atkDesc TEXT,
+    numWins INT,
+    gamesPlayed INT
 );""")
 
 DBC.execute("""CREATE TABLE IF NOT EXISTS game_cards(
@@ -313,11 +317,12 @@ def cD2():
 
 @app.route("/send_stats")
 def send_stats():
-    if "state" not in request.args or "num_turns" not in request.args or "deck" not in request.args:
+    if "state" not in request.args or "num_turns" not in request.args or "deck" not in request.args or "username" not in session:
         return redirect("/")
     state = request.args["state"]
     num_turns = request.args["num_turns"]
     deck = request.args["deck"]
+    username = session["username"]
     print(f"{state} in {num_turns} turns with {deck}")
 
     db=sqlite3.connect(DB_NAME)
@@ -325,6 +330,46 @@ def send_stats():
     c.execute("INSERT INTO games VALUES (?, ?, ?, ?);", (deck, num_turns, state, session["username"]))
     db.commit()
     db.close()
+
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    c.execute("SELECT numWins, gamesPlayed FROM users WHERE username = ?;", (username, ))
+    fetch = c.fetchall()
+    if fetch is not None:
+        fetch = fetch[0]
+
+    numWins = fetch[0]
+    gamesPlayed = fetch[1]
+
+    gamesPlayed+= 1
+    if state == "win":
+        numWins += 1
+
+    c.execute("UPDATE users SET numWins = ?, gamesPlayed = ? WHERE username = ?;", (numWins, gamesPlayed, username, ))
+    db.commit()
+    db.close()
+
+    split_deck = deck.split(",")
+    for card in split_deck:
+        db=sqlite3.connect(DB_NAME)
+        c=db.cursor()
+        c.execute("SELECT numWins, gamesPlayed FROM all_cards WHERE cardId = ?;", (card, ))
+        fetch = c.fetchall()
+        if fetch is not None:
+            fetch = fetch[0]
+
+        numWins = fetch[0]
+        gamesPlayed = fetch[1]
+
+        gamesPlayed+= 1
+        if state == "win":
+            numWins += 1
+
+        c.execute("UPDATE all_cards SET numWins = ?, gamesPlayed = ? WHERE cardId = ?;", (numWins, gamesPlayed, card, ))
+        db.commit()
+        db.close()
+
+
     # add to game database
     # on leaderboard page, show top useres by winrate
     return "stats logged"
@@ -380,8 +425,29 @@ def leaderboard():
 
     card_dict = dict(sorted(card_dict.items(), key=lambda item: item[1], reverse=True))
 
+    cards_list = ""
+    for card in card_dict:
+        cards_list += f"{card}: {card_dict[card]}<br>"
 
-    return card_dict
+    ## getting users with most wins
+
+    user_dict = {}
+    for game in game_arr:
+        if game["state"] == "win":
+            game_state = 1
+        else:
+            game_state = 0
+        if game["player"] not in user_dict:
+            user_dict[game["player"]] = game_state
+        else:
+            user_dict[game["player"]] += game_state
+
+    user_dict = dict(sorted(user_dict.items(), key=lambda item: item[1], reverse=True))
+    users_list = ""
+    for user in user_dict:
+        users_list += f"{user}: {user_dict[user]}<br>"
+
+    return render_template("leaderboard.html", cards_list = cards_list, users_list = users_list)
 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
@@ -448,7 +514,7 @@ def register():
       db.close()
       return render_template("register.html", error="Username already taken!")
 
-    c.execute("INSERT INTO users VALUES (?, ?, ?, ?, '', '', NULL)",
+    c.execute("INSERT INTO users VALUES (?, ?, ?, ?, '', '', 0, 0, NULL);",
     (username, password, reviews, "/static/profilepic/pic1.png"))
 
     db.commit()
