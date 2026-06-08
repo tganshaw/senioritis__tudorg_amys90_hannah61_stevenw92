@@ -117,6 +117,8 @@ def game():
     deck_arr = check_deck.split(";");
     if(len(deck_arr) != 8):
         num = len(deck_arr)
+        if (num == 7):
+            return encyclopedia(error=f"Current deck is incomplete. You need to add {(8-num)} more card.")
         return encyclopedia(error=f"Current deck is incomplete. You need to add {(8-num)} more cards.")
         #return redirect(url_for("encyclopedia.html", error=f"Current deck is incomplete. You need to add {(8-num)} more cards."))
     random.shuffle(deck_arr)
