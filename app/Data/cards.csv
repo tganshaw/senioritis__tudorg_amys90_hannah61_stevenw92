@@ -4,7 +4,7 @@ card_id,name,max_hp,atk,def,spd,atk_name,atk_desc
 2,Mr.Hannon,14,4,4,2,Green-Eyed Monster,Deals 4 points of damage to a single enemy unit.
 3,Ms.Novillo,13,-1,2,4,Ctrl C + Ctrl V,Copies the enemy card's attack.
 4,Mr.Dillon,15,2,2,6,01000011 01010011,Deals 2 points of damage to a single enemy unit.
-5,Dr.Yu,15,-1,4,6,Suspension,Forcibly switches one card on hand with any selected card from the deck.
+5,Dr.Yu,15,-1,4,1,Suspension,Forcibly switches one card on hand with any selected card from the deck.
 6,Mr.Moran,11,-1,2,3,Phone Confiscation,Decreases 2 points of defense for every enemy card for this game.
 7,Ms.Pedrick,12,-1,3,6,Emotional Support,Heals 2 points of health for a selected friendly unit.
 8,Mr.Barry,13,3,4,2,Stock Market Crash,Deals 3 points of damage to a single enemy unit.
