@@ -43,19 +43,6 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS all_cards(
     gamesPlayed INT
 );""")
 
-DBC.execute("""CREATE TABLE IF NOT EXISTS game_cards(
-    gameId INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT,
-    name TEXT,
-    health INTEGER,
-    attack INTEGER,
-    defense INTEGER,
-    speed INTEGER,
-    atkName TEXT,
-    atkDesc TEXT,
-    FOREIGN KEY (atkName, atkDesc) REFERENCES all_cards(atkName, atkDesc)
-);""")
-
 DBC.execute("""CREATE TABLE IF NOT EXISTS games(
     deck TEXT,
     num_turns INT,
@@ -66,13 +53,18 @@ DBC.execute("""CREATE TABLE IF NOT EXISTS games(
 with open('Data/cards.csv', 'r') as f:
     d = f.read().replace("/n", "")[:-1]
     new_d = []
+    index = 0
     for i in d.split("\n")[1:]:
         new_d.append(i.split(","))
-    #print(new_d)
-
-dval=new_d[0]
-DBC.execute("INSERT INTO all_cards(cardId, name, health, attack, defense, speed, atkName, atkDesc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5]), dval[6], dval[7]))
-#DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed, atkName, atkDesc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5]), dval[6], dval[7]))
+        # print(new_d)
+        dval=new_d[index]
+        index += 1
+        DBC.execute("SELECT COUNT(*) FROM all_cards WHERE cardId = ?;", (int(dval[0]), ))
+        fetch = DBC.fetchone()
+        if int(fetch[0]) == 0:
+            DBC.execute("INSERT INTO all_cards VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 0);", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5]), dval[6], dval[7]))
+            DB.commit()
+    #DBC.execute("INSERT OR IGNORE INTO all_cards(cardId, name, health, attack, defense, speed, atkName, atkDesc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (int(dval[0]), dval[1], int(dval[2]), int(dval[3]), int(dval[4]), int(dval[5]), dval[6], dval[7]))
 
 DB.close()
 
@@ -350,6 +342,7 @@ def send_stats():
     db.close()
 
     split_deck = deck.split(",")
+    already_logged = []
     for card in split_deck:
         db=sqlite3.connect(DB_NAME)
         c=db.cursor()
@@ -361,12 +354,15 @@ def send_stats():
         numWins = fetch[0]
         gamesPlayed = fetch[1]
 
-        gamesPlayed+= 1
-        if state == "win":
-            numWins += 1
+        if card not in already_logged:
+            gamesPlayed+= 1
+            if state == "win":
+                numWins += 1
+            already_logged.append(card)
 
-        c.execute("UPDATE all_cards SET numWins = ?, gamesPlayed = ? WHERE cardId = ?;", (numWins, gamesPlayed, card, ))
-        db.commit()
+
+            c.execute("UPDATE all_cards SET numWins = ?, gamesPlayed = ? WHERE cardId = ?;", (numWins, gamesPlayed, card, ))
+            db.commit()
         db.close()
 
 
@@ -446,6 +442,22 @@ def leaderboard():
     users_list = ""
     for user in user_dict:
         users_list += f"{user}: {user_dict[user]}<br>"
+
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    c.execute("SELECT * FROM users;")
+    fetch = c.fetchall()
+    user_dict = {}
+    if fetch is None:
+        user_dict = "No Users Yet"
+    else:
+        for user in fetch:
+            user_dict[user[0]] = round((user[6] / user[7]), 2)
+
+    for user in user_dict:
+        print(user, user_dict[user])
+
+    user_winrate_dict = dict(sorted(user_dict.items(), key=lambda item: item[1], reverse=True))
 
     return render_template("leaderboard.html", cards_list = cards_list, users_list = users_list)
 
