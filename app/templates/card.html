@@ -60,6 +60,18 @@
   </nav>
 
 <div class="p-8">
+
+
+
+
+
+
+
+
+
+
+
+
     <script>
       var deck1="{{deck1}}"
 deck1=deck1.split(";");
@@ -133,13 +145,16 @@ document.write(`
 
 `);
 }
-// if (num_deck2 > 0){
+
 document.write(`
 <br>
 <br>
 
 <h2>Number in Deck2: ${num_deck2}</h2>
+`);
 
+if (num_deck2 > 0){
+document.write(`
 <a
             href="/removeDeck2/${values["card_id"]}"
             class="inline-block border border-gray-600 text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-800 transition"
@@ -147,7 +162,7 @@ document.write(`
             -
           </a>
 `);
-// }
+}
 if (num_deck2 < 2){
 document.write(`
 <a
@@ -209,6 +224,12 @@ for(var i=0;i<8-deck1.length;i++){
 document.write(`
 </div>
 <br>
+
+
+
+
+
+
 <br>
 <br>
 <h1 class="sticky top-0 group text-blue-500 text-center" id="active-text">Your Saved Deck 2:</h1>

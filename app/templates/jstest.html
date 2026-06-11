@@ -59,10 +59,33 @@ select{
 .opp-img{
     filter: hue-rotate(300deg) saturate(125%) contrast(125%) blur({{hard_mode}}px) grayscale({{hard_mode}}%);
 }
+
 </style>
+
 </head>
 
 <body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <nav class="bg-gray-800 border-b fixed top-0 right-0 left-0 w-full z-50">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-evenly">
 
@@ -1166,6 +1189,7 @@ function play_actions()
         action_list.shift();
     }
     made_action = 0;
+    
     current_action.innerHTML = "No Action Selected"
     document.getElementById("get-target").innerHTML = "";
     updateStats();
@@ -1417,9 +1441,17 @@ function shuffle (arr) {
   return res
 }
 
+function popup(arr){
+document.write(`
 
+<div id="toast" class="fixed bottom-5 right-5 p-4 bg-blue-500 text-white rounded-lg shadow-lg" role="alert">
+    <div class="flex items-center">
+        <span>hi</span>
+    </div>
+</div>
+
+`)
+}
+    
 </script>
-
-
-
 </html>
