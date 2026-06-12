@@ -658,6 +658,10 @@ function oppAddAttack()
                         action_list.push(new action(active_card["game_id"], parseInt(active_button.value), 1, parseInt(opp_card["spd"])));
                     }
                 }
+                if(active_card["card_id"] == 6)
+                {
+                  action_list.push(new action(opp_card["game_id"], parseInt(active_button.value), -1, parseInt(opp_card["spd"])));
+                }
                 if(active_card["card_id"] == 16)
                 {
                     opp_card["atk"] = parseInt(opp_card["atk"]) + 1915;
@@ -948,6 +952,11 @@ function addAttack()
 
                         var swap_button = document.getElementById("send-swap");
                         swap_button.addEventListener("click", yuSwap);
+                    }
+                    if(opp_card["card_id"] == 6)
+                    {
+                      action_list.push(new action(parseInt(opp_button.value), parseInt(opp_button.value), -1, parseInt(active_card["spd"])));
+                      current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
                     }
                     if(opp_card["card_id"] == 16)
                     {
