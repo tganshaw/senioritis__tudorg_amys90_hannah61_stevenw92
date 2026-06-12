@@ -375,91 +375,65 @@ def leaderboard():
     if "username" not in session:
         return redirect("/")
 
-    db=sqlite3.connect(DB_NAME)
-    c=db.cursor()
-    c.execute("SELECT * FROM games;")
+    db = sqlite3.connect(DB_NAME)
+    c = db.cursor()
+    c.execute("SELECT * FROM all_cards;")
     fetch = c.fetchall()
-
-
-    game_arr = []
+    card_winrate_dict = {}
+    card_wins_dict = {}
     if fetch is None:
-        game_arr = "No Games Finished Yet"
+        card_winrate_dict = "No Cards Yet"
+        card_wins_dict = "No Cards Yet"
     else:
-        for game in fetch:
-            this_game = {}
-            deck = game[0].split(",")
-            this_game["deck"] = deck
-            this_game["turns"] = game[1]
-            this_game["state"] = game[2]
-            this_game["player"] = game[3]
-            game_arr.append(this_game)
+        for card in fetch:
+            if(card[9] != 0):
 
-    card_list = []
-    with open("Data/cards.csv", "r") as f:
-        data = csv.DictReader(f)
-        for row in data:
-            card_list.append(row)
+                card_winrate_dict[card[1]] = round((card[8] / card[9]), 2)
+                card_wins_dict[card[1]] = card[8]
 
-    card_dict = {}
-    for game in game_arr:
-        print(game)
-        if game["state"] == "win":
-            game_state = 1
-        else:
-            game_state = 0
 
-        game_card_arr = []
-        for card in game["deck"]:
-            if card not in game_card_arr:
-                game_card_arr.append(card)
-        print(game_card_arr)
-        for card in game_card_arr:
-            if card_list[int(card)]["name"] not in card_dict:
-                card_dict[card_list[int(card)]["name"]] = game_state
-            else:
-                card_dict[card_list[int(card)]["name"]] += game_state
+    card_winrate_dict = dict(sorted(card_winrate_dict.items(), key=lambda item: item[1], reverse=True))
+    card_wins_dict = dict(sorted(card_wins_dict.items(), key=lambda item: item[1], reverse=True))
 
-    card_dict = dict(sorted(card_dict.items(), key=lambda item: item[1], reverse=True))
+    card_wins_list = ""
+    for card in card_wins_dict:
+        card_wins_list += f"{card}: {card_wins_dict[card]}<br>"
 
-    cards_list = ""
-    for card in card_dict:
-        cards_list += f"{card}: {card_dict[card]}<br>"
+    card_winrates_list = ""
+    for card in card_winrate_dict:
+        card_winrates_list += f"{card}: {card_winrate_dict[card]}<br>"
 
-    ## getting users with most wins
-
-    user_dict = {}
-    for game in game_arr:
-        if game["state"] == "win":
-            game_state = 1
-        else:
-            game_state = 0
-        if game["player"] not in user_dict:
-            user_dict[game["player"]] = game_state
-        else:
-            user_dict[game["player"]] += game_state
-
-    user_dict = dict(sorted(user_dict.items(), key=lambda item: item[1], reverse=True))
-    users_list = ""
-    for user in user_dict:
-        users_list += f"{user}: {user_dict[user]}<br>"
-
+    print(card_winrates_list)
     db=sqlite3.connect(DB_NAME)
     c=db.cursor()
     c.execute("SELECT * FROM users;")
     fetch = c.fetchall()
-    user_dict = {}
+    user_winrate_dict = {}
+    user_wins_dict = {}
     if fetch is None:
-        user_dict = "No Users Yet"
+        user_winrate_dict = "No Users Yet"
+        user_wins_dict = "No Users Yet"
     else:
         for user in fetch:
-            user_dict[user[0]] = round((user[6] / user[7]), 2)
+            user_winrate_dict[user[0]] = round((user[6] / user[7]), 2)
+            user_wins_dict[user[0]] = user[6]
 
-    for user in user_dict:
-        print(user, user_dict[user])
+    for user in user_winrate_dict:
+        print(user, user_winrate_dict[user])
 
-    user_winrate_dict = dict(sorted(user_dict.items(), key=lambda item: item[1], reverse=True))
+    user_winrate_dict = dict(sorted(user_winrate_dict.items(), key=lambda item: item[1], reverse=True))
+    user_wins_dict = dict(sorted(user_wins_dict.items(), key=lambda item: item[1], reverse=True))
 
-    return render_template("leaderboard.html", cards_list = cards_list, users_list = users_list)
+
+    user_wins_list = ""
+    for user in user_wins_dict:
+        user_wins_list += f"{user}: {user_wins_dict[user]}<br>"
+
+    user_winrates_list = ""
+    for user in user_winrate_dict:
+        user_winrates_list += f"{user}: {user_winrate_dict[user]}<br>"
+
+    return render_template("leaderboard.html", card_winrates_list = card_winrates_list, card_wins_list = card_wins_list, user_winrates_list = user_winrates_list, user_wins_list = user_wins_list)
 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():

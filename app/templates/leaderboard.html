@@ -81,15 +81,31 @@
 <div id = "top-players">
 <div class="text-2xl font-bold"> Top Players (by number of wins): </div>
 <br>
-{{ users_list | safe }}
+{{ user_wins_list | safe }}
 </div>
 
-<br><br><br><br>
+<br><br>
 
-<div id = "most-used-cards">
+<div id = "top-players-winrate">
+<div class="text-2xl font-bold"> Top Players (by winrate): </div>
+<br>
+{{ user_winrates_list | safe }}
+</div>
+
+<br><br>
+
+<div id = "top-cards">
 <div class="text-2xl font-bold"> Top Cards (by number of wins): </div>
 <br>
-{{ cards_list | safe }}
+{{ card_wins_list | safe }}
+</div>
+
+<br><br>
+
+<div id = "top-cards-winrate">
+<div class="text-2xl font-bold"> Top Cards (by winrate): </div>
+<br>
+{{ card_winrates_list | safe }}
 </div>
 
 <!-- things i could add:
