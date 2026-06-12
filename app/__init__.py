@@ -387,7 +387,6 @@ def leaderboard():
     else:
         for card in fetch:
             if(card[9] != 0):
-
                 card_winrate_dict[card[1]] = round((card[8] / card[9]), 2)
                 card_wins_dict[card[1]] = card[8]
 
@@ -415,8 +414,9 @@ def leaderboard():
         user_wins_dict = "No Users Yet"
     else:
         for user in fetch:
-            user_winrate_dict[user[0]] = round((user[6] / user[7]), 2)
-            user_wins_dict[user[0]] = user[6]
+            if user[7] != 0:
+                user_winrate_dict[user[0]] = round((user[6] / user[7]), 2)
+                user_wins_dict[user[0]] = user[6]
 
     for user in user_winrate_dict:
         print(user, user_winrate_dict[user])

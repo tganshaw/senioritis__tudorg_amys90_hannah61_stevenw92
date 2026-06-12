@@ -12,8 +12,8 @@
 <style>
   body{
     padding:0px;
-    font-family: "Anta";    
-    
+    font-family: "Anta";
+
   }
 
   #head1{
@@ -22,7 +22,7 @@
   }
 
  nav{
-    color:white;    
+    color:white;
     }
 
   #notnav{
@@ -62,6 +62,12 @@
     </ul>
 
     <ul class="flex space-x-4">
+        <a href="/leaderboard" class=" hover:text-red-600">
+          Leaderboard
+        </a>
+    </ul>
+
+    <ul class="flex space-x-4">
         <a href="/profile" class=" hover:text-red-600">
           Profile
         </a>
@@ -79,4 +85,20 @@
 </br>
 you lose :(
 </body>
+
+<script>
+
+let params = new URLSearchParams(document.location.search);
+num_turns = params.get("num_turns");
+state = window.location.pathname.substring(1);
+deck = params.get("deck");
+fetch(`/send_stats?state=${state}&num_turns=${num_turns}&deck=${deck}`);
+window.addEventListener('beforeunload', (event) => {
+  // Cancel the event as stated by the standard.
+  event.preventDefault();
+  // Chrome requires returnValue to be set.
+  event.returnValue = '';
+});
+
+</script>
 </html>
