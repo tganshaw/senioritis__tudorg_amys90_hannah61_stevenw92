@@ -956,7 +956,7 @@ function addAttack()
                     if(opp_card["card_id"] == 6)
                     {
                       action_list.push(new action(parseInt(opp_button.value), parseInt(opp_button.value), -1, parseInt(active_card["spd"])));
-                      current_action.innerHTML = `${active_card["name"]} will use ${active_card["atk_name"]}`;
+                      current_action.innerHTML = `${active_card["name"]} will use ${opp_card["atk_name"]}`;
                     }
                     if(opp_card["card_id"] == 16)
                     {
