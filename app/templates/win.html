@@ -125,7 +125,7 @@ function getRandomColor() {
 function changeColor()
 {
   var style_tag = document.getElementById("style");
-  style_tag.innerHTML = `p\{color:${getRandomColor()}\}\n.navbar\{background-color:${getRandomColor()}\}\nbody\{background-color:${getRandomColor()};background-blend-mode: multiply\background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fusagif.com%2Fwp-content%2Fuploads%2Fgify%2Fconfetti-holiday-cheer.gif&f=1&nofb=1&ipt=426886ecaad484a81affa89c997fa3be3990c1135b95f2467f6d4f6049bc490c');}`;
+  style_tag.innerHTML += `p\{color:${getRandomColor()}\}\n.navbar\{background-color:${getRandomColor()}\}`;
 }
 
 </script>
