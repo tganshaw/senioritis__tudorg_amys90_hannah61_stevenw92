@@ -3,76 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>win</title>
+  <title>:)))</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+<style id="style">
+body{
+  padding:0px;
+  background-color:#900020;
+  color:white;
+  font-family: "Anta";
+  background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fusagif.com%2Fwp-content%2Fuploads%2Fgify%2Fconfetti-holiday-cheer.gif&f=1&nofb=1&ipt=426886ecaad484a81affa89c997fa3be3990c1135b95f2467f6d4f6049bc490c");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+</style>
 </head>
 
 <body>
 
-<nav class="bg-gray-800 border-b fixed top-0 right-0 left-0 w-full z-50">
+  <nav class="bg-gray-800 border-b fixed top-0 right-0 left-0 w-full z-50">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-evenly">
 
-    <ul class="flex space-x-4 text-blue-700">
+    <ul class="flex space-x-4">
         <a href="/home" class=" hover:text-red-600">
           Home
         </a>
     </ul>
 
-    <ul class="flex space-x-4 text-gray-50">
+    <ul class="flex space-x-4 text-blue-700">
         <a href="/encyclopedia" class=" hover:text-red-600">
           Encyclopedia
         </a>
     </ul>
 
-    <ul class="flex space-x-4 text-gray-50">
+    <ul class="flex space-x-4">
         <a href="/game" class=" hover:text-red-600">
           Game
         </a>
     </ul>
 
-    <ul class="flex space-x-4 text-gray-50">
+    <ul class="flex space-x-4">
         <a href="/profile" class=" hover:text-red-600">
           Profile
         </a>
     </ul>
-<ul class="flex space-x-4">
+  <ul class="flex space-x-4">
   <form action="{{url_for('logout')}}" method="POST">
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Logout</button>
   </form>
-</ul>
-</div>
-</nav>
-
-<style id="style">
-    nav{
-    color:white;
-    }
-
-    body{
-    font-size:150%;
-}
-</style>
+  </ul>
+  </div>
+  </nav>
 
 
 </br>
+<div class="p-8">
+  <div class="p-8">
+    <br>
+    <br>
+    <!-- <img height=300 src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fusagif.com%2Fwp-content%2Fuploads%2Fgif%2Fconfetti-40.gif&f=1&nofb=1&ipt=c465052517aec135d14c859636c8473b3f6237a80e9f2daf4d1ae6e0ed3f7d4d">
+-->
+    <br>
+    <h1 class="text-4xl font-bold mb-8 text-center">Yes!</h1>
+  </div>
 </br>
-</br>
-</br>
-<p>
+
+<div class="text-gray-700">
+  <p
+    class="first-letter:float-left first-letter:mr-3 first-letter:text-7xl first-letter:font-bold first-letter:text-gray-900 first-line:tracking-widest first-line:uppercase"
+  >
+    Well, let me tell you something.
+  </p>
+  <p class="mt-6">Yes, you. You just WON. Yay :)</p>
+<p class="mt-6">
 you win!
 hooray!
 yippee!
 </p>
-
+<br>
+<p>But don't celebrate too soon... you've still got a long way to go till 1st place.</p>
+</div>
+</br>
+</br>
 <div class = "background-tint">
 <img src="https://ih1.redbubble.net/image.511602851.1011/raf,360x360,075,t,fafafa:ca443f4786.u1.jpg">
 <img src="https://www.beyondhorizons.biz/wp-content/uploads/2016/10/celebration.jpg">
 <img src="https://images.huffingtonpost.com/2014-05-29-iStockHuffPostCelebrationMay2920142-thumb.jpg">
 <img src="https://i0.wp.com/justmaths.co.uk/wp-content/uploads/2016/10/celebration-gif.gif?ssl=1">
-<img height=350 src="https://edit.funimada.com/assets/images/500/background-1000.gif">
 </div>
 
 <script>
@@ -100,7 +119,7 @@ function getRandomColor() {
 function changeColor()
 {
   var style_tag = document.getElementById("style");
-  style_tag.innerHTML = `p\{color:${getRandomColor()}\}\n.navbar\{background-color:${getRandomColor()}\}\nbody\{background-color:${getRandomColor()};background-blend-mode: multiply\}`;
+  style_tag.innerHTML = `p\{color:${getRandomColor()}\}\n.navbar\{background-color:${getRandomColor()}\}\nbody\{background-color:${getRandomColor()};background-blend-mode: multiply\background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fusagif.com%2Fwp-content%2Fuploads%2Fgify%2Fconfetti-holiday-cheer.gif&f=1&nofb=1&ipt=426886ecaad484a81affa89c997fa3be3990c1135b95f2467f6d4f6049bc490c');}`;
 }
 
 </script>
