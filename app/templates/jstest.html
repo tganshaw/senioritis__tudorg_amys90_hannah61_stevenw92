@@ -1208,6 +1208,7 @@ function play_actions()
     current_action.innerHTML = "No Action Selected"
     document.getElementById("get-target").innerHTML = "";
     updateStats();
+    //popup();
     console.log("-------END TURN-------");
     }
 }
@@ -1456,8 +1457,10 @@ function shuffle (arr) {
   return res
 }
 
+
+
 function popup(arr){
-document.write(`
+    document.write(`
 
 <div id="toast" class="fixed bottom-5 right-5 p-4 bg-blue-500 text-white rounded-lg shadow-lg" role="alert">
     <div class="flex items-center">
