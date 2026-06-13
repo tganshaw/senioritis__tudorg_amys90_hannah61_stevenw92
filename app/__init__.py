@@ -216,7 +216,7 @@ def addD1(card_id):
 
     
     
-    if(deck.count(str(card_id))<2 and len(deck) < MAX_DECK_SIZE):
+    if(deck.count(str(card_id))<2 and len(deck) <= MAX_DECK_SIZE):
         deck.append(card_id)
         deck=";".join(deck)
         print("hi")
@@ -258,7 +258,7 @@ def addD2(card_id):
     deck=deck[0][5]
     deck=deck.split(";")
 
-    if(deck.count(str(card_id))<2 and len(deck) < MAX_DECK_SIZE):
+    if(deck.count(str(card_id))<2 and len(deck) <= MAX_DECK_SIZE):
         deck.append(card_id)
         deck=";".join(deck)
         print("hi")
