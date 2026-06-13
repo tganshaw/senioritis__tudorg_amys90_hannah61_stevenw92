@@ -214,10 +214,12 @@ def addD1(card_id):
         deck = ""
     deck=deck.split(";")
 
-    if(deck.count(str(card_id))<2 and deck.count(";")< MAX_DECK_SIZE):
+    
+    
+    if(deck.count(str(card_id))<2 and len(deck) < MAX_DECK_SIZE):
+        deck.append(card_id)
         deck=";".join(deck)
         print("hi")
-        deck+=";"+card_id
         c.execute("UPDATE users SET deck1=? where username=?",(deck,username,))
         db.commit()
     else:
@@ -256,10 +258,10 @@ def addD2(card_id):
     deck=deck[0][5]
     deck=deck.split(";")
 
-    if(deck.count(str(card_id))<2 and deck.count(";")< MAX_DECK_SIZE):
+    if(deck.count(str(card_id))<2 and len(deck) < MAX_DECK_SIZE):
+        deck.append(card_id)
         deck=";".join(deck)
         print("hi")
-        deck+=";"+card_id
         c.execute("UPDATE users SET deck2=? where username=?",(deck,username,))
         db.commit()
     else:
