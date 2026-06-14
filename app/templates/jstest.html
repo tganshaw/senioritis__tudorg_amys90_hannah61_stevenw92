@@ -22,6 +22,45 @@ body{
   position:relative;
 }
 
+.turn-popup{
+    position: fixed;
+    right: 20px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 99999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    animation: popupFade 4s forwards;
+}
+
+.player-popup{
+    background-color: #2563eb;
+    bottom: 80px;
+}
+
+.enemy-popup{
+    background-color: #dc2626;
+    bottom: 20px;
+}
+
+@keyframes popupFade{
+    0%{
+        opacity:0;
+    }
+    10%{
+        opacity:1;
+    }
+    80%{
+        opacity:1;
+    }
+    100%{
+        opacity:0;
+    }
+}
+
+
 #opp-active-button{
   position: absolute;
   top:0%;
@@ -1082,6 +1121,69 @@ function multiAttack(card_id)
     }
 }
 
+
+
+
+
+function getMoveDescription(actionObj)
+{
+    const user = all_cards[actionObj.user];
+
+    if(actionObj.value > -1)
+    {
+        return `${user.name} used ${user.atk_name}`;
+    }
+
+    if(actionObj.value === -1)
+    {
+        return `${user.name} used ${user.atk_name}`;
+    }
+
+    if(actionObj.value === -2)
+    {
+        return `${user.name} swapped in`;
+    }
+
+    if(actionObj.value === -3)
+    {
+        return `${user.name} switched`;
+    }
+
+    return `${user.name} acted`;
+}
+
+
+function showMovePopup(text, isEnemy = false)
+{
+    const existing = document.querySelector(
+        isEnemy ? ".enemy-popup" : ".player-popup"
+    );
+
+    if(existing)
+    {
+        existing.remove();
+    }
+
+    const popup = document.createElement("div");
+
+    popup.className = isEnemy
+        ? "turn-popup enemy-popup"
+        : "turn-popup player-popup";
+
+    popup.innerText = text;
+
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+        if(document.body.contains(popup))
+        {
+            popup.remove();
+        }
+    }, 4000);
+}
+
+
+
 function play_actions()
 {
     if(action_list.length > 0)
@@ -1094,6 +1196,24 @@ function play_actions()
     {
         const this_action = action_list[i];
         const this_user = all_cards[this_action["user"]];
+
+	const isEnemyMove =( (this_user["game_id"] > 4 && this_user["game_id"] < 10) ||this_user["game_id"] > 12);
+
+	if(isEnemyMove)
+	{
+    	showMovePopup(
+        	getMoveDescription(this_action),
+        	true
+   	 );
+	}
+	else
+	{
+    		showMovePopup(
+        		current_action.innerHTML,
+        		false
+    		);
+	}
+
 
         if(this_user["game_id"] < 5 || ( this_user["game_id"] > 9 && this_user["game_id"] < 13))
         {
