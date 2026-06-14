@@ -202,6 +202,22 @@ def card(card_id):
     deck2=(temp[0][5])
     return render_template("card.html",data=data,deck1=deck1,deck2=deck2,card_id=int(card_id))
 
+
+@app.route("/switch")
+def switch():
+    db=sqlite3.connect(DB_NAME)
+    c=db.cursor()
+    username=session["username"]
+    c.execute("SELECT * FROM users where username=?;",(username,))
+    temp=c.fetchall()
+    deck1=(temp[0][5])
+    deck2=temp[0][4]
+    c.execute("UPDATE users SET deck1=? where username=?",(deck1,username,))
+    c.execute("UPDATE users SET deck2=? where username=?",(deck2,username,))
+    db.commit()
+    db.close()
+    return redirect(url_for("profile"))
+
 @app.route("/addDeck1/<card_id>")
 def addD1(card_id):
     db=sqlite3.connect(DB_NAME)
