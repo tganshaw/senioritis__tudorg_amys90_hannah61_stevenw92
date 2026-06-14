@@ -164,3 +164,9 @@ tudorG -- 2026-06-10 10:00
 tudorG -- 2026-06-11 20:00
 - adding leaderboard by winrate
 - fixing problems with old leaderboard system
+
+tudorG, amyS, hannahG, stevenW -- 2026-06-14 15:00
+- recorded video presentation
+
+tudorG -- 2026-06-14 16:00
+- edited video presentation
